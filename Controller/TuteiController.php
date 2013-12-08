@@ -127,10 +127,7 @@ class TuteiController extends Controller {
         }
 
         $current_user = $this->getRepository()->getCurrentUser();
-$request = $this->getRequest();
-$locale = $request->getLocale();
 
-$request->setLocale('pt_BR');
         $response = new Response();
         return $this->render(
                             'TuteiBaseBundle:parts:user_menu.html.twig',
