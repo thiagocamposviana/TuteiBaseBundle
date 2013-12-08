@@ -97,14 +97,14 @@ find ezpublish/EzPublishKernel.php -exec sed -i "s/EzSystemsDemoBundle;/EzSystem
 
 
 cp -r src/Tutei/BaseBundle/SetupFiles/override ezpublish_legacy/settings
-cp -r src/Tutei/BaseBundle/SetupFiles/settings ezpublish_legacy/settings
+cp -r src/Tutei/BaseBundle/SetupFiles/siteaccess ezpublish_legacy/settings
 cp src/Tutei/BaseBundle/SetupFiles/ezpublish_dev.yml ezpublish/config
 
 echo "tutei_base:
     resource: \"@TuteiBaseBundle/Resources/config/routing.yml\"
     prefix:   /\n\n" | cat - ezpublish/config/routing.yml > /tmp/out && mv /tmp/out ezpublish/config/routing.yml 
 
-php ezpublish/console assets:install --symlink web
+php ezpublish/console assets:install --symlink --env=dev web
 php ezpublish/console ezpublish:legacy:assets_install --symlink web
 php ezpublish/console assetic:dump --env=dev web
 
@@ -120,8 +120,8 @@ mysql -u ${dbuser} -p${dbpass} ${dbname} < ezpublish_legacy/kernel/sql/mysql/ker
 mysql -u ${dbuser} -p${dbpass} ${dbname} < src/Tutei/BaseBundle/SetupFiles/cleandata.sql
 
 
-find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type d | sudo xargs chmod -R 775
-find {ezpublish/{cache,logs,config},ezpublish_legacy/{design,extension,settings,var},web} -type f | sudo xargs chmod -R 664
+find . -type d -exec chmod 775 {} \;
+find . -type f -exec chmod 664 {} \;
 chown -R ${apachegroup}:${apachegroup} .
 
 echo "<VirtualHost *:80>\n
