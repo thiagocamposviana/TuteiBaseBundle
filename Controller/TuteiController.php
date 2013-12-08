@@ -252,46 +252,13 @@ class TuteiController extends Controller {
     }
     
     public function showSideMenu($pathString){
-        /*
-        $classes = $this->container->getParameter('tutei.top_menu.content_types_include');
-
-        $searchService = $this->getRepository()->getSearchService();
-
-        $query = new Query();
-
-        $query->criterion = new LogicalAnd(
-                array(
-                    new ContentTypeIdentifier($classes),
-                    new ParentLocationId( array( 2 ) ),
-                    
-                )
-        );
-        
-        $query->sortClauses = array(
-            new SortClause\LocationPriority( Query::SORT_ASC )
-        );
-
-        $list = $searchService->findContent($query);
-        $locationList = array();
-
-        foreach ( $list->searchHits as $content )
-        {
-            $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
-        }
-
-        $current_user = $this->getRepository()->getCurrentUser();
-        //var_dump($current_user);exit;
-         * 
-         */
-
+        //$path = $this->getPath($pathString);        
         $response = new Response();
+        
         return $this->render(
-                            'TuteiBaseBundle:parts:user_menu.html.twig',
-                            array(
-                                'list' => '',
-                                'location' => ''
-                            ), 
-                            $response
+                        'TuteiBaseBundle:parts:side_menu.html.twig',
+                        array( 'locationList' => '' ),
+                        $response
         );
         
     }
