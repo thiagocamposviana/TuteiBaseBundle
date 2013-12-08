@@ -1,0 +1,12 @@
+parameters:
+    tutei_base.tuteicontroller.class: Tutei\BaseBundle\Controller\TuteiController
+    
+services:
+    tutei_base.controller:
+        class: %tutei_base.tuteicontroller.class%
+        arguments: [@ezpublish.view_manager]
+        calls:
+            - [setContainer, [@service_container] ]
+ 
+    tutei:
+        alias: tutei_base.controller

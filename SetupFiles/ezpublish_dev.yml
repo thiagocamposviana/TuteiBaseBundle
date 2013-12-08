@@ -1,0 +1,64 @@
+ezpublish:
+    siteaccess:
+        list:
+            - site
+            - siteadmin
+        groups:
+            site_group:
+                - site
+                - siteadmin
+            frontend_group:
+                - site
+        default_siteaccess: site
+        match:
+            Map\URI:
+                site: site
+                siteadmin: siteadmin
+            Map\Host:
+                ezpublish.dev: site
+                admin.ezpublish.dev: siteadmin
+    imagemagick:
+        enabled: true
+        path: /usr/bin/convert
+    system:
+        site_group:
+            database:
+                type: mysql
+                user: ez5
+                password: ez5
+                server: localhost
+                database_name: ez5
+            languages:
+                - eng-GB
+        frontend_group:
+            session_name: MyFrontendSessionName
+        site:
+            content:
+                view_cache: true
+                ttl_cache: true
+                default_ttl: 30
+            image_variations:
+                my_image_variation:
+                    reference: null
+                    filters:
+                        -
+                            name: geometry/scaledownonly
+                            params:
+                                - 400
+                                - 350
+                my_cropped_variation:
+                    reference: my_mage_variation
+                    filters:
+                        -
+                            name: geometry/scalewidthdownonly
+                            params:
+                                - 300
+                        -
+                            name: geometry/crop
+                            params:
+                                - 200
+                                - 200
+                                - 0
+                                - 0
+        siteadmin:
+            legacy_mode: true

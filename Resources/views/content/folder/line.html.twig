@@ -1,0 +1,16 @@
+<div class="content-view-line">
+    <div class="content-type-folder">
+        
+        <div class="attribute-title">
+            <h2>
+                <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'name' ) }}</a>
+            </h2>
+        </div>
+        
+        {% if not ez_is_field_empty( content, 'short_description' ) %}
+        <div class="attribute-short">
+                {{ ez_render_field( content, 'short_description' ) }}
+        </div>
+        {% endif %}
+    </div>
+</div>

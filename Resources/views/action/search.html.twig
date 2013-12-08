@@ -1,0 +1,38 @@
+{% extends noLayout ? viewbaseLayout : "TuteiBaseBundle::pagelayout.html.twig" %}
+
+{% block content %}
+
+    {% if list|length == 0 %}
+
+    Error
+
+    {% else %}
+
+    <div class="content-view-full">
+        <div class="content-type-folder">
+            <div class="attribute-title">
+                <h2>
+                    Search returned {{ list.searchHits|length }} results
+                </h2>
+            </div>
+
+            <div class="attribute-search-results">
+            {% for item in list.searchHits %}
+                        {{ render(
+                               controller(
+                                   'ez_content:viewLocation',
+                                   {
+                                       'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
+                                       'viewType': 'line',
+                                       'params': {}
+                                   }
+                               )
+                           ) }}
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+{% endblock %}

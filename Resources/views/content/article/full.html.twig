@@ -1,0 +1,23 @@
+{% extends noLayout ? viewbaseLayout : "TuteiBaseBundle::pagelayout.html.twig" %}
+
+{% block content %}
+
+<div class="content-view-full">
+    <div class="content-type-folder">
+        <div class="attribute-title">
+            <h2>{{ ez_render_field( content, 'title' ) }}</h2>
+        </div>
+
+        <div class="attribute-short">
+            {{ ez_render_field( content, 'intro' ) }}    
+        </div>
+
+
+        <div class="attribute-long">
+            {{ ez_render_field( content, 'body' ) }}
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

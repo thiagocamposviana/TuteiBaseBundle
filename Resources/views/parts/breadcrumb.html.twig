@@ -1,0 +1,13 @@
+<ol class="breadcrumb">
+{% for item in locationList %}
+
+    <li{% if loop.index == loop.length %} class="active"{% endif %}>
+    {% if loop.index < loop.length %}
+        <a href="{{ path(item) }}">{{ item.contentInfo.name }}</a>
+    {% else %}
+        {{ item.contentInfo.name }}
+    {% endif %}    
+    </li>
+
+{% endfor %}
+</ol>

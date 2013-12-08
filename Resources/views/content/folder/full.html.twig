@@ -1,0 +1,28 @@
+{% extends noLayout ? viewbaseLayout : "TuteiBaseBundle::pagelayout.html.twig" %}
+
+
+{% block content %}
+
+<div class="content-view-full">
+    <div class="content-type-folder">
+        <div class="attribute-title">
+            <h2>{{ ez_render_field( content, 'name' ) }}</h2>
+        </div>
+
+        <div class="attribute-short">
+            {{ ez_render_field( content, 'short_description' ) }}    
+        </div>
+
+
+        <div class="attribute-long">
+            {{ ez_render_field( content, 'description' ) }}
+        </div>
+
+        <div class="attribute-children">
+        {{ render( controller( "tutei:lineList", 
+                               { 'location': location } ) ) }}             
+        </div>
+    </div>
+</div>
+
+{% endblock %}

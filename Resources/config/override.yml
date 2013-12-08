@@ -1,0 +1,22 @@
+system:
+    frontend_group:
+        location_view:
+            full:
+                article:
+                    template: "TuteiBaseBundle:content/article:full.html.twig"
+                    match:
+                        Identifier\ContentType: [article]
+                
+                folder:
+                    template: "TuteiBaseBundle:content/folder:full.html.twig"
+                    match:
+                        Identifier\ContentType: [folder] 
+            line:
+                article:
+                    template: "TuteiBaseBundle:content/article:line.html.twig"
+                    match:
+                        Identifier\ContentType: [article]
+                folder:
+                    template: "TuteiBaseBundle:content/folder:line.html.twig"
+                    match:
+                        Identifier\ContentType: [folder]

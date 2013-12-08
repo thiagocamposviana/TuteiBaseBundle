@@ -1,0 +1,19 @@
+{
+    "name": "Tutei/BaseBundle",
+    "description": "Bundle for eZ Publish Platform",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Thiago Campos Viana",
+            "homepage": "https://github.com/thiagocamposviana/TuteiBaseBundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "ezsystems/ezpublish-kernel": "*"
+    },
+    "autoload": {
+        "psr-0": {"Tutei\\BaseBundle": ""}
+    },
+    "target-dir": "Tutei/BaseBundle"
+}

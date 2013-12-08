@@ -1,0 +1,7 @@
+parameters:
+    # Folder
+    tutei.folder.content_types_include: [article, folder]
+    tutei.folder.sort_type: 'name'
+    tutei.folder.sort_order: 'asc'
+    
+    tutei.top_menu.content_types_include: [folder]

@@ -1,0 +1,19 @@
+{# includes items with priority higher than 100
+   TODO: create settings for this, like class filter  #}
+{% for item in list.searchHits %}
+<li>
+    <a href="{{ path( location[item.valueObject.versionInfo.contentInfo.mainLocationId] ) }}" title="{{ item.valueObject.versionInfo.contentInfo.name }}">
+        {{ item.valueObject.versionInfo.contentInfo.name }}
+    </a>
+</li>
+{% endfor %}
+
+
+{% if current_user.login != 'anonymous' %}
+    <li><a href="{{ "/user/logout" }}">Logout</a></li>
+    <li><a href="{{ "/content/edit/" ~ current_user.content.versionInfo.contentInfo.id }}">Change profile ( {{ current_user.login }} )</a></li>
+{% else %}
+    <li><a href={{ "/user/login" }}>Log in</a></li>
+{% endif%}
+
+

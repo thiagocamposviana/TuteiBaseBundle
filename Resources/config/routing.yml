@@ -1,0 +1,3 @@
+tutei_base_search:
+    pattern:  /content/search
+    defaults: { _controller: TuteiBaseBundle:Tutei:search }
