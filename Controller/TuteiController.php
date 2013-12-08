@@ -127,7 +127,10 @@ class TuteiController extends Controller {
         }
 
         $current_user = $this->getRepository()->getCurrentUser();
+$request = $this->getRequest();
+$locale = $request->getLocale();
 
+$request->setLocale('pt_BR');
         $response = new Response();
         return $this->render(
                             'TuteiBaseBundle:parts:user_menu.html.twig',
@@ -277,7 +280,7 @@ class TuteiController extends Controller {
         {
             $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
         }
-        
+
         $response = new Response();
         return $this->render(
                             'TuteiBaseBundle:parts:side_menu.html.twig',

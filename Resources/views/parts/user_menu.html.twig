@@ -11,8 +11,9 @@
 
 
 {% if current_user.login != 'anonymous' %}
-    <li><a href="{{ "/user/logout" }}">Logout</a></li>
-    <li><a href="{{ "/content/edit/" ~ current_user.content.versionInfo.contentInfo.id }}">Change profile ( {{ current_user.login }} )</a></li>
+    <li><a href="{{ "/user/logout" }}">{{ 'Logout'|trans }}</a></li>
+    <li><a href="{{ "/content/edit/" ~ current_user.content.versionInfo.contentInfo.id }}">{{ 'Change profile'|trans }} ( {{ current_user.login }} )</a></li>
 {% else %}
-    <li><a href={{ "/user/login" }}>Log in</a></li>
+    <li><a href={{ "/user/login" }}>{{ 'Log in'|trans }}</a></li>
+    <li><a href={{ "/user/register" }}>{{ 'Register'|trans }}</a></li>
 {% endif%}

@@ -3,8 +3,20 @@
     <file source-language="en" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
-                <source>Symfony2 is great</source>
-                <target>O Symfony2 é ótimo</target>
+                <source>Log in</source>
+                <target>Entrar</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Register</source>
+                <target>Cadastrar</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>Logout</source>
+                <target>Sair</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Change profile</source>
+                <target>Editar perfil</target>
             </trans-unit>
         </body>
     </file>
