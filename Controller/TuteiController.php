@@ -7,6 +7,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifi
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\FullText;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationPriority;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
@@ -252,13 +253,40 @@ class TuteiController extends Controller {
     }
     
     public function showSideMenu($pathString){
-        //$path = $this->getPath($pathString);        
-        $response = new Response();
+        $locations = explode('/', $pathString);
+        $locationId = $locations[3];
+
+        $classes = $this->container->getParameter('tutei.top_menu.content_types_include');
+
+        $searchService = $this->getRepository()->getSearchService();
+
+        $query = new Query();
+
+        $query->criterion = new LogicalAnd(
+                array(
+                    new ContentTypeIdentifier($classes),
+                    new ParentLocationId( array( $locationId ) )
+                    )
+        );
+        $query->sortClauses = array(
+            new SortClause\LocationPriority( Query::SORT_ASC )
+        );
+        $list = $searchService->findContent($query);
+        $locationList = array();
         
+        foreach ( $list->searchHits as $content )
+        {
+            $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
+        }
+        
+        $response = new Response();
         return $this->render(
-                        'TuteiBaseBundle:parts:side_menu.html.twig',
-                        array( 'locationList' => '' ),
-                        $response
+                            'TuteiBaseBundle:parts:side_menu.html.twig',
+                            array(
+                                'list' => $list,
+                                'location' => $locationList
+                            ), 
+                            $response
         );
         
     }

@@ -1,7 +1,7 @@
 {# includes items with priority higher than 100
    TODO: create settings for this, like class filter  #}
 
-{% for item in list %}
+{% for item in list.searchHits %}
 <li>
     <a href="{{ path( location[item.valueObject.versionInfo.contentInfo.mainLocationId] ) }}" title="{{ item.valueObject.versionInfo.contentInfo.name }}">
         {{ item.valueObject.versionInfo.contentInfo.name }}

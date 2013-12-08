@@ -1,15 +1,15 @@
-<ul class="nav">
+<h3>Side menu</h3>
+
+<ul class="nav side-menu">
 
     <li class="active">
-        <a href="#overview">Place holder</a>
-        <ul class="nav">
-            <li class=""><a href="#overview-doctype">HTML5 doctype</a></li>
-            <li class=""><a href="#overview-mobile">Mobile first</a></li>
-            <li><a href="#overview-responsive-images">Responsive images</a></li>
-            <li><a href="#overview-type-links">Typography and links</a></li>
-            <li><a href="#overview-normalize">Normalize</a></li>
-            <li><a href="#overview-container">Containers</a></li>
-        </ul>
+        {% for item in list.searchHits %}
+        <li>
+            <a href="{{ path( location[item.valueObject.versionInfo.contentInfo.mainLocationId] ) }}" title="{{ item.valueObject.versionInfo.contentInfo.name }}">
+                {{ item.valueObject.versionInfo.contentInfo.name }}
+            </a>
+        </li>
+        {% endfor %}
     </li>
 </ul>
 
