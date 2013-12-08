@@ -127,7 +127,6 @@ class TuteiController extends Controller {
         }
 
         $current_user = $this->getRepository()->getCurrentUser();
-        //var_dump($current_user);exit;
 
         $response = new Response();
         return $this->render(
