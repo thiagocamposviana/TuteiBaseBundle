@@ -24,10 +24,10 @@ ezpublish:
         site_group:
             database:
                 type: mysql
-                user: ez5
-                password: ez5
+                user: [DBUSER]
+                password: [DBPASS]
                 server: localhost
-                database_name: ez5
+                database_name: [DBNAME]
             languages:
                 - eng-GB
         frontend_group:

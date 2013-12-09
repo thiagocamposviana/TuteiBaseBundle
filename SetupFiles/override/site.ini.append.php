@@ -4,9 +4,9 @@
 DatabaseImplementation=ezmysqli
 Server=localhost
 Port=
-User=ez5
-Password=ez5
-Database=ez5
+User=[DBUSER]
+Password=[DBPASS]
+Database=[DBNAME]
 Charset=
 Socket=disabled
 
@@ -22,7 +22,7 @@ SessionNameHandler=custom
 
 [SiteSettings]
 SiteName=Plain site
-SiteURL=ez5
+SiteURL=[SITEURL]
 DefaultAccess=site
 SiteList[]
 SiteList[]=site
