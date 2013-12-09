@@ -10,6 +10,9 @@ Database=[DBNAME]
 Charset=
 Socket=disabled
 
+[FileSettings]
+VarDir=var/plain_site
+
 
 [ExtensionSettings]
 ActiveExtensions[]
