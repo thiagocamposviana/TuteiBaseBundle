@@ -117,12 +117,13 @@ mysql -u ${dbuser} -p${dbpass} -e "CREATE USER '${dbname}'@'localhost' IDENTIFIE
 mysql -u ${dbuser} -p${dbpass} -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbname}'@'localhost' WITH GRANT OPTION;"
 
 mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/kernel_schema.sql
-mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/cleandata.sql
+
+mysql -u ${dbuser} -p${dbpass} ${dbname} < ../src/Tutei/BaseBundle/SetupFiles/cleandata.sql
 
 
-php ezpm.php import ../src/Tutei/BaseBundle/SetupFiles/content.ezpkg
+#php ezpm.php import ../src/Tutei/BaseBundle/SetupFiles/content.ezpkg
 
-php ezpm.php  install content
+#php ezpm.php  install content
 
 
 cd ..
