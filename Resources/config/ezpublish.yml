@@ -44,6 +44,10 @@ system:
                     match:
                         UrlAlias: "/"
             block:
+                block_item:
+                    template: "TuteiBaseBundle:content/block_item:block.html.twig"
+                    match:
+                        Identifier\ContentType: [block_item]
                 default:
                     template: "TuteiBaseBundle:content/default:block.html.twig"
                     match:

@@ -165,13 +165,12 @@ class TuteiController extends Controller {
     }
 
     public function getTitle($pathString) {
-        $path = $this->getPath($pathString);
-        $path = array_reverse($path);
+        $path = array_reverse($this->getPath($pathString));
         $title = '';
 
         $numItems = count($path);
         $i = 0;
-        foreach ($path as $key => $value) {
+        foreach ($path as $value) {
 
             $title .= $value->contentInfo->name;
             if (++$i !== $numItems) {
@@ -238,16 +237,15 @@ class TuteiController extends Controller {
                         'TuteiBaseBundle:parts:side_menu.html.twig', array('list' => $list), $response
         );
     }
-    
-    public function showExtraInfo($pathString) {
-        
-        if ($pathString == '/1/')
-            return new Response();
-        $locations = explode('/', $pathString);
-        
-        $locationId = $locations[count($locations)-2];
 
-        $classes = $this->container->getParameter('tutei.top_menu.content_types_include');
+    public function showExtraInfo($pathString) {
+
+        if ($pathString == '/1/') {
+            return new Response();
+        }
+        $locations = explode('/', $pathString);
+
+        $locationId = $locations[count($locations) - 2];
 
         $searchService = $this->getRepository()->getSearchService();
 
@@ -264,8 +262,9 @@ class TuteiController extends Controller {
         );
         $list = $searchService->findContent($query);
 
-        if($list->totalCount == 0)
-            return $this->showExtraInfo( str_replace("/$locationId/", "/", $pathString )  );
+        if ($list->totalCount == 0) {
+            return $this->showExtraInfo(str_replace("/$locationId/", "/", $pathString));
+        }
         //$locationList = array();
         //foreach ( $list->searchHits as $content )
         //{
@@ -275,6 +274,52 @@ class TuteiController extends Controller {
         $response = new Response();
         return $this->render(
                         'TuteiBaseBundle:parts:extra_info.html.twig', array('list' => $list), $response
+        );
+    }
+
+    public function showBlocks($pathString) {
+
+        $locations = explode('/', $pathString);
+
+        $locationId = $locations[count($locations) - 2];
+
+        $searchService = $this->getRepository()->getSearchService();
+
+        $query = new Query();
+
+        $query->criterion = new LogicalAnd(
+                array(
+            new ContentTypeIdentifier(array('block')),
+            new ParentLocationId(array($locationId))
+                )
+        );
+        $query->sortClauses = array(
+            new SortClause\LocationPriority(Query::SORT_ASC)
+        );
+        $list = $searchService->findContent($query);
+
+        //var_dump($list->searchHits);
+
+        $blocks = array();
+
+        foreach ($list->searchHits as $block) {
+            $parentId = $block->valueObject->versionInfo->contentInfo->mainLocationId;
+            $query = new Query();
+
+            $query->criterion = new LogicalAnd(
+                    array(
+                new ParentLocationId(array($parentId))
+                    )
+            );
+            $query->sortClauses = array(
+                new SortClause\LocationPriority(Query::SORT_ASC)
+            );
+            $blocks[] = $searchService->findContent($query);
+        }
+
+        $response = new Response();
+        return $this->render(
+                        'TuteiBaseBundle:parts:page_blocks.html.twig', array('blocks' => $blocks), $response
         );
     }
 

@@ -1,0 +1,15 @@
+{% for list in blocks %}
+<div>
+    {% for item in list.searchHits %}
+        {{ render(
+             controller(
+                 'ez_content:viewLocation',
+                 {
+                     'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
+                     'viewType': 'block'
+                 }
+             )
+        ) }}
+    {% endfor %}
+</div>
+{% endfor %}
