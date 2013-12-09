@@ -1,1 +1,7 @@
-<a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ location.contentInfo.name }}</a>
+{% set language = siteaccess[ezpublish.siteaccess.name].language %}
+
+{% if content.versionInfo.names[language] is defined %}
+    <a href="{{ path( location ) }}" title="{{ content.versionInfo.names[language] }}">{{ content.versionInfo.names[language] }}</a>
+{% else %}
+    <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ location.contentInfo.name }}</a>
+{% endif %}

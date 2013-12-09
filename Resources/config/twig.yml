@@ -2,3 +2,6 @@ globals:
     siteaccess:
         site:
             language: eng-GB
+        por:
+            language: por-BR
+            
