@@ -10,7 +10,11 @@ system:
                 folder:
                     template: "TuteiBaseBundle:content/folder:full.html.twig"
                     match:
-                        Identifier\ContentType: [folder] 
+                        Identifier\ContentType: [folder]
+                default:
+                    template: "TuteiBaseBundle:content/default:full.html.twig"
+                    match:
+                        UrlAlias: "/"
             line:
                 article:
                     template: "TuteiBaseBundle:content/article:line.html.twig"
@@ -20,3 +24,7 @@ system:
                     template: "TuteiBaseBundle:content/folder:line.html.twig"
                     match:
                         Identifier\ContentType: [folder]
+                default:
+                    template: "TuteiBaseBundle:content/default:line.html.twig"
+                    match:
+                        UrlAlias: "/"
