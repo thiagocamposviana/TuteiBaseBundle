@@ -33,7 +33,10 @@ class TuteiBaseExtension extends Extension implements PrependExtensionInterface
     
     public function prepend( ContainerBuilder $container )
     {
-        $config = Yaml::parse( __DIR__ . '/../Resources/config/override.yml' );
-        $container->prependExtensionConfig( 'ezpublish', $config );
+        $ezpublish = Yaml::parse( __DIR__ . '/../Resources/config/ezpublish.yml' );
+        $container->prependExtensionConfig( 'ezpublish', $ezpublish );
+        
+        $twig = Yaml::parse( __DIR__ . '/../Resources/config/twig.yml' );
+        $container->prependExtensionConfig( 'twig', $twig );
     }
 }

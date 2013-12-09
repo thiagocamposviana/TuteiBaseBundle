@@ -77,20 +77,13 @@ class TuteiController extends Controller {
         $query->sortClauses = array(
             new SortClause\LocationPriority( Query::SORT_ASC )
         );
-        $list = $searchService->findContent($query);
-        $locationList = array();
-        
-        foreach ( $list->searchHits as $content )
-        {
-            $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
-        }
+        $list = $searchService->findContent($query);        
         
         $response = new Response();
         return $this->render(
                             'TuteiBaseBundle:parts:top_menu.html.twig',
                             array(
-                                'list' => $list,
-                                'location' => $locationList
+                                'list' => $list
                             ), 
                             $response
         );
@@ -119,12 +112,7 @@ class TuteiController extends Controller {
         );
 
         $list = $searchService->findContent($query);
-        $locationList = array();
 
-        foreach ( $list->searchHits as $content )
-        {
-            $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
-        }
 
         $current_user = $this->getRepository()->getCurrentUser();
 
@@ -133,7 +121,6 @@ class TuteiController extends Controller {
                             'TuteiBaseBundle:parts:user_menu.html.twig',
                             array(
                                 'list' => $list,
-                                'location' => $locationList,
                                 'current_user' => $current_user
                             ), 
                             $response
@@ -173,18 +160,12 @@ class TuteiController extends Controller {
 
             $searchService = $this->getRepository()->getSearchService();
             $list = $searchService->findContent($query);
-            //var_dump($list);
-            $locationList = array();
 
-            foreach ($list->searchHits as $content) {
-                $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation($content->valueObject->contentInfo->mainLocationId);
-            }
 
             $response = new Response();
             return $this->render(
                             'TuteiBaseBundle:action:search.html.twig', array(
                         'list' => $list,
-                        'location' => $locationList,
                         'noLayout' => false
                             ), $response
             );
@@ -193,7 +174,6 @@ class TuteiController extends Controller {
             return $this->render(
                             'TuteiBaseBundle:action:search.html.twig', array(
                         'list' => array(),
-                        'location' => array(),
                         'noLayout' => false
                             ), $response
             );
@@ -271,19 +251,18 @@ class TuteiController extends Controller {
             new SortClause\LocationPriority( Query::SORT_ASC )
         );
         $list = $searchService->findContent($query);
-        $locationList = array();
+        //$locationList = array();
         
-        foreach ( $list->searchHits as $content )
-        {
-            $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
-        }
+        //foreach ( $list->searchHits as $content )
+        //{
+        //    $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
+        //}
 
         $response = new Response();
         return $this->render(
                             'TuteiBaseBundle:parts:side_menu.html.twig',
                             array(
-                                'list' => $list,
-                                'location' => $locationList
+                                'list' => $list
                             ), 
                             $response
         );

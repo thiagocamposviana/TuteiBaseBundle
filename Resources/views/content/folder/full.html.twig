@@ -1,21 +1,23 @@
 {% extends noLayout ? viewbaseLayout : "TuteiBaseBundle::pagelayout.html.twig" %}
 
-
 {% block content %}
+
+{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
+
 
 <div class="content-view-full">
     <div class="content-type-folder">
         <div class="attribute-title">
-            <h2>{{ ez_render_field( content, 'name' ) }}</h2>
+            <h2>{{ ez_render_field( content, 'name', { lang: language } ) }}</h2>
         </div>
 
         <div class="attribute-short">
-            {{ ez_render_field( content, 'short_description' ) }}    
+            {{ ez_render_field( content, 'short_description', { lang: language } ) }}    
         </div>
 
 
         <div class="attribute-long">
-            {{ ez_render_field( content, 'description' ) }}
+            {{ ez_render_field( content, 'description', { lang: language } ) }}
         </div>
 
         <div class="attribute-children">

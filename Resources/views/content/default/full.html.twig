@@ -1,0 +1,24 @@
+{% extends noLayout ? viewbaseLayout : "TuteiBaseBundle::pagelayout.html.twig" %}
+
+{% block content %}
+{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
+
+<div class="content-view-full">
+    <div class="content-type-default">
+        
+        {% for key, field in content.fields %}
+            <div class="attribute">
+                <h3>{{ key }}:</h3>
+                {{ ez_render_field( content, key, { lang: language } ) }}
+            </div>        
+        {% endfor %}
+        
+
+        <div class="attribute-children">
+        {{ render( controller( "tutei:lineList", 
+                               { 'location': location } ) ) }}             
+        </div>
+    </div>
+</div>
+
+{% endblock %}

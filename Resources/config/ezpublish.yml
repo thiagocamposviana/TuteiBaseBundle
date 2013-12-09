@@ -28,3 +28,23 @@ system:
                     template: "TuteiBaseBundle:content/default:line.html.twig"
                     match:
                         UrlAlias: "/"
+            menu_item:
+                default:
+                    template: "TuteiBaseBundle:content/default:menu_item.html.twig"
+                    match:
+                        UrlAlias: "/"
+            box:
+                default:
+                    template: "TuteiBaseBundle:content/default:box.html.twig"
+                    match:
+                        UrlAlias: "/"
+            search:
+                default:
+                    template: "TuteiBaseBundle:content/default:search.html.twig"
+                    match:
+                        UrlAlias: "/"
+            block:
+                default:
+                    template: "TuteiBaseBundle:content/default:block.html.twig"
+                    match:
+                        UrlAlias: "/"

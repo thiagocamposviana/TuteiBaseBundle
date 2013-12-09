@@ -1,7 +1,12 @@
 {% for item in list.searchHits %}
-<li>
-    <a href="{{ path( location[item.valueObject.versionInfo.contentInfo.mainLocationId] ) }}" title="{{ item.valueObject.versionInfo.contentInfo.name }}">
-        {{ item.valueObject.versionInfo.contentInfo.name }}
-    </a>
-</li>
+<li>{{ render(
+                   controller(
+                       'ez_content:viewLocation',
+                       {
+                           'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
+                           'viewType': 'menu_item',
+                           'params': {}
+                       }
+                   )
+               ) }}</li>
 {% endfor %}

@@ -2,6 +2,8 @@
 {% if location is not defined %}
     {% set location = null %}
 {% endif %}
+
+
 <html lang="{{ app.request.locale|split('_')[0] }}">
     <head>
         {% if location.pathString is defined %}

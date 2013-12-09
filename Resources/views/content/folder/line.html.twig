@@ -1,3 +1,5 @@
+{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
+
 <div class="content-view-line">
     <div class="content-type-folder">
         
@@ -7,9 +9,9 @@
             </h2>
         </div>
         
-        {% if not ez_is_field_empty( content, 'short_description' ) %}
+        {% if not ez_is_field_empty( content, 'short_description', { lang: language } ) %}
         <div class="attribute-short">
-                {{ ez_render_field( content, 'short_description' ) }}
+                {{ ez_render_field( content, 'short_description', { lang: language } ) }}
         </div>
         {% endif %}
     </div>

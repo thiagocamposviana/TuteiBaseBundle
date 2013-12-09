@@ -1,15 +1,17 @@
+{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
+
 <div class="content-view-line">
     <div class="content-type-article">
 
         <div class="attribute-title">
             <h2>
-                <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'title' ) }}</a>
+                <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'title', { lang: language } ) }}</a>
             </h2>
         </div>
 
-        {% if not ez_is_field_empty( content, 'intro' ) %}
+        {% if not ez_is_field_empty( content, 'intro', { lang: language } ) %}
         <div class="attribute-short">
-                {{ ez_render_field( content, 'intro' ) }}
+                {{ ez_render_field( content, 'intro', { lang: language } ) }}
         </div>
         {% endif %}
     </div>
