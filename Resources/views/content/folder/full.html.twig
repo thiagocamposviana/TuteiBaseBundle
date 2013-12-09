@@ -4,6 +4,8 @@
 
 {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
+<div class="row">
+<div class="col-12 col-sm-12 col-lg-12">
 
 <div class="content-view-full">
     <div class="content-type-folder">
@@ -20,11 +22,15 @@
             {{ ez_render_field( content, 'description', { lang: language } ) }}
         </div>
 
-        <div class="attribute-children">
-        {{ render( controller( "tutei:lineList", 
-                               { 'location': location } ) ) }}             
-        </div>
+        {% if content.fields.show_children is defined and content.getField( 'show_children' ).value.bool %}
+            <div class="attribute-children">
+            {{ render( controller( "tutei:lineList", 
+                                   { 'location': location } ) ) }}             
+            </div>
+        {% endif %}
     </div>
+</div>
+</div>   
 </div>
 
 {% endblock %}

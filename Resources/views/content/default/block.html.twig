@@ -1,1 +1,20 @@
-test2
+{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
+
+{% if content.versionInfo.names[language] is defined %}
+    {% set name = content.versionInfo.names[language] %}
+{% else %}
+    {% set name = location.contentInfo.name %}
+{% endif %}
+
+<div class="col-md-4">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">{{ name }}</h3>
+      </div>
+      <div class="panel-body">
+        {% if content.fields.body is defined %}
+                {{ ez_render_field( content, 'body', { lang: language } ) }}    
+        {% endif %}
+      </div>
+  </div>
+</div>
