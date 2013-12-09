@@ -108,17 +108,30 @@ php ezpublish/console assets:install --symlink --env=dev web
 php ezpublish/console ezpublish:legacy:assets_install --symlink web
 php ezpublish/console assetic:dump --env=dev web
 
-cd ezpublish_legacy && php bin/php/ezpgenerateautoloads.php && cd ..
+cd ezpublish_legacy
 
-
+php bin/php/ezpgenerateautoloads.php
 
 mysql -u ${dbuser} -p${dbpass} -e "CREATE DATABASE ${dbname} CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
 mysql -u ${dbuser} -p${dbpass} -e "CREATE USER '${dbname}'@'localhost' IDENTIFIED BY '${dbname}';"
 mysql -u ${dbuser} -p${dbpass} -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbname}'@'localhost' WITH GRANT OPTION;"
 
-mysql -u ${dbuser} -p${dbpass} ${dbname} < ezpublish_legacy/kernel/sql/mysql/kernel_schema.sql
-mysql -u ${dbuser} -p${dbpass} ${dbname} < src/Tutei/BaseBundle/SetupFiles/cleandata.sql
+mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/kernel_schema.sql
+mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/cleandata.sql
 
+
+kernel/sql/common/
+
+php ezpm.php import ../src/Tutei/BaseBundle/SetupFiles/classes.ezpkg
+
+php ezpm.php  install classes
+
+php ezpm.php import ../src/Tutei/BaseBundle/SetupFiles/content.ezpkg
+
+php ezpm.php  install content
+
+
+cd ..
 
 find . -type d -exec chmod 775 {} \;
 find . -type f -exec chmod 664 {} \;
