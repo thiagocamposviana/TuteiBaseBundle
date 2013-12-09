@@ -16,3 +16,11 @@ body {
     margin-bottom:25px;
     
 }
+
+.panel-body figure.ezimage-field{
+    text-align:center;
+}
+figure.ezimage-field img{
+    max-width:100%;
+    
+}

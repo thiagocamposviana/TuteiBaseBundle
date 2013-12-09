@@ -120,6 +120,11 @@ mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/kernel_schema.sql
 mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/cleandata.sql
 
 
+
+php ezpm.php import ../src/Tutei/BaseBundle/SetupFiles/classes.ezpkg
+
+php ezpm.php  install classes
+
 php ezpm.php import ../src/Tutei/BaseBundle/SetupFiles/content.ezpkg
 
 php ezpm.php  install content
