@@ -1,4 +1,6 @@
 globals:
+    google_analytics_id: ua-test-1
+    google_analytics_site: test.com
     siteaccess:
         site:
             language: eng-GB
