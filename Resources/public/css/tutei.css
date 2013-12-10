@@ -1,26 +1,19 @@
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-  padding-top: 50px;
-  padding-bottom: 20px;
-}
-
-.breadcrumb {
-    margin-top:15px;
-    margin-bottom:0;
-}
 .side-menu {
-    margin-top:15px;
     margin-bottom:15px;
 }
 .content-view-full {
-    margin-bottom:25px;
-    
+    margin-bottom:25px;    
 }
 
-.panel-body figure.ezimage-field{
+figure.ezimage-field {
     text-align:center;
 }
-figure.ezimage-field img{
-    max-width:100%;
-    
+
+figure.ezimage-field img {
+    max-width:100%;    
+}
+
+.user-menu{
+    font-size:0.9em;
+    padding-top:5px;    
 }

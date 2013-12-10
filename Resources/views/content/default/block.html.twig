@@ -15,7 +15,7 @@
         {% if content.fields.body is defined %}
                 {{ ez_render_field( content, 'body', { lang: language } ) }}    
         {% endif %}
-          
+
         {% if content.fields.image is defined %}
         {{ ez_render_field(content, 'image', {
                                         parameters:{ alias:'small' },

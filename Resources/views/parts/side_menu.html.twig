@@ -1,4 +1,5 @@
-<ul class="nav side-menu">
+<div class="navbar navbar-collapse side-menu"  role="navigation">
+<ul class="nav  nav-tabs nav-stacked">
         {% for item in list.searchHits %}
         <li>{{ render(
                    controller(
@@ -11,6 +12,7 @@
                ) }}</li>
         {% endfor %}
 </ul>
+</div>
 
 
 {# TODO: use macro here to show sub levels #}
