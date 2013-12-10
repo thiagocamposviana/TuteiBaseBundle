@@ -89,15 +89,11 @@
             </div>
 
         </div>
-        <!-- Main jumbotron for a primary marketing message or call to action -->
+
         <div class="container">
             <!-- Example row of columns -->
             <div class="row">
-                {#
-                <div class="col-md-3">
-                    {% block left_menu %}{% endblock %}
-                </div>
-                #}
+
                 {% set showSideMenu = false %}
                 {% if location.pathString is defined
                     and location.pathString|split('/')[3] != '' %}
