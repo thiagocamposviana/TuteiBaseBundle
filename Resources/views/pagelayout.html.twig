@@ -112,7 +112,7 @@
                             {% endif %}
                             {% block content %}{% endblock %}
                             
-                            {# TODO: fix render( controller( "tutei:showBlocks", { 'pathString': location.pathString } ) ) #}
+                            {{ render( controller( "tutei:showBlocks", { 'pathString': location.pathString } ) ) }}
                         </div>
 
                 

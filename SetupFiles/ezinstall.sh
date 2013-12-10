@@ -77,15 +77,23 @@ find ${sitedir} -type f -exec chmod 664 {} \;
 cd ${sitedir}
 
 mkdir src/Tutei
+###### use a branch
+#git clone -b improve_installer https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
+#cd src/Tutei/BaseBundle
+#git stash
+#git checkout improve_installer
+#cd ../../..
 
 git clone https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
 
 rm -Rf ezpublish/cache/*
 
-find src/Tutei/BaseBundle/SetupFiles -name "*.*" -exec sed -i "s/\[SITEURL\]/${sitedir}/g" {} \;
-find src/Tutei/BaseBundle/SetupFiles -name "*.*" -exec sed -i "s/\[DBNAME\]/${dbname}/g" {} \;
-find src/Tutei/BaseBundle/SetupFiles -name "*.*" -exec sed -i "s/\[DBPASS\]/${dbname}/g" {} \;
-find src/Tutei/BaseBundle/SetupFiles -name "*.*" -exec sed -i "s/\[DBUSER\]/${dbname}/g" {} \;
+cp -r src/Tutei/BaseBundle/SetupFiles SetupFiles
+
+find SetupFiles -name "*.*" -exec sed -i "s/\[SITEURL\]/${sitedir}/g" {} \;
+find SetupFiles -name "*.*" -exec sed -i "s/\[DBNAME\]/${dbname}/g" {} \;
+find SetupFiles -name "*.*" -exec sed -i "s/\[DBPASS\]/${dbname}/g" {} \;
+find SetupFiles -name "*.*" -exec sed -i "s/\[DBUSER\]/${dbname}/g" {} \;
 
 find ezpublish/config -name "*.*" -exec sed -i "s/eZDemoBundle/TuteiBaseBundle/g" {} \;
 
@@ -96,9 +104,11 @@ find ezpublish/EzPublishKernel.php -exec sed -i "s/            new EzSystemsDemo
 find ezpublish/EzPublishKernel.php -exec sed -i "s/EzSystemsDemoBundle;/EzSystemsDemoBundle;\nuse Tutei\\\BaseBundle\\\TuteiBaseBundle;/g" {} \;
 
 
-cp -r src/Tutei/BaseBundle/SetupFiles/override ezpublish_legacy/settings
-cp -r src/Tutei/BaseBundle/SetupFiles/siteaccess ezpublish_legacy/settings
-cp src/Tutei/BaseBundle/SetupFiles/ezpublish_dev.yml ezpublish/config
+cp -r SetupFiles/override ezpublish_legacy/settings
+cp -r SetupFiles/siteaccess ezpublish_legacy/settings
+cp SetupFiles/ezpublish_dev.yml ezpublish/config
+
+
 
 echo "tutei_base:
     resource: \"@TuteiBaseBundle/Resources/config/routing.yml\"
@@ -118,15 +128,23 @@ mysql -u ${dbuser} -p${dbpass} -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbn
 
 mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/kernel_schema.sql
 
-mysql -u ${dbuser} -p${dbpass} ${dbname} < ../src/Tutei/BaseBundle/SetupFiles/cleandata.sql
+mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/common/cleandata.sql
 
 
-#php ezpm.php import ../src/Tutei/BaseBundle/SetupFiles/content.ezpkg
+sudo -u ${apachegroup} php ezpm.php -s site import ../src/Tutei/BaseBundle/SetupFiles/content_files/content.ezpkg
 
-#php ezpm.php  install content
+sudo -u ${apachegroup} php ezpm.php -s site install content
 
+sudo -u ${apachegroup} php ezpm.php -s site import ../src/Tutei/BaseBundle/SetupFiles/content_files/block_item.ezpkg
+
+sudo -u ${apachegroup} php ezpm.php -s site install block_item
 
 cd ..
+
+php ezpublish/console tutei:create
+
+rm -Rf SetupFiles
+
 
 find . -type d -exec chmod 775 {} \;
 find . -type f -exec chmod 664 {} \;
@@ -249,3 +267,4 @@ echo "127.0.0.1       ${sitedir}" >> /etc/hosts
 
 
 sudo -u ${username} xdg-open http://${sitedir}
+
