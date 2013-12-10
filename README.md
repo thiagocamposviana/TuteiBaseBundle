@@ -1,6 +1,6 @@
-# Tutei Base
+# Tutei Base for Ubuntu
 
-This extension has been created in order to clean install ez publish using the Github master version.
+This extension has been created in order to clean install ez publish in Ubuntu using the Github master version.
 
 # Install instructions
 
