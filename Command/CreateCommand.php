@@ -52,52 +52,55 @@ class CreateCommand extends ContainerAwareCommand {
         $contentTypeService = $repository->getContentTypeService();
         //var_dump($repository);
         
+        $xmlText = "<?xml version='1.0' encoding='utf-8'?><section></section>";
+                
+        $fields = array(
+            array('name'=>'description', 'value'=>$xmlText),
+            array('name'=>'short_description', 'value'=>$xmlText),
+            array('name'=>'name', 'value'=>'Welcome to eZ Publish 5')
+        );
+        
+        $this->updateContent(2, $fields);
+        
         $searchService = $repository->getSearchService();
 
         $query = new Query();
 
         $query->criterion = new ContentTypeIdentifier( array( 'block' ) );
-        
-        
-
-        // array( new SortClause\ContentId() )
-
 
         $list = $searchService->findContent($query);
         
         $content = array(
-            array('name'=>'Harder', 'img'=>getcwd() .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
-            array('name'=>'Better', 'img'=>getcwd() .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
-            array('name'=>'Faster', 'img'=>getcwd() .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
+            array('name'=>'Harder', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
+            array('name'=>'Better', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
+            array('name'=>'Faster', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
         );
         
         foreach($list->searchHits as $index=>$location){
-            foreach($content as $item){
-            
-                $locationId = (int)$location->valueObject->versionInfo->contentInfo->mainLocationId;
-                $this->createBlockItem($locationId, $item['name'], $item['img']);
+            $locationId = (int)$location->valueObject->versionInfo->contentInfo->mainLocationId;
+            foreach($content as $item){           
+                
+                $fields = array(
+                    array('name'=>'title', 'value'=>$item['name']),
+                    array('name'=>'image', 'value'=>$item['img'])
+                );
+                
+                $this->createContent($locationId, 'block_item', $fields);
             }
         }        
     }
     
-    public function createBlockItem($locationId, $name, $imgPath){
+    public function createContent($locationId, $contentType, $fields){
         $repository = $this->getContainer()->get('ezpublish.api.repository');
         $contentTypeService = $repository->getContentTypeService();
-        $contentType = $contentTypeService->loadContentTypeByIdentifier('block_item');
+        $contentType = $contentTypeService->loadContentTypeByIdentifier($contentType);
         $contentService = $repository->getContentService();
         $contentCreateStruct = $contentService->newContentCreateStruct($contentType, 'eng-GB');
-        $pathinfo=pathinfo($imgPath);
 
-        $value = new \eZ\Publish\Core\FieldType\Image\Value(
-            array(
-                'path' => $imgPath,
-                'fileSize' => filesize( $imgPath ),
-                'fileName' => basename( $pathinfo['basename'] ),
-                'alternativeText' => 'block_item'
-            ));
-        $contentCreateStruct->setField('title', $name);
         
-        $contentCreateStruct->setField('image', $value);
+        foreach( $fields as $field ){
+            $contentCreateStruct->setField( $field['name'], $field['value'] );
+        }
         
         
         $locationService = $repository->getLocationService();
@@ -106,6 +109,28 @@ class CreateCommand extends ContainerAwareCommand {
 
         $draft = $contentService->createContent($contentCreateStruct, array($locationCreateStruct));
         $content = $contentService->publishVersion($draft->versionInfo);
+    }    
+    
+    public function updateContent($locationId, $fields){
+        $repository = $this->getContainer()->get('ezpublish.api.repository');
+        $locationService = $repository->getLocationService();
+        
+        $location = $locationService->loadLocation( $locationId );
+        
+        $contentService = $repository->getContentService();
+        
+        $contentInfo = $contentService->loadContentInfo( $location->contentInfo->id );
+        $contentDraft = $contentService->createContentDraft( $contentInfo );
+        
+        
+        $contentUpdateStruct = $contentService->newContentUpdateStruct();
+        
+        foreach( $fields as $field ){
+            $contentUpdateStruct->setField( $field['name'], $field['value'] );
+        }
+        
+        $contentDraft = $contentService->updateContent( $contentDraft->versionInfo, $contentUpdateStruct );
+        $content = $contentService->publishVersion( $contentDraft->versionInfo );
         
     }
 
