@@ -3,25 +3,13 @@ parameters:
     
     project.menufilter.top:
                 - folder
-                - article/menu
+                # - article/menu
     project.menufilter.side:
                 - folder
-                - article/menu
+                # - article/menu
                 
     project.list.block: [block_item]
     project.list.infobox: [article, link]
-    project.list.folder: [article, link]
+    project.list.folder: [article, link, folder]
                 
     project.structure.folder: [article, folder]
-    
-    
-    
-
-                
-    tutei.folder.content_types_include:
-                                    - article
-                                    - folder
-    tutei.folder.sort_type: 'name'
-    tutei.folder.sort_order: 'asc'
-    
-    tutei.top_menu.content_types_include: [folder]

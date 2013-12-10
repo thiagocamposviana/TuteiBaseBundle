@@ -14,8 +14,37 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use eZ\Publish\SPI\Persistence\Content\Location;
 
 class TuteiController extends Controller {
+    
+    public function createSortClause($location){
+        
+        $sortOrder = Query::SORT_ASC;
+        if( $location->sortOrder == 0 ){
+            $sortOrder = Query::SORT_DESC;
+        }
+        
+        
+        switch($location->sortField){
+            case Location::SORT_FIELD_CONTENTOBJECT_ID:
+                return new SortClause\ContentId($sortOrder);
+            case Location::SORT_FIELD_DEPTH:
+                return new SortClause\LocationDepth($sortOrder);
+            case Location::SORT_FIELD_MODIFIED:
+                return new SortClause\DateModified($sortOrder);
+            case Location::SORT_FIELD_PUBLISHED:
+                return new SortClause\DatePublished($sortOrder);
+            case Location::SORT_FIELD_PRIORITY:
+                return new SortClause\LocationPriority($sortOrder);
+            case Location::SORT_FIELD_SECTION:
+                return new SortClause\SectionIdentifier($sortOrder);
+            default:
+                return new SortClause\ContentName($sortOrder);
+                            
+        }
+                
+    }
 
     public function lineList($location) {
 
@@ -24,10 +53,8 @@ class TuteiController extends Controller {
         //$contentTypeService = $repository->getContentTypeService();
         //$contentType = $contentTypeService->loadContentType($location->contentInfo->contentTypeId);
 
-        $classes = $this->container->getParameter('tutei.folder.content_types_include');
-        $sortType = $this->container->getParameter('tutei.folder.sort_type');
-        $sortOrder = $this->container->getParameter('tutei.folder.sort_order');
-
+        $classes = $this->container->getParameter('project.list.folder');
+        
         $searchService = $this->getRepository()->getSearchService();
 
         $query = new Query();
@@ -40,7 +67,7 @@ class TuteiController extends Controller {
         );
 
         $query->sortClauses = array(
-            $this->getSortClause($sortType, $sortOrder)
+            $this->createSortClause($location)
         );
         // TODO: Limit search
         // $query->limit = 20;
@@ -55,9 +82,34 @@ class TuteiController extends Controller {
                         ), $response
         );
     }
+    
+    public function createMenuFilter($classes){
+        $filters = array();
+        foreach($classes as $index=>$class) {
+            $filter = explode('/', $class);
+            
+            if(count( $filter ) > 1){
+                $classes[$index]=$filter[0];
+
+                $filters[]=new Query\Criterion\LogicalOr( array(
+                            new ContentTypeIdentifier($class),
+                            new Query\Criterion\Field($filter[1], Operator::EQ, true)                     
+                            
+                        ));
+    
+            } else {
+                $filters[]=new ContentTypeIdentifier($class);
+            }
+        }
+        
+        return new Query\Criterion\LogicalOr($filters);
+        
+    }
 
     public function showTopMenu() {
-        $classes = $this->container->getParameter('tutei.top_menu.content_types_include');
+        $classes = $this->container->getParameter('project.menufilter.top');        
+        
+        $filters = $this->createMenuFilter($classes);
 
         $searchService = $this->getRepository()->getSearchService();
 
@@ -65,7 +117,7 @@ class TuteiController extends Controller {
 
         $query->criterion = new LogicalAnd(
                 array(
-            new ContentTypeIdentifier($classes),
+            $filters,
             new ParentLocationId(array(2)),
             new LocationPriority(Operator::LT, 100)
                 )
@@ -85,8 +137,9 @@ class TuteiController extends Controller {
 
     public function showUserMenu() {
 
-        /* TODO: Create menu filter settings and code */
-        $classes = $this->container->getParameter('tutei.top_menu.content_types_include');
+        $classes = $this->container->getParameter('project.menufilter.top');        
+        
+        $filters = $this->createMenuFilter($classes);
 
         $searchService = $this->getRepository()->getSearchService();
 
@@ -94,7 +147,7 @@ class TuteiController extends Controller {
 
         $query->criterion = new LogicalAnd(
                 array(
-            new ContentTypeIdentifier($classes),
+            $filters,
             new ParentLocationId(array(2)),
             new LocationPriority(Operator::GTE, 100)
                 )
@@ -116,19 +169,6 @@ class TuteiController extends Controller {
                     'current_user' => $current_user
                         ), $response
         );
-    }
-
-    public function getSortClause($name, $order) {
-
-        if ($order == 'asc')
-            $order = Query::SORT_ASC;
-        else
-            $order = Query::SORT_DESC;
-
-        switch ($name) {
-            case 'name':
-                return new SortClause\ContentName($order);
-        }
     }
 
     public function searchAction() {
@@ -194,7 +234,7 @@ class TuteiController extends Controller {
             }
         }
         return $path;
-        //$location = $this->locationService->loadLocation( $locationId );
+        
     }
 
     public function showBreadcrumb($pathString) {
@@ -209,8 +249,10 @@ class TuteiController extends Controller {
     public function showSideMenu($pathString) {
         $locations = explode('/', $pathString);
         $locationId = $locations[3];
-
-        $classes = $this->container->getParameter('tutei.top_menu.content_types_include');
+        
+        $classes = $this->container->getParameter('project.menufilter.side');        
+        
+        $filters = $this->createMenuFilter($classes);
 
         $searchService = $this->getRepository()->getSearchService();
 
@@ -218,7 +260,7 @@ class TuteiController extends Controller {
 
         $query->criterion = new LogicalAnd(
                 array(
-            new ContentTypeIdentifier($classes),
+            $filters,
             new ParentLocationId(array($locationId))
                 )
         );
@@ -257,9 +299,15 @@ class TuteiController extends Controller {
             new ParentLocationId(array($locationId))
                 )
         );
+        
+        $repository = $this->getRepository();
+        $locationService = $repository->getLocationService();
+        $location = $locationService->loadLocation( $locationId );
+        
         $query->sortClauses = array(
-            new SortClause\LocationPriority(Query::SORT_ASC)
+            $this->createSortClause($location)
         );
+
         $list = $searchService->findContent($query);
 
         if ($list->totalCount == 0) {
@@ -293,8 +341,13 @@ class TuteiController extends Controller {
             new ParentLocationId(array($locationId))
                 )
         );
+        
+        $repository = $this->getRepository();
+        $locationService = $repository->getLocationService();
+        $location = $locationService->loadLocation( $locationId );
+        
         $query->sortClauses = array(
-            new SortClause\LocationPriority(Query::SORT_ASC)
+            $this->createSortClause($location)
         );
         $list = $searchService->findContent($query);
 

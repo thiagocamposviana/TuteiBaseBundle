@@ -20,6 +20,9 @@ UrlAlias: "/"
 - In twig, {{ ezpublish.legacy }}  only has content if you are in legacy 
 fallback for content.
 
+- The search class in ez 5 works a little different from the fetch, fields needs
+be searchable.
+
 
 4.x                         5.x
   
