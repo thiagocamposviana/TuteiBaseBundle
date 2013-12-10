@@ -77,6 +77,12 @@ find ${sitedir} -type f -exec chmod 664 {} \;
 cd ${sitedir}
 
 mkdir src/Tutei
+###### use a branch
+#git clone -b improve_installer https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
+#cd src/Tutei/BaseBundle
+#git stash
+#git checkout improve_installer
+#cd ../../..
 
 git clone https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
 
@@ -125,12 +131,17 @@ mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/kernel_schema.sql
 mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/common/cleandata.sql
 
 
-php ezpm.php import ../src/Tutei/BaseBundle/SetupFiles/content.ezpkg
+sudo -u ${apachegroup} php ezpm.php -s site import ../src/Tutei/BaseBundle/SetupFiles/content_files/content.ezpkg
 
-php ezpm.php  install content
+sudo -u ${apachegroup} php ezpm.php -s site install content
 
+sudo -u ${apachegroup} php ezpm.php -s site import ../src/Tutei/BaseBundle/SetupFiles/content_files/block_item.ezpkg
+
+sudo -u ${apachegroup} php ezpm.php -s site install block_item
 
 cd ..
+
+php ezpublish/console tutei:create
 
 rm -Rf SetupFiles
 
@@ -256,3 +267,4 @@ echo "127.0.0.1       ${sitedir}" >> /etc/hosts
 
 
 sudo -u ${username} xdg-open http://${sitedir}
+
