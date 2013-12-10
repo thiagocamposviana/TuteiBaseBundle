@@ -33,7 +33,7 @@
             Not using bootstrap-theme.min.css -->
         {% stylesheets 
             "bundles/tuteibase/css/bootstrap.min.css"
-            "bundles/tuteibase/css/tutei.css" %}
+            "bundles/tuteibase/css/project.css" %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
@@ -90,7 +90,6 @@
         </div>
 
         <div class="container">
-            <!-- Example row of columns -->
             <div class="row">
 
                 {% set showSideMenu = false %}
@@ -156,7 +155,7 @@
         <script src="https://code.jquery.com/jquery.js"></script>
         {% javascripts
             "bundles/tuteibase/js/bootstrap.min.js"
-            "bundles/tuteibase/js/tutei.js"
+            "bundles/tuteibase/js/project.js"
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
@@ -173,8 +172,6 @@
             ga('send', 'pageview');
 
         </script>
-        {% else %}
-            hjuhsajdhsakjh
         {% endif %}
 
     </body>
