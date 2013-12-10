@@ -60,7 +60,7 @@ class CreateCommand extends ContainerAwareCommand {
             array('name'=>'name', 'value'=>'Welcome to eZ Publish 5')
         );
         
-        $this->updateContent(2, $fields);
+        //$this->updateContent(2, $fields);
         
         $searchService = $repository->getSearchService();
 
