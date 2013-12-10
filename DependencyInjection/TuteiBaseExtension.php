@@ -28,7 +28,7 @@ class TuteiBaseExtension extends Extension implements PrependExtensionInterface
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         
-        $loader->load( 'default_settings.yml' );
+        $loader->load( 'project.yml' );
     }
     
     public function prepend( ContainerBuilder $container )
