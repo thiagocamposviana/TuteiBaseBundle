@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-{% if location is not defined %}
-    {% set location = null %}
-{% endif %}
-
-
 <html lang="{{ app.request.locale|split('_')[0] }}">
     <head>
+        {% if location is not defined %}
+            {% set location = null %}
+        {% endif %}
+        
         {% if location.pathString is defined %}
             {% set title %}
                 {{ render( controller( "tutei:getTitle", { 'pathString': location.pathString } ) ) }}
