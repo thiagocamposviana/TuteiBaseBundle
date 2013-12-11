@@ -131,13 +131,10 @@ mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/kernel_schema.sql
 mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/common/cleandata.sql
 
 
-sudo -u ${apachegroup} php ezpm.php -s site import ../src/Tutei/BaseBundle/SetupFiles/content_files/content.ezpkg
+sudo -u ${apachegroup} php ezpm.php -s site import ../src/Tutei/BaseBundle/SetupFiles/content_files/classes.ezpkg
 
-sudo -u ${apachegroup} php ezpm.php -s site install content
+sudo -u ${apachegroup} php ezpm.php -s site install classes
 
-sudo -u ${apachegroup} php ezpm.php -s site import ../src/Tutei/BaseBundle/SetupFiles/content_files/block_item.ezpkg
-
-sudo -u ${apachegroup} php ezpm.php -s site install block_item
 
 cd ..
 

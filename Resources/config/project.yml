@@ -2,9 +2,11 @@ parameters:
     
     project.menufilter.top:
                 - folder
+                - gallery
                 # - article/menu
     project.menufilter.side:
                 - folder
+                - gallery
                 # - article/menu
                 
     project.list.block: [block_item]

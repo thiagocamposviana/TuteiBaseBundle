@@ -9,15 +9,17 @@
         <div class="attribute-title">
             <h2>{{ ez_render_field( content, 'name', { lang: language } ) }}</h2>
         </div>
-
+        {% if not ez_is_field_empty( content, "short_description" ) %}
         <div class="attribute-short">
             {{ ez_render_field( content, 'short_description', { lang: language } ) }}    
         </div>
+        {% endif %}
 
-
+        {% if not ez_is_field_empty( content, "description" ) %}
         <div class="attribute-long">
             {{ ez_render_field( content, 'description', { lang: language } ) }}
         </div>
+        {% endif %}
 
         {% if content.fields.show_children is defined and content.getField( 'show_children' ).value.bool %}
             <div class="attribute-children">

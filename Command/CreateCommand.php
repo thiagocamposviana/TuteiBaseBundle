@@ -46,63 +46,101 @@ class CreateCommand extends ContainerAwareCommand {
         $userService = $repository->getUserService();
         $user = $userService->loadUserByCredentials( 'admin', 'publish');
         $repository->setCurrentUser( $user );
-
-        $contentService = $repository->getContentService();
-        $locationService = $repository->getLocationService();
-        $contentTypeService = $repository->getContentTypeService();
-        //var_dump($repository);
         
-        $xmlText = "<?xml version='1.0' encoding='utf-8'?><section></section>";
-                
-        $fields = array(
-            array('name'=>'description', 'value'=>$xmlText),
-            array('name'=>'short_description', 'value'=>$xmlText),
-            array('name'=>'name', 'value'=>'Welcome to eZ Publish 5')
+        /* $xmlText = "<?xml version='1.0' encoding='utf-8'?><section></section>"; */
+        
+        $fieldsInfo = array( 
+
+            array('name'=>'title', 'value'=>'Infobox')
         );
         
-        //$this->updateContent(2, $fields);
+        $created = $this->createContent(2, 'infobox', $fieldsInfo);
+
+        $fields = array( 
+
+            array('name'=>'name', 'value'=>'Folders')
+        );
         
-        $searchService = $repository->getSearchService();
+        $created = $this->createContent(2, 'folder', $fields);
+        
+        //var_dump($created->versionInfo->contentInfo->mainLocationId);exit;
+        
+        $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId,
+                                    'folder', $fields);
+        $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId,
+                                    'folder', $fields);
+        $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId,
+                                    'folder', $fields);
+        
+        $fieldsInfo = array( 
 
-        $query = new Query();
+            array('name'=>'title', 'value'=>'Changed Infobox')
+        );
+        
+        $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId,
+                                    'infobox', $fieldsInfo);
+        
+        $fields = array( 
 
-        $query->criterion = new ContentTypeIdentifier( array( 'block' ) );
-
-        $list = $searchService->findContent($query);
-        /*
+            array('name'=>'title', 'value'=>'Block')
+        );
+        
+        $created = $this->createContent(2, 'block', $fields);
+ 
         $content = array(
             array('name'=>'Harder', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
             array('name'=>'Better', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
             array('name'=>'Faster', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
         );
         
-        foreach($list->searchHits as $index=>$location){
-            $locationId = (int)$location->valueObject->versionInfo->contentInfo->mainLocationId;
-            foreach($content as $item){           
-                
-                $fields = array(
-                    array('name'=>'title', 'value'=>$item['name']),
-                    array('name'=>'image', 'value'=>$item['img'])
-                );
-                
-                $this->createContent($locationId, 'block_item', $fields);
-            }
-        }  
-         * 
-         */  
-        $content = array(
-            array('name'=>'Harder', 'img'=>getcwd() .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
-            array('name'=>'Better', 'img'=>getcwd() .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
-            array('name'=>'Faster', 'img'=>getcwd() .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
+        $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
+        foreach($content as $item){           
+
+            $fields = array(
+                array('name'=>'title', 'value'=>$item['name']),
+                array('name'=>'image', 'value'=>$item['img'])
+            );
+
+            $this->createContent($locationId, 'block_item', $fields);
+        }
+        
+        
+        $fields = array( 
+
+            array('name'=>'name', 'value'=>'Articles')
         );
         
-        foreach($list->searchHits as $index=>$location){
-            foreach($content as $item){
-            
-                $locationId = (int)$location->valueObject->versionInfo->contentInfo->mainLocationId;
-                $this->createBlockItem($locationId, $item['name'], $item['img']);
-            }
-        }   
+        $created = $this->createContent(2, 'folder', $fields);
+        
+        
+        
+        
+        
+        $fields = array( 
+
+            array('name'=>'title', 'value'=>'Gallery')
+        );
+        
+        $created = $this->createContent(2, 'gallery', $fields);
+        
+        $content = array(
+            array('name'=>'Harder', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
+            array('name'=>'Better', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
+            array('name'=>'Faster', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
+        );
+        
+        $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
+        foreach($content as $item){           
+
+            $fields = array(
+                array('name'=>'name', 'value'=>$item['name']),
+                array('name'=>'image', 'value'=>$item['img'])
+            );
+
+            $this->createContent($locationId, 'image', $fields);
+        }
+          
+   
     }
     
     public function createContent($locationId, $contentType, $fields){
@@ -123,7 +161,8 @@ class CreateCommand extends ContainerAwareCommand {
         $locationCreateStruct = $locationService->newLocationCreateStruct($locationId);
 
         $draft = $contentService->createContent($contentCreateStruct, array($locationCreateStruct));
-        $content = $contentService->publishVersion($draft->versionInfo);
+        return $contentService->publishVersion($draft->versionInfo);
+        
     }    
     
     public function updateContent($locationId, $fields){
@@ -148,36 +187,6 @@ class CreateCommand extends ContainerAwareCommand {
         $content = $contentService->publishVersion( $contentDraft->versionInfo );
         
     }
-    
-    /* TODO: Remove this method, improve createContent */
-     public function createBlockItem($locationId, $name, $imgPath){
-        $repository = $this->getContainer()->get('ezpublish.api.repository');
-        $contentTypeService = $repository->getContentTypeService();
-        $contentType = $contentTypeService->loadContentTypeByIdentifier('block_item');
-        $contentService = $repository->getContentService();
-        $contentCreateStruct = $contentService->newContentCreateStruct($contentType, 'eng-GB');
-        $pathinfo=pathinfo($imgPath);
-
-        $value = new \eZ\Publish\Core\FieldType\Image\Value(
-            array(
-                'path' => $imgPath,
-                'fileSize' => filesize( $imgPath ),
-                'fileName' => basename( $pathinfo['basename'] ),
-                'alternativeText' => 'block_item'
-            ));
-        $contentCreateStruct->setField('title', $name);
-        
-        $contentCreateStruct->setField('image', $value);
-        
-        
-        $locationService = $repository->getLocationService();
-
-        $locationCreateStruct = $locationService->newLocationCreateStruct($locationId);
-
-        $draft = $contentService->createContent($contentCreateStruct, array($locationCreateStruct));
-        $content = $contentService->publishVersion($draft->versionInfo);
-        
-    }    
     
     public function updateType(){
         
