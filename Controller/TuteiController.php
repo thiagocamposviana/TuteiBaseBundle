@@ -47,12 +47,16 @@ class TuteiController extends Controller {
     }
 
     public function lineList($location) {
-
-        // TODO: Find a better way to fetch children
-        //$repository = $this->getRepository();
-        //$contentTypeService = $repository->getContentTypeService();
-        //$contentType = $contentTypeService->loadContentType($location->contentInfo->contentTypeId);
-
+        $response = new Response();
+        
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
+        
+        // Menu will expire when top location cache expires.
+        $response->headers->set( 'X-Location-Id', $location->id );
+        // Menu might vary depending on user permissions, so make the cache vary on the user hash.
+        $response->setVary( 'X-User-Hash' );
+        
         $classes = $this->container->getParameter('project.list.folder');
         
         $searchService = $this->getRepository()->getSearchService();
@@ -75,7 +79,7 @@ class TuteiController extends Controller {
 
         $list = $searchService->findContent($query);
 
-        $response = new Response();
+        
         return $this->render(
                         'TuteiBaseBundle:parts:line_list.html.twig', array(
                     'list' => $list
@@ -107,6 +111,17 @@ class TuteiController extends Controller {
     }
 
     public function showTopMenu() {
+        
+        $response = new Response();
+        
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
+        
+        // Menu will expire when top location cache expires.
+        $response->headers->set( 'X-Location-Id', 2 );
+        // Menu might vary depending on user permissions, so make the cache vary on the user hash.
+        $response->setVary( 'X-User-Hash' );
+        
         $classes = $this->container->getParameter('project.menufilter.top');        
         
         $filters = $this->createMenuFilter($classes);
@@ -127,7 +142,7 @@ class TuteiController extends Controller {
         );
         $list = $searchService->findContent($query);
 
-        $response = new Response();
+        
         return $this->render(
                         'TuteiBaseBundle:parts:top_menu.html.twig', array(
                     'list' => $list
@@ -136,6 +151,11 @@ class TuteiController extends Controller {
     }
 
     public function showUserMenu() {
+        
+        $response = new Response();
+        
+        $response->setSharedMaxAge( 3600 );
+        $response->setVary( 'Cookie' );
 
         $classes = $this->container->getParameter('project.menufilter.top');        
         
@@ -162,7 +182,7 @@ class TuteiController extends Controller {
 
         $current_user = $this->getRepository()->getCurrentUser();
 
-        $response = new Response();
+        
         return $this->render(
                         'TuteiBaseBundle:parts:user_menu.html.twig', array(
                     'list' => $list,
@@ -247,8 +267,21 @@ class TuteiController extends Controller {
     }
 
     public function showSideMenu($pathString) {
+        
+        $response = new Response();
+        
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
+
+        
+        
         $locations = explode('/', $pathString);
         $locationId = $locations[3];
+        
+        // Menu will expire when top location cache expires.
+        $response->headers->set( 'X-Location-Id', $locationId );
+        // Menu might vary depending on user permissions, so make the cache vary on the user hash.
+        $response->setVary( 'X-User-Hash' );
         
         $classes = $this->container->getParameter('project.menufilter.side');        
         
@@ -274,7 +307,7 @@ class TuteiController extends Controller {
         //    $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
         //}
 
-        $response = new Response();
+        
         return $this->render(
                         'TuteiBaseBundle:parts:side_menu.html.twig', array('list' => $list), $response
         );
@@ -371,6 +404,13 @@ class TuteiController extends Controller {
         }
 
         $response = new Response();
+        
+        $response->setPublic();
+        $response->setSharedMaxAge( 86400 );
+        
+        // Menu will expire when top location cache expires.
+        $response->headers->set( 'X-Location-Id', $locationId );
+        
         return $this->render(
                         'TuteiBaseBundle:parts:page_blocks.html.twig', array('blocks' => $blocks), $response
         );
