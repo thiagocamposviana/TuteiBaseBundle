@@ -17,6 +17,12 @@ system:
                     template: "TuteiBaseBundle:content/folder:full.html.twig"
                     match:
                         Identifier\ContentType: [folder]
+                        
+                gallery:
+                    template: "TuteiBaseBundle:content/gallery:full.html.twig"
+                    match:
+                        Identifier\ContentType: [gallery]
+                        
                 default:
                     template: "TuteiBaseBundle:content/default:full.html.twig"
                     match:
@@ -26,29 +32,40 @@ system:
                     template: "TuteiBaseBundle:content/article:line.html.twig"
                     match:
                         Identifier\ContentType: [article]
+                        
                 folder:
                     template: "TuteiBaseBundle:content/folder:line.html.twig"
                     match:
                         Identifier\ContentType: [folder]
+                        
+                image:
+                    template: "TuteiBaseBundle:content/image:line.html.twig"
+                    match:
+                        Identifier\ContentType: [image]
+                        
                 default:
                     template: "TuteiBaseBundle:content/default:line.html.twig"
                     match:
                         UrlAlias: "/"
+                        
             menu_item:
                 default:
                     template: "TuteiBaseBundle:content/default:menu_item.html.twig"
                     match:
                         UrlAlias: "/"
+                        
             box:
                 default:
                     template: "TuteiBaseBundle:content/default:box.html.twig"
                     match:
                         UrlAlias: "/"
+                        
             search:
                 default:
                     template: "TuteiBaseBundle:content/default:search.html.twig"
                     match:
                         UrlAlias: "/"
+                        
             block:
 
                 default:

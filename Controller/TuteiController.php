@@ -56,9 +56,13 @@ class TuteiController extends Controller {
         // Menu will expire when top location cache expires.
         $response->headers->set( 'X-Location-Id', $location->id );
         // Menu might vary depending on user permissions, so make the cache vary on the user hash.
-        $response->setVary( 'X-User-Hash' );
+        $response->setVary( 'X-User-Hash' );        
         
-        $classes = $this->container->getParameter('project.list.folder');
+        
+        $contentTypeService = $this->getRepository()->getContentTypeService();
+        $contentType = $contentTypeService->loadContentType($location->contentInfo->contentTypeId);
+
+        $classes = $this->container->getParameter( 'project.list.' . $contentType->identifier );
         
         $searchService = $this->getRepository()->getSearchService();
 
@@ -74,9 +78,6 @@ class TuteiController extends Controller {
         $query->sortClauses = array(
             $this->createSortClause($location)
         );
-        
-        
-
         
         // Initialize pagination.
         $pager = new Pagerfanta(
@@ -398,7 +399,6 @@ class TuteiController extends Controller {
         );
         $list = $searchService->findContent($query);
 
-        //var_dump($list->searchHits);
 
         $blocks = array();
 

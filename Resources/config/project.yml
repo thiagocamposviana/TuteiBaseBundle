@@ -12,6 +12,7 @@ parameters:
     project.list.block: [block_item]
     project.list.infobox: [article, link]
     project.list.folder: [article, link, folder]
+    project.list.gallery: [image]
                 
     project.structure.folder: [article, folder]
     
