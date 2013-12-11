@@ -117,8 +117,9 @@
                                 {{ render( controller( "tutei:showBreadcrumb", { 'pathString': location.pathString } ) ) }}
                             {% endif %}
                             {% block content %}{% endblock %}
-                            
-                            {{ render( controller( "tutei:showBlocks", { 'pathString': location.pathString } ) ) }}
+                            {% if location.pathString is defined %}
+                                {{ render( controller( "tutei:showBlocks", { 'pathString': location.pathString } ) ) }}
+                            {% endif %}
                         </div>
 
                 
