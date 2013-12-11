@@ -177,6 +177,41 @@ class CreateCommand extends ContainerAwareCommand {
         $draft = $contentService->createContent($contentCreateStruct, array($locationCreateStruct));
         $content = $contentService->publishVersion($draft->versionInfo);
         
+    }    
+    
+    public function updateType(){
+        
+        $repository = $this->getContainer()->get('ezpublish.api.repository');
+        $contentTypeService = $repository->getContentTypeService();
+        $contentType = $contentTypeService->loadContentTypeByIdentifier('folder');
+        
+        
+        $contentDraft = $contentTypeService->createContentTypeDraft( $contentType );
+        
+        
+        $contentUpdateStruct = $contentTypeService->newContentTypeUpdateStruct();
+        
+        $titleFieldCreate = $contentTypeService->newFieldDefinitionCreateStruct(
+            'menu3', 'ezboolean'
+        );
+        $titleFieldCreate->names = array(
+            'eng-GB' => 'Menu'
+            );
+        $titleFieldCreate->isSearchable = true;
+
+        $titleFieldCreate->position = 10;
+        $titleFieldCreate->isTranslatable = false;
+        $titleFieldCreate->isRequired = true;
+        $titleFieldCreate->isInfoCollector = false;
+        $titleFieldCreate->fieldSettings = array();
+        
+        
+        $contentTypeService->addFieldDefinition( $contentDraft,  $titleFieldCreate );
+        
+        
+        $content = $contentTypeService->publishContentTypeDraft( $contentDraft );
+        //        $contentDraft = $contentTypeService->updateContentTypeDraft( $contentDraft, $contentUpdateStruct );
+   
     }
 
 }
