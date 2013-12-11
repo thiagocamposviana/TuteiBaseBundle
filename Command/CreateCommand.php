@@ -112,9 +112,27 @@ class CreateCommand extends ContainerAwareCommand {
         
         $created = $this->createContent(2, 'folder', $fields);
         
+        $xmlText = "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Article intro test.</paragraph></section>";
         
+        $content = array(
+            array('name'=>'Harder', 'intro'=> $xmlText, 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
+            array('name'=>'Better', 'intro'=> $xmlText, 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
+            array('name'=>'Faster', 'intro'=> $xmlText, 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
+        );
         
-        
+        for($x=0; $x<5;$x++){
+            $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
+            foreach($content as $item){           
+
+                $fields = array(
+                    array('name'=>'title', 'value'=>$item['name']),
+                    array('name'=>'intro', 'value'=>$item['intro']),
+                    array('name'=>'image', 'value'=>$item['img'])
+                );
+
+                $this->createContent($locationId, 'article', $fields);
+            }
+        }
         
         $fields = array( 
 
