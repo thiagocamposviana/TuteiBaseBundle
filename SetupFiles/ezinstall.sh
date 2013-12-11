@@ -95,7 +95,7 @@ find SetupFiles -name "*.*" -exec sed -i "s/\[DBNAME\]/${dbname}/g" {} \;
 find SetupFiles -name "*.*" -exec sed -i "s/\[DBPASS\]/${dbname}/g" {} \;
 find SetupFiles -name "*.*" -exec sed -i "s/\[DBUSER\]/${dbname}/g" {} \;
 
-find ezpublish/config -name "*.*" -exec sed -i "s/eZDemoBundle/TuteiBaseBundle/g" {} \;
+find ezpublish/config -name "config.yml" -exec sed -i "s/eZDemoBundle/TuteiBaseBundle, eZDemoBundle/g" {} \;
 
 
 find ezpublish/EzPublishKernel.php -exec sed -i "s/            new EzSystemsDemoBundle(),/            new EzSystemsDemoBundle(),\n            new TuteiBaseBundle(),/g" {} \;
