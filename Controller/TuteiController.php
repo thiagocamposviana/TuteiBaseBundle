@@ -4,17 +4,18 @@ namespace Tutei\BaseBundle\Controller;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\FullText;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Subtree;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationPriority;
-use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
+use eZ\Publish\Core\Pagination\Pagerfanta\ContentSearchAdapter;
+use eZ\Publish\SPI\Persistence\Content\Location;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use eZ\Publish\SPI\Persistence\Content\Location;
 
 class TuteiController extends Controller {
     
@@ -46,7 +47,7 @@ class TuteiController extends Controller {
                 
     }
 
-    public function lineList($location) {
+    public function lineList($location, $request) {
         $response = new Response();
         
         $response->setPublic();
@@ -73,16 +74,29 @@ class TuteiController extends Controller {
         $query->sortClauses = array(
             $this->createSortClause($location)
         );
-        // TODO: Limit search
-        // $query->limit = 20;
-        // $query->offset = 0;
+        
+        
 
-        $list = $searchService->findContent($query);
+        
+        // Initialize pagination.
+        $pager = new Pagerfanta(
+            new ContentSearchAdapter( $query, $this->getRepository()->getSearchService() )
+        );
+        
+        $pager->setMaxPerPage( $this->container->getParameter('project.line_list.limit') );
+        $pager->setCurrentPage( $request->get( 'page', 1 ) );
+
+        // $list = $searchService->findContent($query);
+        $content = $this->getRepository()
+            ->getContentService()
+            ->loadContentByContentInfo( $location->getContentInfo() );
 
         
         return $this->render(
                         'TuteiBaseBundle:parts:line_list.html.twig', array(
-                    'list' => $list
+                'location' => $location,
+                'content' => $content,
+                    'pager' => $pager
                         ), $response
         );
     }

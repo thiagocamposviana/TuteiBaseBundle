@@ -15,8 +15,9 @@
         
 
         <div class="attribute-children">
-        {{ render( controller( "tutei:lineList", 
-                               { 'location': location } ) ) }}             
+            {{ render( controller( "tutei:lineList", 
+                                   { 'location': location,
+                                     'request': app.request } ) ) }}              
         </div>
     </div>
 </div>

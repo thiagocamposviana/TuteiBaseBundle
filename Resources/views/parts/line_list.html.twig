@@ -1,11 +1,14 @@
-{% for item in list.searchHits %}
-            {{ render(
-                   controller(
-                       'ez_content:viewLocation',
-                       {
-                           'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
-                           'viewType': 'line'
-                       }
-                   )
-               ) }}
-{% endfor %}
+{% if pager|length() > 0 %}
+    <section class="content-view-children">
+        {% for item in pager %}
+            {{ render_esi( controller( 'ez_content:viewLocation', {'locationId': item.contentInfo.mainLocationId, 'viewType': 'line'} ) ) }}
+        {% endfor %}
+    </section>
+
+    {% if pager.haveToPaginate() %}
+        <div class="pagination-centered">
+            {{ pagerfanta( pager, 'twitter_bootstrap_translated', {'routeName': location} ) }}
+        </div>
+    {% endif %}
+
+{% endif %}

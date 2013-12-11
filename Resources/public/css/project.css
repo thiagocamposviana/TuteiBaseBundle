@@ -17,3 +17,12 @@ figure.ezimage-field img {
     font-size:0.9em;
     padding-top:5px;    
 }
+
+.pagination ul {
+    list-style: none;
+}
+
+.pagination ul li {
+    display:inline;
+    padding: 0 10px;
+}
