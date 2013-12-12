@@ -1,3 +1,18 @@
+TODO:
+    - Implement multibanner and banner templates;
+    - Improve gallery template;
+    - Improve blocks;
+    - Improve infobox;
+    - Improve content generation on install;
+    - Improve search templates;
+    - Improve pagination;
+    - Review and improve templates;
+    - Review and improve cache;
+    - Optimize code;
+    - Release alpha version.
+    
+#########################
+
 - Couldn't find a way to configure eZ publish to use twig translations when 
 accessing a certain siteaccess that uses another language.
 
@@ -22,6 +37,9 @@ fallback for content.
 
 - The search class in ez 5 works a little different from the fetch, fields needs
 be searchable.
+
+- Updating a content using new ez publish php api is causing error kernel 20 to 
+subnodes.
 
 
 4.x                         5.x
