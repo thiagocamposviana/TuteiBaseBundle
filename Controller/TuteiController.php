@@ -224,12 +224,18 @@ class TuteiController extends Controller {
             // TODO: Limit search
 
             $searchService = $this->getRepository()->getSearchService();
-            $list = $searchService->findContent($query);
+            // Initialize pagination.
+            $pager = new Pagerfanta(
+                new ContentSearchAdapter( $query, $this->getRepository()->getSearchService() )
+            );
+
+            $pager->setMaxPerPage( $this->container->getParameter('project.line_list.limit') );
+            $pager->setCurrentPage( $request->get( 'page', 1 ) );
 
 
             $response = new Response();
             return $this->render(
-                            'TuteiBaseBundle:action:search.html.twig', array('list' => $list, 'noLayout' => false), $response
+                            'TuteiBaseBundle:action:search.html.twig', array('pager' => $pager, 'noLayout' => false), $response
             );
         } else {
             $response = new Response();
@@ -316,11 +322,6 @@ class TuteiController extends Controller {
             new SortClause\LocationPriority(Query::SORT_ASC)
         );
         $list = $searchService->findContent($query);
-        //$locationList = array();
-        //foreach ( $list->searchHits as $content )
-        //{
-        //    $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
-        //}
 
         
         return $this->render(

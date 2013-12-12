@@ -2,36 +2,31 @@
 
 {% block content %}
 
-    {% if list|length == 0 %}
+<div class="content-view-full">
+    <div class="content-type-folder">
+        <div class="attribute-title">
+            <h2>
+                Search returned {{pager|length()}} results
+            </h2>
+        </div>
 
-    Error
+        <div class="attribute-search-results">
+        {% if pager|length() > 0 %}
+            <section class="content-view-children">
+                {% for item in pager %}
+                    {{ render_esi( controller( 'ez_content:viewLocation', {'locationId': item.contentInfo.mainLocationId, 'viewType': 'line'} ) ) }}
+                {% endfor %}
+            </section>
 
-    {% else %}
+            {% if pager.haveToPaginate() %}
+                <div class="pagination-centered">
+                    {{ pagerfanta( pager, 'twitter_bootstrap_translated', {'routeName': location} ) }}
+                </div>
+            {% endif %}
 
-    <div class="content-view-full">
-        <div class="content-type-folder">
-            <div class="attribute-title">
-                <h2>
-                    Search returned {{ list.searchHits|length }} results
-                </h2>
-            </div>
-
-            <div class="attribute-search-results">
-            {% for item in list.searchHits %}
-                        {{ render(
-                               controller(
-                                   'ez_content:viewLocation',
-                                   {
-                                       'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
-                                       'viewType': 'line'
-                                   }
-                               )
-                           ) }}
-            {% endfor %}
-            </div>
+        {% endif %}
         </div>
     </div>
-
-    {% endif %}
+</div>
 
 {% endblock %}
