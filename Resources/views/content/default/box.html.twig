@@ -43,4 +43,20 @@
             {{ ez_render_field( content, 'body', { lang: language } ) }}    
     {% endif %}
   </div>
+    
+    {% set items = sourceItems[content.fields.source[language].destinationContentId] %}
+    <ul>
+    {% for item in items.searchHits %}
+                <li>{{ render(
+                   controller(
+                       'ez_content:viewLocation',
+                       {
+                           'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
+                           'viewType': 'menu_item'
+                       }
+                   )
+               ) }}</li>
+    
+    {% endfor %}
+    </ul>
 </div>

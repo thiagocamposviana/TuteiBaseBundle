@@ -361,30 +361,40 @@ class TuteiController extends Controller {
         if ($list->totalCount == 0) {
             return $this->showExtraInfo(str_replace("/$locationId/", "/", $pathString));
         }
-        //$locationList = array();
-        //foreach ( $list->searchHits as $content )
-        //{
-        //    $locationList[$content->valueObject->versionInfo->contentInfo->mainLocationId] = $this->getRepository()->getLocationService()->loadLocation( $content->valueObject->contentInfo->mainLocationId );
-        //}
+
         $siteaccess=$this->container->get('ezpublish.siteaccess')->name;
-        //$this->container->getParameter('templating');
         $twigGlobals=$this->container->get('twig')->getGlobals();
         $language=$twigGlobals['siteaccess'][$siteaccess]['language'];
         $repository = $this->getRepository();
         $contentService= $repository->getContentService();
         
         $relationList = array();
+        $sourceItems = array();
         foreach ( $list->searchHits as $content )
         {
             $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
             $related = $contentService->loadContent($objId);
             $relationList[$objId]=$locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);
+            
+            $srcId = $content->valueObject->fields['source'][$language]->destinationContentId;
+            $source = $contentService->loadContent($objId);
+            $query = new Query();
+
+            $query->criterion = new LogicalAnd(
+                    array(
+                new ParentLocationId($source->versionInfo->contentInfo->mainLocationId)
+                    )
+            );
+            
+            $query->limit = 4;
+            
+            $sourceItems[$srcId] = $searchService->findContent($query);
         }
 
 
         $response = new Response();
         return $this->render(
-                        'TuteiBaseBundle:parts:extra_info.html.twig', array('list' => $list, 'relationList'=>$relationList), $response
+                        'TuteiBaseBundle:parts:extra_info.html.twig', array('list' => $list, 'relationList'=>$relationList, 'sourceItems'=>$sourceItems), $response
         );
     }
 
