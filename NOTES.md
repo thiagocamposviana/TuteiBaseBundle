@@ -1,14 +1,12 @@
 TODO:
     - Implement multibanner and banner templates;
     - Improve gallery template;
-    - Improve blocks;
     - Improve content generation on install;
-    - Improve search templates;
     - Improve pagination;
     - Review and improve templates;
     - Review and improve cache;
     - Optimize code;
-    - Release alpha version.
+    - Release version 1.0.
     
 #########################
 

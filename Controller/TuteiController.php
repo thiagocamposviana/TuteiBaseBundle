@@ -470,5 +470,83 @@ class TuteiController extends Controller {
                         'TuteiBaseBundle:parts:page_blocks.html.twig', array('blocks' => $blocks, 'relationList' => $relationList), $response
         );
     }
+    
+    public function showBanners($pathString) {
+
+        $locations = explode('/', $pathString);
+
+        $locationId = $locations[count($locations) - 2];
+
+        $searchService = $this->getRepository()->getSearchService();
+
+        $query = new Query();
+
+        $query->criterion = new LogicalAnd(
+                array(
+            new ContentTypeIdentifier(array('multibanner')),
+            new ParentLocationId(array($locationId))
+                )
+        );
+        
+        $query->limit=1;
+
+        $repository = $this->getRepository();
+        $locationService = $repository->getLocationService();
+        $location = $locationService->loadLocation($locationId);
+
+        $query->sortClauses = array(
+            $this->createSortClause($location)
+        );
+        $list = $searchService->findContent($query);
+
+
+        $blocks = array();
+
+        foreach ($list->searchHits as $block) {
+            $parentId = $block->valueObject->versionInfo->contentInfo->mainLocationId;
+            $query = new Query();
+
+            $query->criterion = new LogicalAnd(
+                    array(
+                new ParentLocationId(array($parentId))
+                    )
+            );
+            $query->sortClauses = array(
+                new SortClause\LocationPriority(Query::SORT_ASC)
+            );
+            $blocks[] = $searchService->findContent($query);
+        }
+
+        $siteaccess = $this->container->get('ezpublish.siteaccess')->name;
+        $twigGlobals = $this->container->get('twig')->getGlobals();
+        $language = $twigGlobals['siteaccess'][$siteaccess]['language'];
+        $contentService = $repository->getContentService();
+
+        $relationList = array();
+        
+        foreach ($blocks as $b) {
+            foreach ($b->searchHits as $content) {
+                
+                if (isset($content->valueObject->fields['link_object'][$language]->destinationContentId)) {
+                    $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
+                    $related = $contentService->loadContent($objId);                                       
+
+                    $relationList[$objId] = $locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);
+                }
+            }
+        }
+
+        $response = new Response();
+
+        $response->setPublic();
+        $response->setSharedMaxAge(86400);
+
+        // Menu will expire when top location cache expires.
+        $response->headers->set('X-Location-Id', $locationId);
+
+        return $this->render(
+                        'TuteiBaseBundle:parts:page_banners.html.twig', array('banners' => $blocks, 'relationList' => $relationList), $response
+        );
+    }
 
 }

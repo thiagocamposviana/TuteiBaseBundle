@@ -1,0 +1,47 @@
+{% set language = siteaccess[ezpublish.siteaccess.name].language %}
+{% if  banners[0] is defined %}
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+      {% for item in banners[0].searchHits %}
+    <li data-target="#carousel-example-generic" 
+        data-slide-to="{{ loop.index-1 }}"{%if loop.index-1==0 %} class="active"{% endif %}></li>
+    {% endfor %}
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+        {% for item in banners[0].searchHits %}
+                
+        {% if not ez_is_field_empty( item.valueObject, "image" ) %}
+        <div class="attribute-image">
+              {{ ez_render_field(item.valueObject, 'image', {
+                                              parameters:{ alias:'small' },
+                                              attr:{ class:'block_item', custom_attribute:'value' }
+                                           }
+                        )
+              }}
+            
+        </div>
+        {% endif %}
+
+      <div class="carousel-caption">
+        {{ item.valueObject.fields.title[language].text }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Controls -->
+  {#
+  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+    #}
+</div>
+
+{% endif %}
