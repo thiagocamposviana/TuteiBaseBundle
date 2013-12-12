@@ -372,25 +372,32 @@ class TuteiController extends Controller {
         $sourceItems = array();
         foreach ( $list->searchHits as $content )
         {
-            $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
-            $related = $contentService->loadContent($objId);
-            $relationList[$objId]=$locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);
+            if(isset($content->valueObject->fields['link_object'][$language]))
+            {
+                $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
+                $related = $contentService->loadContent($objId);
+                $relationList[$objId]=$locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);
+            }
             
-            $srcId = $content->valueObject->fields['source'][$language]->destinationContentId;
-            $source = $contentService->loadContent($objId);
-            $query = new Query();
+            if(isset($content->valueObject->fields['source'][$language]))
+            {
+                $srcId = $content->valueObject->fields['source'][$language]->destinationContentId;
+                $source = $contentService->loadContent($objId);
+                $query = new Query();
 
-            $query->criterion = new LogicalAnd(
-                    array(
-                new ParentLocationId($source->versionInfo->contentInfo->mainLocationId)
-                    )
-            );
+                $query->criterion = new LogicalAnd(
+                        array(
+                    new ParentLocationId($source->versionInfo->contentInfo->mainLocationId)
+                        )
+                );
+
+                $query->limit = 4;
+
+                $sourceItems[$srcId] = $searchService->findContent($query);
+
             
-            $query->limit = 4;
-            
-            $sourceItems[$srcId] = $searchService->findContent($query);
+            }
         }
-
 
         $response = new Response();
         return $this->render(

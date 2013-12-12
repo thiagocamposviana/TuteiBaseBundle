@@ -42,8 +42,9 @@
     {% if content.fields.body is defined %}
             {{ ez_render_field( content, 'body', { lang: language } ) }}    
     {% endif %}
-  </div>
-    
+      
+      
+    {% if sourceItems[content.fields.source[language].destinationContentId] is defined %}
     {% set items = sourceItems[content.fields.source[language].destinationContentId] %}
     <ul>
     {% for item in items.searchHits %}
@@ -59,4 +60,7 @@
     
     {% endfor %}
     </ul>
+    {% endif %}
+  </div>
+    
 </div>
