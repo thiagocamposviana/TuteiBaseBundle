@@ -33,7 +33,8 @@
             Not using bootstrap-theme.min.css -->
         {% stylesheets 
             "bundles/tuteibase/css/bootstrap.min.css"
-            "bundles/tuteibase/css/project.css" %}
+            "bundles/tuteibase/css/project.css"
+            filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 

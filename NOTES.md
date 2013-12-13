@@ -37,6 +37,8 @@ be searchable.
 - Updating a content using new ez publish php api is causing error kernel 20 to 
 subnodes.
 
+- Use filter='cssrewrite' to fix css paths for fonts, images, etc.
+
 
 4.x                         5.x
   
