@@ -12,6 +12,7 @@ figure.ezimage-field {
 figure.ezimage-field img {
     max-width:100%; 
     width:100%;
+    height:auto;
 }
 
 .user-menu{
@@ -26,4 +27,18 @@ figure.ezimage-field img {
 .pagination ul li {
     display:inline;
     padding: 0 10px;
+}
+
+
+/* Gallery */
+
+.content-type-gallery figure.ezimage-field img {
+    
+    width:auto;
+}
+
+.content-type-gallery figure.ezimage-field {
+    
+    text-align:left;
+    
 }
