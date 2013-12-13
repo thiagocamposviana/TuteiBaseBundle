@@ -11,8 +11,9 @@
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
-    <div class="item active">
-        {% for item in banners[0].searchHits %}
+    {% for item in banners[0].searchHits %}
+    <div class="item{%if loop.index-1==0 %} active{% endif %}">
+        
                 
         {% if not ez_is_field_empty( item.valueObject, "image" ) %}
         <div class="attribute-image">
@@ -29,8 +30,9 @@
       <div class="carousel-caption">
         {{ item.valueObject.fields.title[language].text }}
       </div>
-      {% endfor %}
+      
     </div>
+    {% endfor %}
   </div>
 
   <!-- Controls -->

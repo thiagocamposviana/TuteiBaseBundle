@@ -1,5 +1,4 @@
 TODO:
-    - Implement multibanner and banner templates;
     - Improve gallery template;
     - Improve content generation on install;
     - Improve pagination;
