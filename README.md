@@ -1,5 +1,9 @@
 # Tutei Base for Ubuntu
 
+Youtube video tutorial: http://youtu.be/PPWYx863OXo
+
+You can use Virtual Box to test it.
+
 This extension has been created in order to clean install ez publish in Ubuntu using the Github master version.
 
 # Install instructions
