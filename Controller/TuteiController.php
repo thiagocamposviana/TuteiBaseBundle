@@ -62,8 +62,6 @@ class TuteiController extends Controller {
 
         $classes = $this->container->getParameter('project.list.' . $contentType->identifier);
 
-        $searchService = $this->getRepository()->getSearchService();
-
         $query = new Query();
 
         $query->criterion = new LogicalAnd(
@@ -217,7 +215,6 @@ class TuteiController extends Controller {
                     )
             );
 
-            $searchService = $this->getRepository()->getSearchService();
             // Initialize pagination.
             $pager = new Pagerfanta(
                     new ContentSearchAdapter($query, $this->getRepository()->getSearchService())
@@ -358,7 +355,6 @@ class TuteiController extends Controller {
 
 
         $language = $this->getLanguage();
-        $repository = $this->getRepository();
         $contentService = $repository->getContentService();
 
         $relationList = array();
