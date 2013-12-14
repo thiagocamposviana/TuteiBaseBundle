@@ -16,36 +16,35 @@
     {% set link = content.fields.link_external[language].link %}
 {% endif %}
 
-<div class="col-md-4">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <a href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>{{ name }}</a>
-            </h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <a href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>{{ name }}</a>
+        </h3>
+    </div>
+    <div class="panel-body">
+
+
+        {% if content.fields.image is defined %}
+        <div class="block-image">
+            <a href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>
+        {{ ez_render_field(content, 'image', {
+                                        parameters:{ alias:'small' },
+                                        attr:{ class:'block_item', custom_attribute:'value' }
+                                     }
+                  )
+        }}</a>
         </div>
-        <div class="panel-body">
+        {% endif %} 
 
 
-            {% if content.fields.image is defined %}
-            <div class="block-image">
-                <a href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>
-            {{ ez_render_field(content, 'image', {
-                                            parameters:{ alias:'small' },
-                                            attr:{ class:'block_item', custom_attribute:'value' }
-                                         }
-                      )
-            }}</a>
-            </div>
-            {% endif %} 
+        {% if not ez_is_field_empty( content, "intro" ) %}
+        <div class="block-intro">
+          {{ ez_render_field( content, 'intro', { lang: language } ) }}    
+        </div>          
+        {% endif %}
 
 
-            {% if content.fields.intro is defined %}
-            <div class="block-intro">
-              {{ ez_render_field( content, 'intro', { lang: language } ) }}    
-            </div>          
-            {% endif %}
-
-
-        </div>
     </div>
 </div>

@@ -1,6 +1,20 @@
+{% set language = siteaccess[ezpublish.siteaccess.name].language %}
+
 {% for list in blocks %}
+
+{% set columns = list.content.valueObject.fields['columns'][language].value %}
+{% set column_width = 12 // columns %}
+
+
 <div class="row">
-    {% for item in list.searchHits %}
+    {% for item in list.children.searchHits %}
+
+    {% if loop.index0 > 0 and loop.index0 % columns == 0 %}
+    </div>
+    <div class="row">
+    {% endif %}
+
+    <div class="col-md-{{ column_width }}">
         {{ render(
              controller(
                  'ez_content:viewLocation',
@@ -11,6 +25,8 @@
                  }
              )
         ) }}
+    </div>    
     {% endfor %}
 </div>
+
 {% endfor %}

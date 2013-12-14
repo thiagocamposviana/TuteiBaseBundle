@@ -216,7 +216,6 @@ class TuteiController extends Controller {
                 new FullText($text)
                     )
             );
-            // TODO: Limit search
 
             $searchService = $this->getRepository()->getSearchService();
             // Initialize pagination.
@@ -357,9 +356,8 @@ class TuteiController extends Controller {
             return $this->showExtraInfo(str_replace("/$locationId/", "/", $pathString));
         }
 
-        $siteaccess = $this->container->get('ezpublish.siteaccess')->name;
-        $twigGlobals = $this->container->get('twig')->getGlobals();
-        $language = $twigGlobals['siteaccess'][$siteaccess]['language'];
+
+        $language = $this->getLanguage();
         $repository = $this->getRepository();
         $contentService = $repository->getContentService();
 
@@ -425,7 +423,9 @@ class TuteiController extends Controller {
         $blocks = array();
 
         foreach ($list->searchHits as $block) {
+
             $parentId = $block->valueObject->versionInfo->contentInfo->mainLocationId;
+            $blocks[$parentId]['content'] = $block;
             $query = new Query();
 
             $query->criterion = new LogicalAnd(
@@ -436,7 +436,13 @@ class TuteiController extends Controller {
             $query->sortClauses = array(
                 new SortClause\LocationPriority(Query::SORT_ASC)
             );
-            $blocks[] = $searchService->findContent($query);
+            $columns= $block->valueObject->fields['columns'][$this->getLanguage()]->value;
+            $rows = $block->valueObject->fields['rows'][$this->getLanguage()]->value;
+            if($rows > 0){
+                $query->limit = $rows * $columns;
+            }
+
+            $blocks[$parentId]['children'] = $searchService->findContent($query);
         }
 
         $siteaccess = $this->container->get('ezpublish.siteaccess')->name;
@@ -445,13 +451,13 @@ class TuteiController extends Controller {
         $contentService = $repository->getContentService();
 
         $relationList = array();
-        
+
         foreach ($blocks as $b) {
-            foreach ($b->searchHits as $content) {
-                
+            foreach ($b['children']->searchHits as $content) {
+
                 if (isset($content->valueObject->fields['link_object'][$language]->destinationContentId)) {
                     $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
-                    $related = $contentService->loadContent($objId);                                       
+                    $related = $contentService->loadContent($objId);
 
                     $relationList[$objId] = $locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);
                 }
@@ -470,7 +476,7 @@ class TuteiController extends Controller {
                         'TuteiBaseBundle:parts:page_blocks.html.twig', array('blocks' => $blocks, 'relationList' => $relationList), $response
         );
     }
-    
+
     public function showBanners($pathString) {
 
         $locations = explode('/', $pathString);
@@ -487,8 +493,8 @@ class TuteiController extends Controller {
             new ParentLocationId(array($locationId))
                 )
         );
-        
-        $query->limit=1;
+
+        $query->limit = 1;
 
         $repository = $this->getRepository();
         $locationService = $repository->getLocationService();
@@ -523,13 +529,13 @@ class TuteiController extends Controller {
         $contentService = $repository->getContentService();
 
         $relationList = array();
-        
+
         foreach ($blocks as $b) {
             foreach ($b->searchHits as $content) {
-                
+
                 if (isset($content->valueObject->fields['link_object'][$language]->destinationContentId)) {
                     $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
-                    $related = $contentService->loadContent($objId);                                       
+                    $related = $contentService->loadContent($objId);
 
                     $relationList[$objId] = $locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);
                 }
@@ -547,6 +553,12 @@ class TuteiController extends Controller {
         return $this->render(
                         'TuteiBaseBundle:parts:page_banners.html.twig', array('banners' => $blocks, 'relationList' => $relationList), $response
         );
+    }
+
+    public function getLanguage() {
+        $siteaccess = $this->container->get('ezpublish.siteaccess')->name;
+        $twigGlobals = $this->container->get('twig')->getGlobals();
+        return $twigGlobals['siteaccess'][$siteaccess]['language'];
     }
 
 }
