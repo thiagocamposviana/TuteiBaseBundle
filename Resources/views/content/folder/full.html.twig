@@ -23,9 +23,10 @@
 
         {% if content.fields.show_children is defined and content.getField( 'show_children' ).value.bool %}
             <div class="attribute-children">
-            {{ render( controller( "tutei:lineList", 
-                                   { 'location': location,
-                                     'request': app.request } ) ) }}             
+            {{ render( controller( "tutei:showComponent", 
+                                   { 'name': 'LineList',
+                                     'parameters': { 'location': location,
+                                                     'request': app.request } } ) ) }}             
             </div>
         {% endif %}
     </div>

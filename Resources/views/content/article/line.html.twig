@@ -1,28 +1,29 @@
 {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
 <div class="content-view-line">
-    <div class="content-type-article"> 
+    <div class="content-type-article media"> 
         
 
-        <div class="attribute-title">
+        <div class="attribute-title media-heading">
             <h2>
                 <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'title', { lang: language } ) }}</a>
             </h2>
         </div>
         
         {% if content.fields.image is defined %}
-        <div class="attribute-image">
+        <div class="attribute-image pull-left">
+            <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">
         {{ ez_render_field(content, 'image', {
-                                        parameters:{ alias:'small' },
-                                        attr:{ class:'block_item', custom_attribute:'value' }
+                                        parameters:{ alias:'original' },
+                                        attr:{ class:'media-object image-small', custom_attribute:'value' }
                                      }
                   )
-        }}
+        }}</a>
         </div>
         {% endif %} 
 
         {% if not ez_is_field_empty( content, 'intro', { lang: language } ) %}
-        <div class="attribute-short">
+        <div class="attribute-short media-body">
                 {{ ez_render_field( content, 'intro', { lang: language } ) }}
         </div>
         {% endif %}

@@ -7,7 +7,7 @@
         
         {% if location.pathString is defined %}
             {% set title %}
-                {{ render( controller( "tutei:getTitle", { 'pathString': location.pathString } ) ) }}
+                {{ render( controller( "tutei:showComponent", { 'name':'Title', 'parameters':{'pathString': location.pathString } } ) ) }}
             {% endset %}
         {% elseif content is defined%}
             {% set title %}
@@ -54,7 +54,7 @@
                     <div class="col-sm-6">
                         <div class="pull-right user-menu">
                             <ul class="list-unstyled list-inline">
-                                {{ render( controller( "tutei:showUserMenu" ) ) }}
+                                {{ render( controller( "tutei:showComponent", { 'name': 'UserMenu' } ) ) }}
                             </ul>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                 <div class="navbar-collapse collapse">
 
                     <ul class="nav navbar-nav">
-                        {{ render( controller( "tutei:showTopMenu" ) ) }}
+                        {{ render( controller( "tutei:showComponent", { 'name': 'TopMenu' } ) ) }}
                     </ul>
                     <form class="navbar-form navbar-right" role="form" method="get" action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}">
                         <div class="form-group">
@@ -93,7 +93,7 @@
         <div class="container">
             <div class="row">
                 {% if location.pathString is defined %}
-                    {{ render( controller( "tutei:showBanners", { 'pathString': location.pathString } ) ) }}
+                    {{ render( controller( "tutei:showComponent", { 'name' : 'Banners','parameters' : {'pathString': location.pathString } } ) ) }}
                 {% endif %}
                 
 
@@ -110,20 +110,24 @@
                 {% endif %}
                     {% if showSideMenu %}
                         <div class="col-md-3">
-                            {{ render( controller( "tutei:showSideMenu", { 'pathString': location.pathString } ) ) }}
-                            {{ render( controller( "tutei:showExtraInfo", { 'pathString': location.pathString } ) ) }}
-
+                            {{ render( controller( "tutei:showComponent", { 'name':'SideMenu',
+                                             'parameters': { 'pathString': location.pathString } } ) ) }}
+                            {{ render( controller( "tutei:showComponent",
+                                                        { 'name':'ExtraInfo',
+                                                          'parameters': { 'pathString': location.pathString } } ) ) }}
                         </div>                       
                     {% endif %} 
                         <div class="col-md-{% if showSideMenu %}9{% else %}12{% endif %}">     
 
                             {% if location.pathString is defined
                                     and location.pathString|split('/')[3] != ''  %}
-                                {{ render( controller( "tutei:showBreadcrumb", { 'pathString': location.pathString } ) ) }}
+                                {{ render( controller( "tutei:showComponent",
+                                                        { 'name':'Breadcrumb',
+                                                          'parameters': { 'pathString': location.pathString } } ) ) }}
                             {% endif %}
                             {% block content %}{% endblock %}
                             {% if location.pathString is defined %}
-                                {{ render( controller( "tutei:showBlocks", { 'pathString': location.pathString } ) ) }}
+                                {{ render( controller( "tutei:showComponent", {'name':'Blocks', 'parameters': { 'pathString': location.pathString } } ) ) }}
                             {% endif %}
                         </div>
 
