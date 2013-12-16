@@ -37,6 +37,8 @@
             filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->       
+        <script src="https://code.jquery.com/jquery.js"></script>
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -155,8 +157,6 @@
               </footer>
         </div> <!-- /container -->
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://code.jquery.com/jquery.js"></script>
         {% javascripts
             "bundles/tuteibase/js/bootstrap.min.js"
             "bundles/tuteibase/js/project.js"
