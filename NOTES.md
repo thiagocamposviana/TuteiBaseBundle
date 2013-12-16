@@ -5,7 +5,7 @@ TODO:
     - Review and improve templates;
     - Review and improve cache;
     - Optimize code;
-    - Release version 1.0.
+    - Release version 2.0.
     
 #########################
 
