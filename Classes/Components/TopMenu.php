@@ -49,11 +49,13 @@ class TopMenu extends Component {
             new LocationPriority(Query::SORT_ASC)
         );
         $list = $searchService->findContent($query);
+        
+        $locations = explode('/', $this->parameters['pathString']);
 
 
         return $this->controller->render(
                         'TuteiBaseBundle:parts:top_menu.html.twig', array(
-                    'list' => $list
+                    'list' => $list, 'locations'=>$locations
                         ), $response
         );
     }

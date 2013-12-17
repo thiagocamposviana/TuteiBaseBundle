@@ -2,7 +2,11 @@
 <div class="navbar navbar-collapse side-menu"  role="navigation">
 <ul class="nav  nav-tabs nav-stacked">
         {% for item in list.searchHits %}
-        <li>{{ render(
+        {% set active = false %}
+        {% if item.valueObject.versionInfo.contentInfo.mainLocationId in locations %}
+            {% set active = true %}
+        {% endif %}
+        <li{% if active %} class="active"{% endif %}>{{ render(
                    controller(
                        'ez_content:viewLocation',
                        {

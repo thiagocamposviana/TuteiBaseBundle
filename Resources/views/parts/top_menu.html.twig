@@ -1,11 +1,16 @@
 {% for item in list.searchHits %}
-<li>{{ render(
+
+{% set active = false %}
+{% if item.valueObject.versionInfo.contentInfo.mainLocationId in locations %}
+    {% set active = true %}
+{% endif %}
+<li{% if active %} class="active"{% endif %}>{{ render(
                    controller(
                        'ez_content:viewLocation',
                        {
                            'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
                            'viewType': 'menu_item',
-                           'params': {}
+                           'params': {'active':active}
                        }
                    )
                ) }}</li>

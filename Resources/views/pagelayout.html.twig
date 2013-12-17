@@ -78,7 +78,7 @@
                 <div class="navbar-collapse collapse">
 
                     <ul class="nav navbar-nav">
-                        {{ render( controller( "tutei:showComponent", { 'name': 'TopMenu' } ) ) }}
+                        {{ render( controller( "tutei:showComponent", { 'name': 'TopMenu','parameters' : {'pathString': location.pathString } } ) ) }}
                     </ul>
                     <form class="navbar-form navbar-right" role="form" method="get" action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}">
                         <div class="form-group">
