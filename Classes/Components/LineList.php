@@ -54,8 +54,10 @@ class LineList extends Component {
         $pager = new Pagerfanta(
                 new ContentSearchAdapter($query, $this->controller->getRepository()->getSearchService())
         );
+        
+        $limit = isset($this->parameters['limit'])?$this->parameters['limit']:$this->controller->getContainer()->getParameter('project.line_list.limit');
 
-        $pager->setMaxPerPage($this->controller->getContainer()->getParameter('project.line_list.limit'));
+        $pager->setMaxPerPage($limit);
         $pager->setCurrentPage($request->get('page', 1));
 
         // $list = $searchService->findContent($query);
@@ -63,9 +65,9 @@ class LineList extends Component {
                 ->getContentService()
                 ->loadContentByContentInfo($location->getContentInfo());
 
-
+        $template = isset($this->parameters['template'])?$this->parameters['template']:'TuteiBaseBundle:parts:line_list.html.twig';
         return $this->controller->render(
-                        'TuteiBaseBundle:parts:line_list.html.twig', array(
+                        $template, array(
                     'location' => $location,
                     'content' => $content,
                     'pager' => $pager

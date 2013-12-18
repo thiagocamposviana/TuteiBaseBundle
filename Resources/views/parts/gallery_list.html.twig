@@ -1,0 +1,26 @@
+{% set columns = 3 %}
+{% set column_width = 12 // columns %}
+
+{% if pager|length() > 0 %}
+    <section class="content-view-children">
+        <div class="row">  
+        {% for item in pager %}             
+
+            {% if loop.index0 > 0 and loop.index0 % columns == 0 %}
+            </div>
+            <div class="row">
+            {% endif %}
+            <div class="col-md-{{ column_width }}">
+                {{ render_esi( controller( 'ez_content:viewLocation', {'locationId': item.contentInfo.mainLocationId, 'viewType': 'line'} ) ) }}
+            </div>   
+        {% endfor %}
+        </div>
+    </section>
+
+    {% if pager.haveToPaginate() %}
+        <div class="pagination-centered">
+            {{ pagerfanta( pager, 'twitter_bootstrap_translated', {'routeName': location} ) }}
+        </div>
+    {% endif %}
+
+{% endif %}

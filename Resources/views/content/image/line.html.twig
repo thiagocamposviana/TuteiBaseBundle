@@ -8,14 +8,19 @@
                 <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'name', { lang: language } ) }}</a>
             </h2>
         </div>
+        
 
         {% if content.fields.image is defined %}
+        {% set image_alias = ez_image_alias( content.getField('image'), content.versionInfo,  'original' ) %}
+        
+        <a href="{{ asset( image_alias.uri ) }}" data-lightbox="gallery">
         {{ ez_render_field(content, 'image', {
                                         parameters:{ alias:'small' },
                                         attr:{ class:'block_item', custom_attribute:'value' }
                                      }
                   )
-        }}
+        }}</a>
+        
         {% endif %} 
     </div>
 </div>
