@@ -203,59 +203,43 @@ class CreateCommand extends ContainerAwareCommand {
         
         
         
-        $fields = array( 
-
-            array('name'=>'name', 'value'=>'Articles')
-        );
         
-        $created = $this->createContent(2, 'folder', $fields);
-        
-        $xmlText = "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Article intro test.</paragraph></section>";
-        
-        $content = array(
-            array('name'=>'Harder', 'intro'=> $xmlText, 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
-            array('name'=>'Better', 'intro'=> $xmlText, 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
-            array('name'=>'Faster', 'intro'=> $xmlText, 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
-        );
-        
-        /* TODO: articles image is a object relation list, change it later  */
-        for($x=0; $x<5;$x++){
-            $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
-            foreach($content as $item){           
-
-                $fields = array(
-                    array('name'=>'title', 'value'=>$item['name']),
-                    array('name'=>'intro', 'value'=>$item['intro'])
-                );
-
-                $this->createContent($locationId, 'article', $fields);
-            }
-        }
         
         $fields = array( 
 
             array('name'=>'title', 'value'=>'Gallery')
         );
         
-        $created = $this->createContent(2, 'gallery', $fields);
+        $created_gallery = $this->createContent(2, 'gallery', $fields);
+        
+        
+
+        
+        
+        $fields = array( 
+
+            array('name'=>'name', 'value'=>'Articles')
+        );
+        
+        $articles_folder = $this->createContent(2, 'folder', $fields);
         
         $content = array(
-            array('name'=>'Image 1', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image1_box.jpg'),
-            array('name'=>'Image 2', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image2_box.jpg'),
-            array('name'=>'Image 3', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image3_box.jpg'),
-            array('name'=>'Image 4', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image4_box.jpg'),
-            array('name'=>'Image 5', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image5_box.jpg'),
-            array('name'=>'Image 6', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image6_box.jpg'),
-            array('name'=>'Image 7', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image7_box.jpg'),
-            array('name'=>'Image 8', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image8_box.jpg'),
-            array('name'=>'Image 9', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image9_box.jpg'),
+            array('name'=>'Image 01', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image1_box.jpg'),
+            array('name'=>'Image 02', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image2_box.jpg'),
+            array('name'=>'Image 03', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image3_box.jpg'),
+            array('name'=>'Image 04', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image4_box.jpg'),
+            array('name'=>'Image 05', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image5_box.jpg'),
+            array('name'=>'Image 06', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image6_box.jpg'),
+            array('name'=>'Image 07', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image7_box.jpg'),
+            array('name'=>'Image 08', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image8_box.jpg'),
+            array('name'=>'Image 09', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image9_box.jpg'),
             array('name'=>'Image 10', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image10_box.jpg'),
             array('name'=>'Image 11', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image11_box.jpg'),
             array('name'=>'Image 12', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image12_box.jpg')
 
         );
-        
-        $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
+        $created_images = array();
+        $locationId = (int)$created_gallery->versionInfo->contentInfo->mainLocationId;
         foreach($content as $item){           
 
             $fields = array(
@@ -263,9 +247,38 @@ class CreateCommand extends ContainerAwareCommand {
                 array('name'=>'image', 'value'=>$item['img'])
             );
 
-            $this->createContent($locationId, 'image', $fields);
+            $created_images[] = $this->createContent($locationId, 'image', $fields);
         }
-          
+        
+        $xmlText = "<?xml version='1.0' encoding='utf-8'?><section><paragraph>Article intro test.</paragraph></section>";
+
+        $content = array(
+            array('name'=>'Article 01', 'intro'=> $xmlText, 'image'=>$created_images[0]->versionInfo->contentInfo),
+            array('name'=>'Article 02', 'intro'=> $xmlText, 'image'=>$created_images[1]->versionInfo->contentInfo),
+            array('name'=>'Article 03', 'intro'=> $xmlText, 'image'=>$created_images[2]->versionInfo->contentInfo),
+            array('name'=>'Article 04', 'intro'=> $xmlText, 'image'=>$created_images[3]->versionInfo->contentInfo),
+            array('name'=>'Article 05', 'intro'=> $xmlText, 'image'=>$created_images[4]->versionInfo->contentInfo),
+            array('name'=>'Article 06', 'intro'=> $xmlText, 'image'=>$created_images[5]->versionInfo->contentInfo),
+            array('name'=>'Article 07', 'intro'=> $xmlText, 'image'=>$created_images[6]->versionInfo->contentInfo),
+            array('name'=>'Article 08', 'intro'=> $xmlText, 'image'=>$created_images[7]->versionInfo->contentInfo),
+            array('name'=>'Article 09', 'intro'=> $xmlText, 'image'=>$created_images[8]->versionInfo->contentInfo),   
+            array('name'=>'Article 10', 'intro'=> $xmlText, 'image'=>$created_images[9]->versionInfo->contentInfo)
+        );
+        
+        /* TODO: articles image is a object relation list, change it later  */
+
+            $locationId = (int)$articles_folder->versionInfo->contentInfo->mainLocationId;
+            foreach($content as $item){           
+
+                $fields = array(
+                    array('name'=>'title', 'value'=>$item['name']),
+                    array('name'=>'intro', 'value'=>$item['intro']),
+                    array('name'=>'image', 'value'=>$item['image'])
+                );
+
+                $this->createContent($locationId, 'article', $fields);
+            }
+        
    
     }
     
