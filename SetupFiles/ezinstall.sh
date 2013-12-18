@@ -78,15 +78,30 @@ cd ${sitedir}
 
 mkdir src/Tutei
 ###### use a branch
-#git clone -b improve_installer https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
+#git clone -b 1.x https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
 #cd src/Tutei/BaseBundle
 #git stash
-#git checkout improve_installer
+#git checkout 1.x
 #cd ../../..
 
 git clone https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
 
 rm -Rf ezpublish/cache/*
+
+cd ezpublish_legacy
+
+mysql -u ${dbuser} -p${dbpass} -e "CREATE DATABASE ${dbname} CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+mysql -u ${dbuser} -p${dbpass} -e "CREATE USER '${dbname}'@'localhost' IDENTIFIED BY '${dbname}';"
+mysql -u ${dbuser} -p${dbpass} -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbname}'@'localhost' WITH GRANT OPTION;"
+
+mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/kernel_schema.sql
+
+mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/common/cleandata.sql
+
+cd ..
+
+
+
 
 cp -r src/Tutei/BaseBundle/SetupFiles SetupFiles
 
@@ -121,14 +136,6 @@ php ezpublish/console assetic:dump --env=dev web
 cd ezpublish_legacy
 
 php bin/php/ezpgenerateautoloads.php
-
-mysql -u ${dbuser} -p${dbpass} -e "CREATE DATABASE ${dbname} CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
-mysql -u ${dbuser} -p${dbpass} -e "CREATE USER '${dbname}'@'localhost' IDENTIFIED BY '${dbname}';"
-mysql -u ${dbuser} -p${dbpass} -e "GRANT ALL PRIVILEGES ON ${dbname}.* TO '${dbname}'@'localhost' WITH GRANT OPTION;"
-
-mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/mysql/kernel_schema.sql
-
-mysql -u ${dbuser} -p${dbpass} ${dbname} < kernel/sql/common/cleandata.sql
 
 
 sudo -u ${apachegroup} php ezpm.php -s site import ../src/Tutei/BaseBundle/SetupFiles/content_files/classes.ezpkg
@@ -249,8 +256,8 @@ ServerName ${sitedir}\n
         # Additional Assetic rules for eZ Publish 5.1 / 2013.4 and higher.\n
         ## Don't forget to run php ezpublish/console assetic:dump --env=prod\n
         ## and make sure to comment these out in dev environment.\n
-        RewriteRule ^/css/.*\.css - [L]\n
-        RewriteRule ^/js/.*\.js - [L]\n
+        #RewriteRule ^/css/.*\.css - [L]\n
+        #RewriteRule ^/js/.*\.js - [L]\n
  \n
         RewriteRule .* /index.php\n
     </IfModule>\n
