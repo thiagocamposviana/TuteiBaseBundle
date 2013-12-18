@@ -72,3 +72,9 @@ system:
                     template: "TuteiBaseBundle:content/default:block.html.twig"
                     match:
                         UrlAlias: "/"
+        content_view:
+            line:
+                image:
+                    template: "TuteiBaseBundle:content/image:content_line.html.twig"
+                    match:
+                        Identifier\ContentType: [image]

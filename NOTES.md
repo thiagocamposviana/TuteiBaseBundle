@@ -1,10 +1,8 @@
 TODO:
-    - Improve gallery template;
     - Improve content generation on install;
     - Improve pagination;
     - Review and improve templates;
     - Review and improve cache;
-    - Optimize code;
     - Release version 2.0.
     
 #########################

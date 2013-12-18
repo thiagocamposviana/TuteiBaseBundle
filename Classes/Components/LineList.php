@@ -34,9 +34,11 @@ class LineList extends Component {
 
         $contentTypeService = $this->controller->getRepository()->getContentTypeService();
         $contentType = $contentTypeService->loadContentType($location->contentInfo->contentTypeId);
-
-        $classes = $this->controller->getContainer()->getParameter('project.list.' . $contentType->identifier);
-
+        if($this->controller->getContainer()->hasParameter('project.list.' . $contentType->identifier)){
+            $classes = $this->controller->getContainer()->getParameter('project.list.' . $contentType->identifier);
+        } else {
+            return $response->setContent('');
+        }
         $query = new Query();
 
         $query->criterion = new LogicalAnd(

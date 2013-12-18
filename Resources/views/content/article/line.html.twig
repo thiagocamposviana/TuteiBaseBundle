@@ -10,16 +10,23 @@
             </h2>
         </div>
         
-        {% if content.fields.image is defined %}
+        {% if not ez_is_field_empty( content, 'image', { lang: language } ) %}
+        
         <div class="attribute-image pull-left">
-            <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">
-        {{ ez_render_field(content, 'image', {
-                                        parameters:{ alias:'original' },
-                                        attr:{ class:'media-object image-small', custom_attribute:'value' }
-                                     }
-                  )
-        }}</a>
+        <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">
+
+        {{ render_hinclude(
+                controller( 
+                    "ez_content:viewContent", 
+                    {
+                        "contentId": content.fields.image[language].destinationContentId,
+                        "viewType": "line",
+                        "params": { 'alias' : 'small' }
+                    }
+                )
+          ) }}</a>
         </div>
+        
         {% endif %} 
 
         {% if not ez_is_field_empty( content, 'intro', { lang: language } ) %}

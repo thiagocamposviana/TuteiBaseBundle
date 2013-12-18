@@ -1,0 +1,8 @@
+{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
+{% if content.fields.image[language].uri is defined %}
+{% set image_alias = ez_image_alias( content.getField('image'), content.versionInfo,  alias|default('original') ) %}
+
+<img class="image-small" src="{{asset( image_alias.uri )}}" alt="{{content.versionInfo.names[language]}}" />
+
+{% endif %}
+
