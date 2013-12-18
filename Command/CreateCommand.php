@@ -80,17 +80,54 @@ class CreateCommand extends ContainerAwareCommand {
         $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId,
                                     'infobox', $fieldsInfo);
         
+        
+        
+        
+        
         $fields = array( 
 
-            array('name'=>'title', 'value'=>'Block')
+            array('name'=>'title', 'value'=>'Multibanner'),
+        );
+        
+        $created = $this->createContent(2, 'multibanner', $fields);
+ 
+        $content = array(
+            array('name'=>'Banner 1', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image5_banner.jpg'),
+            array('name'=>'Banner 2', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image1_banner.jpg')
+        );
+        
+        $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
+        foreach($content as $item){           
+
+            $fields = array(
+                array('name'=>'title', 'value'=>$item['name']),
+                array('name'=>'image', 'value'=>$item['img'])
+            );
+
+            $this->createContent($locationId, 'banner', $fields);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        $fields = array( 
+
+            array('name'=>'title', 'value'=>'Block'),
+            array('name'=>'columns', 'value'=> 2)
         );
         
         $created = $this->createContent(2, 'block', $fields);
  
         $content = array(
-            array('name'=>'Harder', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
-            array('name'=>'Better', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
-            array('name'=>'Faster', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
+            array('name'=>'Item 1', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image12_box.jpg'),
+            array('name'=>'Item 2', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image11_box.jpg')
         );
         
         $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
@@ -103,6 +140,67 @@ class CreateCommand extends ContainerAwareCommand {
 
             $this->createContent($locationId, 'block_item', $fields);
         }
+        
+        $fields = array( 
+
+            array('name'=>'title', 'value'=>'Block'),
+            array('name'=>'columns', 'value'=> 3)
+        );
+        
+        $created = $this->createContent(2, 'block', $fields);
+ 
+        $content = array(
+            array('name'=>'Item 3', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image10_box.jpg'),
+            array('name'=>'Item 4', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image9_box.jpg'),
+            array('name'=>'Item 5', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image8_box.jpg')
+
+        );
+        
+        $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
+        foreach($content as $item){           
+
+            $fields = array(
+                array('name'=>'title', 'value'=>$item['name']),
+                array('name'=>'image', 'value'=>$item['img'])
+            );
+
+            $this->createContent($locationId, 'block_item', $fields);
+        }
+        
+        
+        
+        
+        
+        
+        $fields = array( 
+
+            array('name'=>'title', 'value'=>'Block'),
+            array('name'=>'columns', 'value'=> 4)
+        );
+        
+        $created = $this->createContent(2, 'block', $fields);
+ 
+        $content = array(
+            array('name'=>'Item 6', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image7_box.jpg'),
+            array('name'=>'Item 7', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image6_box.jpg'),
+            array('name'=>'Item 8', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image5_box.jpg'),
+            array('name'=>'Item 9', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image4_box.jpg')
+
+        );
+        
+        $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
+        foreach($content as $item){           
+
+            $fields = array(
+                array('name'=>'title', 'value'=>$item['name']),
+                array('name'=>'image', 'value'=>$item['img'])
+            );
+
+            $this->createContent($locationId, 'block_item', $fields);
+        }
+        
+        
+        
         
         
         $fields = array( 
@@ -142,9 +240,19 @@ class CreateCommand extends ContainerAwareCommand {
         $created = $this->createContent(2, 'gallery', $fields);
         
         $content = array(
-            array('name'=>'Harder', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/blossom.png'),
-            array('name'=>'Better', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/bubbles.jpg'),
-            array('name'=>'Faster', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/buttercup.png')
+            array('name'=>'Image 1', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image1_box.jpg'),
+            array('name'=>'Image 2', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image2_box.jpg'),
+            array('name'=>'Image 3', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image3_box.jpg'),
+            array('name'=>'Image 4', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image4_box.jpg'),
+            array('name'=>'Image 5', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image5_box.jpg'),
+            array('name'=>'Image 6', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image6_box.jpg'),
+            array('name'=>'Image 7', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image7_box.jpg'),
+            array('name'=>'Image 8', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image8_box.jpg'),
+            array('name'=>'Image 9', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image9_box.jpg'),
+            array('name'=>'Image 10', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image10_box.jpg'),
+            array('name'=>'Image 11', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image11_box.jpg'),
+            array('name'=>'Image 12', 'img'=>str_replace('/web','', getcwd() ) .'/src/Tutei/BaseBundle/SetupFiles/content_files/image12_box.jpg')
+
         );
         
         $locationId = (int)$created->versionInfo->contentInfo->mainLocationId;
