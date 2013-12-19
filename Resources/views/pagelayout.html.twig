@@ -102,7 +102,9 @@
                 
 
                 {% set showSideMenu = false %}
-                {% if location.pathString is defined
+                {% if show_side_menu 
+                    and content.contentInfo.contentTypeId not in hide_side_menu_type_id_array
+                    and location.pathString is defined
                     and location.pathString|split('/')[3] != '' %}
             
                 {#  TODO:

@@ -1,6 +1,12 @@
 globals:
     google_analytics_id: ua-test-1
     google_analytics_site: test.com
+    
+    #enable / disable side menu
+    show_side_menu: true
+    # array containing the content types that won't show the side menu
+    hide_side_menu_type_id_array: [19]
+    
     siteaccess:
         site:
             language: eng-GB
