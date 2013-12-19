@@ -28,6 +28,23 @@
         </div>
         
         {% endif %} 
+        
+        <div class="attribute-byline">
+            <span class="date">
+                <small>{{ location.contentInfo.publishedDate|localizeddate( 'short', 'short', app.request.locale ) }}</small>
+            </span>
+        {% if not ez_is_field_empty( content, 'author' ) %}
+            <span class="author"><small>
+                {{ ez_render_field(
+                    content,
+                    'author',
+                    {
+                        'template': 'eZDemoBundle:fields:ezauthor_simple.html.twig'
+                    }
+                ) }}</small>
+            </span>
+        {% endif %}
+        </div>
 
         {% if not ez_is_field_empty( content, 'intro', { lang: language } ) %}
         <div class="attribute-short media-body">
