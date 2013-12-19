@@ -1,6 +1,17 @@
 .side-menu {
     margin-bottom:15px;
 }
+
+.top-menu > ul > li > a {
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+}
+
+.top-menu > ul.navbar-nav > li > a:hover,
+.top-menu > ul.navbar-nav > li.active > a:hover{
+    color: #428BCA;
+    border-bottom: 2px solid #428BCA;
+    box-sizing:border-box;
+}
 .content-view-full {
     margin-bottom:25px;    
 }
@@ -72,6 +83,7 @@ figure.ezimage-field img {
 #social-bar a {
     margin-right: 5px;
     padding: 5px; /* Increase hit rectangle for touch devices */
+    text-decoration: none;
 }
 
 #social-bar a:first-child {
