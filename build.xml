@@ -72,17 +72,6 @@
      <arg line="--format=lint-xml ${cssfiles.clean}" />
     </exec>
   </target>
-  
-  <target name="jslint" description="Run the JSLint tool on JS files">
-    <fileset dir="." id="jsfiles.raw">
-       <include name="**/*.js" />
-      <exclude name="**/*.min.js" />
-    </fileset>
-    <pathconvert pathsep=" " property="jsfiles.clean" refid="jsfiles.raw" />
-     <exec executable="jslint" output="${builddir}/logs/jslint.xml">
-      <arg line="--report xml ${jsfiles.clean}" />
-    </exec>
-  </target>
 
   <target name="pdepend" description="Calculate software metrics using PHP_Depend">
     <exec executable="pdepend">
