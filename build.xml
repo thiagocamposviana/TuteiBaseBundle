@@ -68,7 +68,7 @@
     </fileset>
     <pathconvert pathsep=" " property="cssfiles.clean" refid="cssfiles.raw"/>
     <exec executable="csslint" output="${builddir}/logs/csslint.xml">
-     <arg line="--rules=errors --format=lint-xml ${cssfiles.clean}" />
+     <arg line="--format=lint-xml ${cssfiles.clean}" />
     </exec>
   </target>
   
@@ -79,7 +79,7 @@
     </fileset>
     <pathconvert pathsep=" " property="jsfiles.clean" refid="jsfiles.raw" />
      <exec executable="java" output="${builddir}/logs/jslint.xml">
-      <arg line="-jar $JSLINT_HOME/jslint4java.jar --report xml ${jsfiles.clean}" />
+      <arg line="-jar /usr/local/jslint/jslint4java.jar --report xml ${jsfiles.clean}" />
     </exec>
   </target>
 
