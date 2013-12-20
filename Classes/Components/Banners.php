@@ -11,16 +11,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
- * Description of Banners
+ * Renders page Banners
  *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
-class Banners extends Component {
-    
-    public function render() {
+class Banners extends Component
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
         $pathString = $this->parameters['pathString'];
         $locations = explode('/', $pathString);
-        
+
 
         $locationId = $locations[count($locations) - 2];
 
@@ -29,10 +33,10 @@ class Banners extends Component {
         $query = new Query();
 
         $query->criterion = new LogicalAnd(
-                array(
+            array(
             new ContentTypeIdentifier(array('multibanner')),
             new ParentLocationId(array($locationId))
-                )
+            )
         );
 
         $query->limit = 1;
@@ -54,9 +58,9 @@ class Banners extends Component {
             $query = new Query();
 
             $query->criterion = new LogicalAnd(
-                    array(
+                array(
                 new ParentLocationId(array($parentId))
-                    )
+                )
             );
             $query->sortClauses = array(
                 new LocationPriority(Query::SORT_ASC)
@@ -92,7 +96,8 @@ class Banners extends Component {
         $response->headers->set('X-Location-Id', $locationId);
 
         return $this->controller->render(
-                        'TuteiBaseBundle:parts:page_banners.html.twig', array('banners' => $blocks, 'relationList' => $relationList), $response
+                'TuteiBaseBundle:parts:page_banners.html.twig', array('banners' => $blocks, 'relationList' => $relationList), $response
         );
     }
+
 }

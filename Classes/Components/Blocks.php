@@ -11,14 +11,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
- * Description of Blocks
+ * Renders page Blocks
  *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
-class Blocks extends Component {
-    
-    public function render(){
-        
+class Blocks extends Component
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
+
         $pathString = $this->parameters['pathString'];
         $locations = explode('/', $pathString);
 
@@ -29,10 +33,10 @@ class Blocks extends Component {
         $query = new Query();
 
         $query->criterion = new LogicalAnd(
-                array(
+            array(
             new ContentTypeIdentifier(array('block')),
             new ParentLocationId(array($locationId))
-                )
+            )
         );
 
         $repository = $this->controller->getRepository();
@@ -54,16 +58,16 @@ class Blocks extends Component {
             $query = new Query();
 
             $query->criterion = new LogicalAnd(
-                    array(
+                array(
                 new ParentLocationId(array($parentId))
-                    )
+                )
             );
             $query->sortClauses = array(
                 new LocationPriority(Query::SORT_ASC)
             );
-            $columns= $block->valueObject->fields['columns'][$this->controller->getLanguage()]->value;
+            $columns = $block->valueObject->fields['columns'][$this->controller->getLanguage()]->value;
             $rows = $block->valueObject->fields['rows'][$this->controller->getLanguage()]->value;
-            if($rows > 0){
+            if ($rows > 0) {
                 $query->limit = $rows * $columns;
             }
 
@@ -98,7 +102,8 @@ class Blocks extends Component {
         $response->headers->set('X-Location-Id', $locationId);
 
         return $this->controller->render(
-                        'TuteiBaseBundle:parts:page_blocks.html.twig', array('blocks' => $blocks, 'relationList' => $relationList), $response
+                'TuteiBaseBundle:parts:page_blocks.html.twig', array('blocks' => $blocks, 'relationList' => $relationList), $response
         );
     }
+
 }

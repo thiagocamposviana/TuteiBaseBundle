@@ -11,14 +11,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Description of Search
+ * Renders Search results
  *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
-class Search extends Component {
-    
-    public function render(){        
-        
+class Search extends Component
+{
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
+
         $request = Request::createFromGlobals();
 
         if ($request->getMethod() == "GET" and $request->query->has('search_text')) {
@@ -28,14 +32,14 @@ class Search extends Component {
             $query = new Query();
 
             $query->criterion = new LogicalAnd(
-                    array(
+                array(
                 new FullText($text)
-                    )
+                )
             );
 
             // Initialize pagination.
             $pager = new Pagerfanta(
-                    new ContentSearchAdapter($query, $this->controller->getRepository()->getSearchService())
+                new ContentSearchAdapter($query, $this->controller->getRepository()->getSearchService())
             );
 
             $pager->setMaxPerPage($this->controller->getContainer()->getParameter('project.line_list.limit'));
@@ -44,13 +48,14 @@ class Search extends Component {
 
             $response = new Response();
             return $this->controller->render(
-                            'TuteiBaseBundle:action:search.html.twig', array('pager' => $pager, 'noLayout' => false), $response
+                    'TuteiBaseBundle:action:search.html.twig', array('pager' => $pager, 'noLayout' => false), $response
             );
         } else {
             $response = new Response();
             return $this->controller->render(
-                            'TuteiBaseBundle:action:search.html.twig', array('list' => array(), 'noLayout' => false), $response
+                    'TuteiBaseBundle:action:search.html.twig', array('list' => array(), 'noLayout' => false), $response
             );
         }
     }
+
 }

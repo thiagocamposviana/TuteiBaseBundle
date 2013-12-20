@@ -12,14 +12,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
- * Description of TopMenu
+ * Renders page TopMenu
  *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
-class TopMenu extends Component {
-    
-    public function render(){
-        
+class TopMenu extends Component
+{
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
+
         $response = new Response();
 
         $response->setPublic();
@@ -39,24 +44,25 @@ class TopMenu extends Component {
         $query = new Query();
 
         $query->criterion = new LogicalAnd(
-                array(
+            array(
             $filters,
             new ParentLocationId(array(2)),
             new LocationPriority2(Operator::LT, 100)
-                )
+            )
         );
         $query->sortClauses = array(
             new LocationPriority(Query::SORT_ASC)
         );
         $list = $searchService->findContent($query);
-        
+
         $locations = explode('/', $this->parameters['pathString']);
 
 
         return $this->controller->render(
-                        'TuteiBaseBundle:parts:top_menu.html.twig', array(
-                    'list' => $list, 'locations'=>$locations
-                        ), $response
+                'TuteiBaseBundle:parts:top_menu.html.twig', array(
+                'list' => $list, 'locations' => $locations
+                ), $response
         );
     }
+
 }

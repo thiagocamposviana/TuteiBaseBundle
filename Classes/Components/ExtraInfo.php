@@ -10,20 +10,25 @@ use Symfony\Component\HttpFoundation\Response;
 use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
- * Description of ExtraInfo
+ * Renders page ExtraInfo
  *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
-class ExtraInfo extends Component {
-    
-    public function render(){
-        
+class ExtraInfo extends Component
+{
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
+
         $pathString = $this->parameters['pathString'];
         if ($pathString == '/1/') {
             return new Response();
         }
-        
-        
+
+
         $locations = explode('/', $pathString);
 
         $locationId = $locations[count($locations) - 2];
@@ -33,10 +38,10 @@ class ExtraInfo extends Component {
         $query = new Query();
 
         $query->criterion = new LogicalAnd(
-                array(
+            array(
             new ContentTypeIdentifier(array('infobox')),
             new ParentLocationId(array($locationId))
-                )
+            )
         );
 
         $repository = $this->controller->getRepository();
@@ -73,9 +78,9 @@ class ExtraInfo extends Component {
                 $query = new Query();
 
                 $query->criterion = new LogicalAnd(
-                        array(
+                    array(
                     new ParentLocationId($source->versionInfo->contentInfo->mainLocationId)
-                        )
+                    )
                 );
 
                 $query->limit = 4;
@@ -86,8 +91,8 @@ class ExtraInfo extends Component {
 
         $response = new Response();
         return $this->controller->render(
-                        'TuteiBaseBundle:parts:extra_info.html.twig', array('list' => $list, 'relationList' => $relationList, 'sourceItems' => $sourceItems), $response
+                'TuteiBaseBundle:parts:extra_info.html.twig', array('list' => $list, 'relationList' => $relationList, 'sourceItems' => $sourceItems), $response
         );
-        
     }
+
 }

@@ -9,7 +9,6 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\Yaml\Yaml;
 
-
 /**
  * This is the class that loads and manages your bundle configuration
  *
@@ -17,6 +16,7 @@ use Symfony\Component\Yaml\Yaml;
  */
 class TuteiBaseExtension extends Extension implements PrependExtensionInterface
 {
+
     /**
      * {@inheritDoc}
      */
@@ -25,18 +25,22 @@ class TuteiBaseExtension extends Extension implements PrependExtensionInterface
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
-        
-        $loader->load( 'project.yml' );
+
+        $loader->load('project.yml');
     }
-    
-    public function prepend( ContainerBuilder $container )
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prepend(ContainerBuilder $container)
     {
-        $ezpublish = Yaml::parse( __DIR__ . '/../Resources/config/ezpublish.yml' );
-        $container->prependExtensionConfig( 'ezpublish', $ezpublish );
-        
-        $twig = Yaml::parse( __DIR__ . '/../Resources/config/twig.yml' );
-        $container->prependExtensionConfig( 'twig', $twig );
+        $ezpublish = Yaml::parse(__DIR__ . '/../Resources/config/ezpublish.yml');
+        $container->prependExtensionConfig('ezpublish', $ezpublish);
+
+        $twig = Yaml::parse(__DIR__ . '/../Resources/config/twig.yml');
+        $container->prependExtensionConfig('twig', $twig);
     }
+
 }

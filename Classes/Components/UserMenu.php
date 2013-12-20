@@ -12,13 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
- * Description of UserMenu
+ * Renders page UserMenu
  *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
-class UserMenu extends Component {
-    
-    public function render(){
+class UserMenu extends Component
+{
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
         $response = new Response();
 
         $response->setSharedMaxAge(3600);
@@ -33,11 +38,11 @@ class UserMenu extends Component {
         $query = new Query();
 
         $query->criterion = new LogicalAnd(
-                array(
+            array(
             $filters,
             new ParentLocationId(array(2)),
             new LocationPriority2(Operator::GTE, 100)
-                )
+            )
         );
 
         $query->sortClauses = array(
@@ -51,10 +56,11 @@ class UserMenu extends Component {
 
 
         return $this->controller->render(
-                        'TuteiBaseBundle:parts:user_menu.html.twig', array(
-                    'list' => $list,
-                    'current_user' => $current_user
-                        ), $response
+                'TuteiBaseBundle:parts:user_menu.html.twig', array(
+                'list' => $list,
+                'current_user' => $current_user
+                ), $response
         );
     }
+
 }

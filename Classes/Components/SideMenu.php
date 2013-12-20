@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Description of SideMenu
- *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
- */
-
 namespace Tutei\BaseBundle\Classes\Components;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -15,16 +9,25 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationPriority;
 use Symfony\Component\HttpFoundation\Response;
 use Tutei\BaseBundle\Classes\SearchHelper;
 
-class SideMenu extends Component {
-    
-    
-    public function render(){
+/**
+ * Renders page SideMenu
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
+class SideMenu extends Component
+{
+
+    /**
+     * {@inheritDoc}
+     */
+    public function render()
+    {
         $response = new Response();
 
         $response->setPublic();
         $response->setSharedMaxAge(86400);
 
-        
+
 
         $locations = explode('/', $this->parameters['pathString']);
         $locationId = $locations[3];
@@ -37,16 +40,16 @@ class SideMenu extends Component {
         $classes = $this->controller->getContainer()->getParameter('project.menufilter.side');
 
         $filters = SearchHelper::createMenuFilter($classes);
-        
+
         $searchService = $this->controller->getRepository()->getSearchService();
 
         $query = new Query();
 
         $query->criterion = new LogicalAnd(
-                array(
+            array(
             $filters,
             new ParentLocationId(array($locationId))
-                )
+            )
         );
         $query->sortClauses = array(
             new LocationPriority(Query::SORT_ASC)
@@ -55,9 +58,8 @@ class SideMenu extends Component {
 
 
         return $this->controller->render(
-                        'TuteiBaseBundle:parts:side_menu.html.twig', array('list' => $list, 'locations'=>$locations), $response
+                'TuteiBaseBundle:parts:side_menu.html.twig', array('list' => $list, 'locations' => $locations), $response
         );
-        
-        
     }
+
 }

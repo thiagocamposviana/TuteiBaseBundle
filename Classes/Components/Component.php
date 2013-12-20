@@ -1,29 +1,47 @@
 <?php
 
 /**
- * Description of PageComponent
+ * The page component abstract class
  *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
 use Tutei\BaseBundle\Controller\TuteiController;
 
-abstract class Component {
-    
+abstract class Component
+{
+
+    /**
+     * The current controller
+     * @var \Tutei\BaseBundle\Controller\TuteiController 
+     */
     protected $controller;
-    protected $parameters;
     
-    public function __construct( TuteiController $controller, $parameters = array() ){
+    /**
+     * A hash array containing all the parameters to be used by the component
+     * @var array 
+     */
+    protected $parameters;
+
+    /**
+     * 
+     * @param \Tutei\BaseBundle\Controller\TuteiController $controller
+     * @param array $parameters
+     */
+    public function __construct(TuteiController $controller, $parameters = array())
+    {
         $this->controller = $controller;
         $this->parameters = $parameters;
+    }
+
+    /**
+     * Renders the component
+     */
+    public function render()
+    {
         
     }
-    
-    public function render(){     
-        
-    }
-    
-    
+
 }
