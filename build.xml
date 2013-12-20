@@ -52,6 +52,14 @@
       <modified />
     </fileset>
     </apply>
+    <apply executable="app/console" failonerror="true">
+      <arg value="twig:lint" />
+
+      <fileset dir="${basedir}/Resources">
+        <include name="**/*.twig" />
+      </fileset>
+
+    </apply>
   </target>
 
   <target name="phploc" description="Measure project size using PHPLOC">
@@ -90,7 +98,7 @@
     </exec>
   </target>
 
-  <target name="phpmd-ci" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
+  <target name="phpmd-ci" depends="clean" description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
     <exec executable="phpmd">
       <arg path="${sourcedir}" />
       <arg value="xml" />
@@ -100,14 +108,14 @@
     </exec>
   </target>
 
-  <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
+  <target name="phpcs" depends="clean" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
     <exec executable="phpcs">
       <arg value="--standard=Symfony2" />
       <arg path="${sourcedir}" />
     </exec>
   </target>
 
-  <target name="phpcs-ci" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
+  <target name="phpcs-ci" depends="clean" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
     <exec executable="phpcs" output="/dev/null">
       <arg value="--report=checkstyle" />
       <arg value="--report-file=${builddir}/logs/checkstyle.xml" />
