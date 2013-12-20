@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * File containing the Blocks Component class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 namespace Tutei\BaseBundle\Classes\Components;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -12,8 +16,6 @@ use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
  * Renders page Blocks
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class Blocks extends Component
 {

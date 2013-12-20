@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the SearchHelper class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes;
 

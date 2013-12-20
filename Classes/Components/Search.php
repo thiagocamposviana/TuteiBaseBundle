@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the Search Component class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
@@ -12,8 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Renders Search results
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class Search extends Component
 {

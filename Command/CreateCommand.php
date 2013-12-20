@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the CreateCommand class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Command;
 
@@ -8,8 +13,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Creates sample content
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class CreateCommand extends ContainerAwareCommand
 {

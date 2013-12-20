@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the ExtraInfo Component class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
@@ -11,8 +16,6 @@ use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
  * Renders page ExtraInfo
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class ExtraInfo extends Component
 {

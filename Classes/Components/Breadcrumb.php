@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the Breadcrumb Component class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
@@ -7,8 +12,6 @@ use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
  * Renders page Breadcrumb
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class Breadcrumb extends Component
 {

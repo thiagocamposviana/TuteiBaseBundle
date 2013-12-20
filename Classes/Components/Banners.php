@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the Banners Component class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
@@ -12,8 +17,6 @@ use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
  * Renders page Banners
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class Banners extends Component
 {

@@ -9,6 +9,15 @@ use Tutei\BaseBundle\Classes\Components\Search;
 class TuteiController extends Controller
 {
 
+    /**
+     * Renders in a given component
+     * 
+     * @param string $name
+     * @param array $parameters
+     * @param string $nameSpace
+     * 
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function showComponent($name, $parameters = array(), $nameSpace = "Tutei\BaseBundle\Classes\Components")
     {
         $class = $nameSpace . "\\" . $name;
@@ -25,17 +34,32 @@ class TuteiController extends Controller
         return new Response("<h1>Error: Component not found</h1>");
     }
 
+    /**
+     * Shows the search results
+     * 
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function searchAction()
     {
         $search = new Search($this);
         return $search->render();
     }
 
+    /**
+     * Gets the controller's container
+     * 
+     * @return \Symfony\Component\DependencyInjection\Container
+     */
     public function getContainer()
     {
         return $this->container;
     }
 
+    /**
+     * Returns the current siteaccess language
+     * 
+     * @return string
+     */
     public function getLanguage()
     {
         $siteaccess = $this->container->get('ezpublish.siteaccess')->name;

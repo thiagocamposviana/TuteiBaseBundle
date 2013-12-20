@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the Component abstract class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
@@ -6,8 +11,6 @@ use Tutei\BaseBundle\Controller\TuteiController;
 
 /**
  * The page component abstract class
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 abstract class Component
 {

@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the UserMenu Component class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
@@ -13,8 +18,6 @@ use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
  * Renders page UserMenu
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class UserMenu extends Component
 {

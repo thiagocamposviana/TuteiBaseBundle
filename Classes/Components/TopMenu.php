@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the TopMenu Component class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
@@ -13,8 +18,6 @@ use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
  * Renders page TopMenu
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class TopMenu extends Component
 {

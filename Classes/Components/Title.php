@@ -1,4 +1,9 @@
 <?php
+/**
+ * File containing the Title Component class
+ *
+ * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
+ */
 
 namespace Tutei\BaseBundle\Classes\Components;
 
@@ -7,8 +12,6 @@ use Tutei\BaseBundle\Classes\SearchHelper;
 
 /**
  * Renders page Title
- *
- * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
 class Title extends Component
 {
