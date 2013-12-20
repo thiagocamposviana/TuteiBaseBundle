@@ -113,6 +113,7 @@
       <arg value="--report=checkstyle" />
       <arg value="--report-file=${builddir}/logs/checkstyle.xml" />
       <arg value="--standard=Symfony2" />
+      <arg value="--ignore=${builddir}" />
       <arg path="${sourcedir}" />
     </exec>
   </target> 
