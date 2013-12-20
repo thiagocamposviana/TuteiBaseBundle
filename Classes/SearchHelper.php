@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Description of SearchHelper
- *
- * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
- */
-
 namespace Tutei\BaseBundle\Classes;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
@@ -19,11 +13,14 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationDepth;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationPriority;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionIdentifier;
+use Tutei\BaseBundle\Controller\TuteiController;
 
+class SearchHelper
+{
 
-class SearchHelper {
-    public static function createSortClause($location) {
-        
+    public static function createSortClause(Location $location)
+    {
+
         $sortOrder = Query::SORT_ASC;
         if ($location->sortOrder == 0) {
             $sortOrder = Query::SORT_DESC;
@@ -47,8 +44,9 @@ class SearchHelper {
                 return new ContentName($sortOrder);
         }
     }
-    
-    public static function createMenuFilter($classes) {
+
+    public static function createMenuFilter($classes)
+    {
         $filters = array();
         foreach ($classes as $index => $class) {
             $filter = explode('/', $class);
@@ -58,7 +56,7 @@ class SearchHelper {
 
                 $filters[] = new Query\Criterion\LogicalOr(array(
                     new ContentTypeIdentifier($class),
-                    new Query\Criterion\Field($filter[1], Operator::EQ, true)
+                    new Query\Criterion\Field($filter[1], Operator::EQ, true),
                 ));
             } else {
                 $filters[] = new ContentTypeIdentifier($class);
@@ -67,12 +65,13 @@ class SearchHelper {
 
         return new Query\Criterion\LogicalOr($filters);
     }
-    
-    public static function getPath($pathString, $controller) {
-        
-        
+
+    public static function getPath($pathString, TuteiController $controller)
+    {
+
+
         $repository = $controller->getRepository();
-        
+
         $locationService = $repository->getLocationService();
         $locations = explode('/', $pathString);
 
@@ -85,4 +84,5 @@ class SearchHelper {
         }
         return $path;
     }
+
 }

@@ -1,5 +1,5 @@
 {
-    "name": "Tutei/BaseBundle",
+    "name": "tutei/base-bundle",
     "description": "Bundle for eZ Publish Platform",
     "license": "GPL-2.0",
     "authors": [
@@ -9,8 +9,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
-        "ezsystems/ezpublish-kernel": "*"
+        "php": ">=5.3.3"
     },
     "autoload": {
         "psr-0": {"Tutei\\BaseBundle": ""}

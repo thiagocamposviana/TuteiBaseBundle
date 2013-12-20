@@ -1,21 +1,17 @@
 <?php
 
+namespace Tutei\BaseBundle\Command;
+
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
 /**
  * Description of ContentCommand
  *
  * @author Thiago Campos Viana <thiagocamposviana at gmail.com>
  */
-
-namespace Tutei\BaseBundle\Command;
-
-use eZ\Publish\API\Repository\Values\Content\Query;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
-use eZ\Publish\Core\FieldType\User\Value;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class CreateCommand extends ContainerAwareCommand {
 
@@ -37,18 +33,13 @@ class CreateCommand extends ContainerAwareCommand {
      * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output) {
-        // fetch the input argument
-        if (!$name = $input->getArgument('name')) {
-            $name = "World";
-        }
+
         $repository = $this->getContainer()->get('ezpublish.api.repository');
 
         $userService = $repository->getUserService();
         $user = $userService->loadUserByCredentials( 'admin', 'publish');
         $repository->setCurrentUser( $user );
-        
-        /* $xmlText = "<?xml version='1.0' encoding='utf-8'?><section></section>"; */
-        
+                
         $fieldsInfo = array( 
 
             array('name'=>'title', 'value'=>'Infobox')
@@ -105,12 +96,7 @@ class CreateCommand extends ContainerAwareCommand {
             );
 
             $this->createContent($locationId, 'banner', $fields);
-        }
-        
-        
-        
-        
-        
+        }      
         
         
         
@@ -262,22 +248,20 @@ class CreateCommand extends ContainerAwareCommand {
             array('name'=>'Article 07', 'intro'=> $xmlText, 'image'=>$created_images[6]->versionInfo->contentInfo),
             array('name'=>'Article 08', 'intro'=> $xmlText, 'image'=>$created_images[7]->versionInfo->contentInfo),
             array('name'=>'Article 09', 'intro'=> $xmlText, 'image'=>$created_images[8]->versionInfo->contentInfo),   
-            array('name'=>'Article 10', 'intro'=> $xmlText, 'image'=>$created_images[9]->versionInfo->contentInfo)
+            array('name'=>'Article 10', 'intro'=> $xmlText, 'image'=>$created_images[9]->versionInfo->contentInfo),
         );
         
-        /* TODO: articles image is a object relation list, change it later  */
+        $locationId = (int)$articles_folder->versionInfo->contentInfo->mainLocationId;
+        foreach($content as $item){           
 
-            $locationId = (int)$articles_folder->versionInfo->contentInfo->mainLocationId;
-            foreach($content as $item){           
+            $fields = array(
+                array('name'=>'title', 'value'=>$item['name']),
+                array('name'=>'intro', 'value'=>$item['intro']),
+                array('name'=>'image', 'value'=>$item['image']),
+            );
 
-                $fields = array(
-                    array('name'=>'title', 'value'=>$item['name']),
-                    array('name'=>'intro', 'value'=>$item['intro']),
-                    array('name'=>'image', 'value'=>$item['image'])
-                );
-
-                $this->createContent($locationId, 'article', $fields);
-            }
+            $this->createContent($locationId, 'article', $fields);
+        }
         
    
     }
@@ -323,7 +307,7 @@ class CreateCommand extends ContainerAwareCommand {
         }
         
         $contentDraft = $contentService->updateContent( $contentDraft->versionInfo, $contentUpdateStruct );
-        $content = $contentService->publishVersion( $contentDraft->versionInfo );
+        return $contentService->publishVersion( $contentDraft->versionInfo );
         
     }
     
@@ -357,8 +341,7 @@ class CreateCommand extends ContainerAwareCommand {
         $contentTypeService->addFieldDefinition( $contentDraft,  $titleFieldCreate );
         
         
-        $content = $contentTypeService->publishContentTypeDraft( $contentDraft );
-        //        $contentDraft = $contentTypeService->updateContentTypeDraft( $contentDraft, $contentUpdateStruct );
+        return $contentTypeService->publishContentTypeDraft( $contentDraft );
    
     }
 

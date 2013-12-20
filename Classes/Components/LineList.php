@@ -62,7 +62,6 @@ class LineList extends Component {
         $pager->setMaxPerPage($limit);
         $pager->setCurrentPage($request->get('page', 1));
 
-        // $list = $searchService->findContent($query);
         $content = $this->controller->getRepository()
                 ->getContentService()
                 ->loadContentByContentInfo($location->getContentInfo());
