@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Lazyprojet" default="build">
+<project name="Project" default="build">
   <property name="workspace" value="${basedir}" />
   <property name="sourcedir" value="${basedir}" />
   <property name="builddir" value="${workspace}/build" />
@@ -65,6 +65,7 @@
   <target name="csslint" description="Run the CSSLint tool on CSS files">
     <fileset dir="." id="cssfiles.raw">
     <include name="**/*.css" />
+    <exclude name="**/*.min.css" />
     </fileset>
     <pathconvert pathsep=" " property="cssfiles.clean" refid="cssfiles.raw"/>
     <exec executable="csslint" output="${builddir}/logs/csslint.xml">
@@ -78,8 +79,8 @@
       <exclude name="**/*.min.js" />
     </fileset>
     <pathconvert pathsep=" " property="jsfiles.clean" refid="jsfiles.raw" />
-     <exec executable="java" output="${builddir}/logs/jslint.xml">
-      <arg line="-jar $JSLINT_HOME/jslint4java.jar --report xml ${jsfiles.clean}" />
+     <exec executable="jslint" output="${builddir}/logs/jslint.xml">
+      <arg line="--report xml ${jsfiles.clean}" />
     </exec>
   </target>
 
