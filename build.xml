@@ -103,6 +103,7 @@
   <target name="phpcs" depends="clean" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
     <exec executable="phpcs">
       <arg value="--standard=Symfony2" />
+      <arg value="--ignore=${builddir}" />
       <arg path="${sourcedir}" />
     </exec>
   </target>
