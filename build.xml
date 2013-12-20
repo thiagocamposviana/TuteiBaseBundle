@@ -73,10 +73,9 @@
   </target>
   
   <target name="jslint" description="Run the JSLint tool on JS files">
-    <fileset dir="public/scripts" id="jsfiles.raw">
+    <fileset dir="." id="jsfiles.raw">
        <include name="**/*.js" />
       <exclude name="**/*.min.js" />
-      <exclude name="build/**/*.js" />
     </fileset>
     <pathconvert pathsep=" " property="jsfiles.clean" refid="jsfiles.raw" />
      <exec executable="java" output="${basedir}/build/logs/jslint.xml">
