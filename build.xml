@@ -6,7 +6,7 @@
   <property name="builddir" value="${workspace}/build" />
 
   <target name="build"
-   depends="prepare,lint,phploc,pdepend,phpcpd,phpmd-ci,phpcs-ci,phpdoc,phpcb"/>
+   depends="prepare,lint,jslint,csslint,phploc,pdepend,phpcpd,phpmd-ci,phpcs-ci,phpdoc,phpcb"/>
 
   <target name="build-parallel" depends="prepare,lint,tools-parallel,phpcb"/>
 
@@ -61,6 +61,28 @@
     <arg path="${sourcedir}" />
     </exec>
   </target>
+  
+  <target name="csslint" description="Run the CSSLint tool on CSS files">
+    <fileset dir="." id="cssfiles.raw">
+    <include name="**/*.css" />
+    </fileset>
+    <pathconvert pathsep=" " property="cssfiles.clean" refid="cssfiles.raw"/>
+    <exec executable="csslint" output="${basedir}/build/logs/csslint.xml">
+     <arg line="--rules=errors --format=lint-xml ${cssfiles.clean}" />
+    </exec>
+  </target>
+  
+  <target name="jslint" description="Run the JSLint tool on JS files">
+    <fileset dir="public/scripts" id="jsfiles.raw">
+       <include name="**/*.js" />
+      <exclude name="**/*.min.js" />
+      <exclude name="build/**/*.js" />
+    </fileset>
+    <pathconvert pathsep=" " property="jsfiles.clean" refid="jsfiles.raw" />
+     <exec executable="java" output="${basedir}/build/logs/jslint.xml">
+      <arg line="-jar $JSLINT_HOME/jslint4java.jar --report xml ${jsfiles.clean}" />
+    </exec>
+  </target>
 
   <target name="pdepend" description="Calculate software metrics using PHP_Depend">
     <exec executable="pdepend">
@@ -103,7 +125,7 @@
       <arg value="--standard=Symfony2" />
       <arg path="${sourcedir}" />
     </exec>
-  </target>
+  </target> 
 
   <target name="phpcpd" description="Find duplicate code using PHPCPD">
     <exec executable="phpcpd">
