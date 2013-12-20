@@ -52,7 +52,7 @@
       <modified />
     </fileset>
     </apply>
-    <apply executable="app/console" failonerror="true">
+    <apply executable="../../../ezpublish/console" failonerror="true">
       <arg value="twig:lint" />
 
       <fileset dir="${basedir}/Resources">
