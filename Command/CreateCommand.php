@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File containing the CreateCommand class
  *
@@ -39,26 +40,40 @@ class CreateCommand extends ContainerAwareCommand
         $user = $userService->loadUserByCredentials('admin', 'publish');
         $repository->setCurrentUser($user);
 
+        $xmlText = "<?xml version='1.0' encoding='utf-8'?><section>"
+            . "<paragraph>This infobox will be shown here until there's "
+            . "another infobox created in the content tree in a depth closer to "
+            . "the current location.</paragraph>"
+            . "</section>";
+
         $fieldsInfo = array(
-            array('name' => 'title', 'value' => 'Infobox')
+            array('name' => 'title', 'value' => 'Infobox'),
+            array('name' => 'body', 'value' => $xmlText),
         );
 
         $created = $this->createContent(2, 'infobox', $fieldsInfo);
 
         $fields = array(
-            array('name' => 'name', 'value' => 'Folders')
+            array('name' => 'name', 'value' => 'Folders'),
         );
 
         $created = $this->createContent(2, 'folder', $fields);
 
-        //var_dump($created->versionInfo->contentInfo->mainLocationId);exit;
-
-        $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
-        $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
-        $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+        for($count=0; $count<3; $count++){
+            $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+            $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+            $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+            $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+            $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+        }
+        
+        $xmlText = "<?xml version='1.0' encoding='utf-8'?><section>"
+            . "<paragraph>Here's a brand new infobox!</paragraph>"
+            . "</section>";
 
         $fieldsInfo = array(
-            array('name' => 'title', 'value' => 'Changed Infobox')
+            array('name' => 'title', 'value' => 'Changed Infobox'),
+            array('name' => 'body', 'value' => $xmlText),
         );
 
         $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'infobox', $fieldsInfo);
