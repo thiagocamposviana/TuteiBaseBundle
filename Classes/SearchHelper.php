@@ -15,9 +15,17 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationPriority;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionIdentifier;
 use Tutei\BaseBundle\Controller\TuteiController;
 
+/**
+ * Helpers functions used to search object
+ */
 class SearchHelper
 {
 
+    /**
+     * Creates the sort clause according to the location sort field
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationDepth|\eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionIdentifier|\eZ\Publish\API\Repository\Values\Content\Query\SortClause\DateModified|\eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationPriority|\eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName|\eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentId|\eZ\Publish\API\Repository\Values\Content\Query\SortClause\DatePublished
+     */
     public static function createSortClause(Location $location)
     {
 
@@ -45,6 +53,11 @@ class SearchHelper
         }
     }
 
+    /**
+     * Filters by content type and content type checkbox attribute
+     * @param type $classes
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalOr
+     */
     public static function createMenuFilter($classes)
     {
         $filters = array();
@@ -66,9 +79,14 @@ class SearchHelper
         return new Query\Criterion\LogicalOr($filters);
     }
 
+    /**
+     * Get all content in path given a path string
+     * @param string                                        $pathString
+     * @param \Tutei\BaseBundle\Controller\TuteiController  $controller
+     * @return array
+     */
     public static function getPath($pathString, TuteiController $controller)
     {
-
 
         $repository = $controller->getRepository();
 
