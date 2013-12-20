@@ -121,7 +121,8 @@ find ezpublish/EzPublishKernel.php -exec sed -i "s/EzSystemsDemoBundle;/EzSystem
 
 cp -r SetupFiles/override ezpublish_legacy/settings
 cp -r SetupFiles/siteaccess ezpublish_legacy/settings
-cp SetupFiles/ezpublish_dev.yml ezpublish/config
+cp SetupFiles/ezpublish_dev.yml ezpublish/config/ezpublish_dev.yml
+cp SetupFiles/ezpublish_dev.yml ezpublish/config/ezpublish_test.yml
 
 
 
