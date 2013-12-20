@@ -12,13 +12,10 @@ class TuteiControllerTest extends WebTestCase
         $options = array(
             'environment' => 'test'
         );
-        
+
         $client = static::createClient($options);
-        
 
         $crawler = $client->request('GET', '/content/search');
-        
-        var_dump($crawler);
 
         $this->assertTrue($crawler->filter('html:contains("Search returned")')->count() > 0);
     }
