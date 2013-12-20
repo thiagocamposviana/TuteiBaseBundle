@@ -270,7 +270,7 @@ echo "127.0.0.1       ${sitedir}" >> /etc/hosts
 
 /etc/init.d/apache2 restart
 
-if [ "${sitedir}" == "localhost" ]
+if [ "${sitedir}" = "localhost" ]
 then
 php ezpublish/console twig:lint @TuteiBaseBundle
 phpunit -c ezpublish
