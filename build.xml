@@ -67,7 +67,7 @@
     <include name="**/*.css" />
     </fileset>
     <pathconvert pathsep=" " property="cssfiles.clean" refid="cssfiles.raw"/>
-    <exec executable="csslint" output="${basedir}/build/logs/csslint.xml">
+    <exec executable="csslint" output="${builddir}/logs/csslint.xml">
      <arg line="--rules=errors --format=lint-xml ${cssfiles.clean}" />
     </exec>
   </target>
@@ -78,7 +78,7 @@
       <exclude name="**/*.min.js" />
     </fileset>
     <pathconvert pathsep=" " property="jsfiles.clean" refid="jsfiles.raw" />
-     <exec executable="java" output="${basedir}/build/logs/jslint.xml">
+     <exec executable="java" output="${builddir}/logs/jslint.xml">
       <arg line="-jar $JSLINT_HOME/jslint4java.jar --report xml ${jsfiles.clean}" />
     </exec>
   </target>
