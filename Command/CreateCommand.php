@@ -57,16 +57,17 @@ class CreateCommand extends ContainerAwareCommand
             array('name' => 'name', 'value' => 'Folders'),
         );
 
-        $created = $this->createContent(2, 'folder', $fields);
+        $sideMenuParent = $this->createContent(2, 'folder', $fields);
 
-        for($count=0; $count<3; $count++){
-            $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
-            $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
-            $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
-            $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
-            $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
-        }
-        
+        $created = $this->createContent($sideMenuParent->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+        $this->createContent($sideMenuParent->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+        $this->createContent($sideMenuParent->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+        $this->createContent($sideMenuParent->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+        $this->createContent($sideMenuParent->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+
+        $created = $this->createContent($created->versionInfo->contentInfo->mainLocationId, 'folder', $fields);
+
+
         $xmlText = "<?xml version='1.0' encoding='utf-8'?><section>"
             . "<paragraph>Here's a brand new infobox!</paragraph>"
             . "</section>";
