@@ -7,6 +7,9 @@ TODO:
     
 #########################
 
+- Check ez5_jenkins.png to have an idea on how to configure jenkins to work with
+ this project.
+
 - To check twig templates:
 php ezpublish/console twig:lint @TuteiBaseBundle
 
