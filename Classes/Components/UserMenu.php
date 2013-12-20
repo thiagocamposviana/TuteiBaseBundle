@@ -38,11 +38,11 @@ class UserMenu extends Component
         $query = new Query();
 
         $query->criterion = new LogicalAnd(
-            array(
+          array(
             $filters,
             new ParentLocationId(array(2)),
             new LocationPriority2(Operator::GTE, 100)
-            )
+          )
         );
 
         $query->sortClauses = array(
@@ -56,10 +56,10 @@ class UserMenu extends Component
 
 
         return $this->controller->render(
-                'TuteiBaseBundle:parts:user_menu.html.twig', array(
-                'list' => $list,
-                'current_user' => $current_user
-                ), $response
+            'TuteiBaseBundle:parts:user_menu.html.twig', array(
+              'list' => $list,
+              'current_user' => $current_user
+            ), $response
         );
     }
 
