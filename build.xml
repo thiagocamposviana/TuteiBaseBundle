@@ -63,7 +63,7 @@
   </target>
   
   <target name="csslint" depends="clean" description="Run the CSSLint tool on CSS files">
-    <fileset dir="." id="cssfiles.raw">
+    <fileset dir="Resources" id="cssfiles.raw">
     <include name="**/*.css" />
     <exclude name="**/*.min.css" />
     </fileset>
