@@ -17,6 +17,7 @@ use Tutei\BaseBundle\Classes\SearchHelper;
  */
 class Blocks extends Component
 {
+
     /**
      * {@inheritDoc}
      */
@@ -102,7 +103,10 @@ class Blocks extends Component
         $response->headers->set('X-Location-Id', $locationId);
 
         return $this->controller->render(
-                'TuteiBaseBundle:parts:page_blocks.html.twig', array('blocks' => $blocks, 'relationList' => $relationList), $response
+                'TuteiBaseBundle:parts:page_blocks.html.twig', array(
+                'blocks' => $blocks,
+                'relationList' => $relationList
+                ), $response
         );
     }
 

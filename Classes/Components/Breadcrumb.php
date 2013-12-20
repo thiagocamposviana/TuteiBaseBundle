@@ -12,6 +12,7 @@ use Tutei\BaseBundle\Classes\SearchHelper;
  */
 class Breadcrumb extends Component
 {
+
     /**
      * {@inheritDoc}
      */
@@ -22,7 +23,9 @@ class Breadcrumb extends Component
         $response = new Response();
 
         return $this->controller->render(
-                'TuteiBaseBundle:parts:breadcrumb.html.twig', array('locationList' => $path), $response
+                'TuteiBaseBundle:parts:breadcrumb.html.twig', array(
+                'locationList' => $path
+                ), $response
         );
     }
 

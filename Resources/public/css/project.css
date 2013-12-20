@@ -70,7 +70,7 @@ figure.ezimage-field img {
 
 /* Create square icons, white logo on colored background */
 
-#social-bar .icon {
+.social-bar .icon {
     color: white;
     border-radius: 4px;
     border: 1px outset rgba(128, 128, 128, 0.5);
@@ -80,52 +80,52 @@ figure.ezimage-field img {
     text-shadow: 1px 1px 1px rgba(128, 128, 128, 0.5);
 }
 
-#social-bar a {
+.social-bar a {
     margin-right: 5px;
     padding: 5px; /* Increase hit rectangle for touch devices */
     text-decoration: none;
 }
 
-#social-bar a:first-child {
+.social-bar a:first-child {
     padding-left: 0;
 }
 
 /* Set icon color related to the service */
 
-#social-bar a span {
+.social-bar a span {
     margin-left: 5px;
 }
 
-#social-bar .icon-rss {
+.social-bar .icon-rss {
     color: #e5842f;
 }
 
-#social-bar .icon-facebook {
+.social-bar .icon-facebook {
     color: #3B5998;
 }
 
-#social-bar .icon-github {
+.social-bar .icon-github {
     color: #000;
 }
 
-#social-bar .icon-twitter {
+.social-bar .icon-twitter {
     color: #00ACED;
 }
 
-#social-bar .icon-google-plus {
+.social-bar .icon-google-plus {
     color: #E14107;
 }
 
-#social-bar a:hover span {
+.social-bar a:hover span {
     color: #333333; /* Match icon highlight color */
 }
 
 /* Animate mouse hover */
-#social-bar a span {
+.social-bar a span {
    transition: color 0.5s;
 }
 
-#social-bar a:hover span {
+.social-bar a:hover span {
     color: #333333;
     transition: color 0.5s;
 }

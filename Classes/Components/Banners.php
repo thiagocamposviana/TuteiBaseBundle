@@ -17,6 +17,7 @@ use Tutei\BaseBundle\Classes\SearchHelper;
  */
 class Banners extends Component
 {
+
     /**
      * {@inheritDoc}
      */
@@ -96,7 +97,10 @@ class Banners extends Component
         $response->headers->set('X-Location-Id', $locationId);
 
         return $this->controller->render(
-                'TuteiBaseBundle:parts:page_banners.html.twig', array('banners' => $blocks, 'relationList' => $relationList), $response
+                'TuteiBaseBundle:parts:page_banners.html.twig', array(
+                'banners' => $blocks,
+                'relationList' => $relationList
+                ), $response
         );
     }
 

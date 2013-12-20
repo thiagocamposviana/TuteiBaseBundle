@@ -91,7 +91,11 @@ class ExtraInfo extends Component
 
         $response = new Response();
         return $this->controller->render(
-                'TuteiBaseBundle:parts:extra_info.html.twig', array('list' => $list, 'relationList' => $relationList, 'sourceItems' => $sourceItems), $response
+                'TuteiBaseBundle:parts:extra_info.html.twig', array(
+                'list' => $list,
+                'relationList' => $relationList,
+                'sourceItems' => $sourceItems
+                ), $response
         );
     }
 

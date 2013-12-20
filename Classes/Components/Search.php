@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Search extends Component
 {
+
     /**
      * {@inheritDoc}
      */
@@ -53,7 +54,10 @@ class Search extends Component
         } else {
             $response = new Response();
             return $this->controller->render(
-                    'TuteiBaseBundle:action:search.html.twig', array('list' => array(), 'noLayout' => false), $response
+                    'TuteiBaseBundle:action:search.html.twig', array(
+                    'list' => array(),
+                    'noLayout' => false
+                    ), $response
             );
         }
     }

@@ -58,7 +58,10 @@ class SideMenu extends Component
 
 
         return $this->controller->render(
-                'TuteiBaseBundle:parts:side_menu.html.twig', array('list' => $list, 'locations' => $locations), $response
+                'TuteiBaseBundle:parts:side_menu.html.twig', array(
+                'list' => $list,
+                'locations' => $locations
+                ), $response
         );
     }
 
