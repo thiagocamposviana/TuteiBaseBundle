@@ -7,6 +7,9 @@ TODO:
     
 #########################
 
+- To check twig templates:
+php ezpublish/console twig:lint @TuteiBaseBundle
+
 - Couldn't find a way to configure eZ publish to use twig translations when 
 accessing a certain siteaccess that uses another language.
 

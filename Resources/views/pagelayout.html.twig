@@ -78,9 +78,13 @@
                     
                 </div>
                 <div class="navbar-collapse collapse top-menu">
+                    {% set pathString = '' %}
+                    {% if location.pathString is defined %}
+                        {% set pathString = location.pathString %}
+                    {% endif %}
 
                     <ul class="nav navbar-nav">
-                        {{ render( controller( "tutei:showComponent", { 'name': 'TopMenu','parameters' : {'pathString': location.pathString } } ) ) }}
+                        {{ render( controller( "tutei:showComponent", { 'name': 'TopMenu','parameters' : {'pathString': pathString } } ) ) }}
                     </ul>
                     <form class="navbar-form navbar-right" role="form" method="get" action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}">
                         <div class="form-group">
@@ -103,6 +107,7 @@
 
                 {% set showSideMenu = false %}
                 {% if show_side_menu 
+                    and content is defined
                     and content.contentInfo.contentTypeId not in hide_side_menu_type_id_array
                     and location.pathString is defined
                     and location.pathString|split('/')[3] != '' %}

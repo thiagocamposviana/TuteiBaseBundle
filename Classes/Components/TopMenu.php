@@ -57,8 +57,14 @@ class TopMenu extends Component
             new LocationPriority(Query::SORT_ASC)
         );
         $list = $searchService->findContent($query);
+        
+        $pathString = '';
+        if(isset($this->parameters['pathString']))
+        {
+            $pathString = $this->parameters['pathString'];
+        }
 
-        $locations = explode('/', $this->parameters['pathString']);
+        $locations = explode('/', $pathString);
 
 
         return $this->controller->render(

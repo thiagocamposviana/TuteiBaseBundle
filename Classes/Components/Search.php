@@ -29,7 +29,9 @@ class Search extends Component
 
         $request = Request::createFromGlobals();
 
-        if ($request->getMethod() == "GET" and $request->query->has('search_text')) {
+        if ($request->getMethod() == "GET"
+            and $request->query->has('search_text')
+            and $request->query->get('search_text') != '') {
 
             $text = $request->query->get('search_text');
 
@@ -59,7 +61,8 @@ class Search extends Component
             return $this->controller->render(
                     'TuteiBaseBundle:action:search.html.twig', array(
                     'list' => array(),
-                    'noLayout' => false
+                    'pager' => array(),
+                    'noLayout' => false,
                     ), $response
             );
         }
