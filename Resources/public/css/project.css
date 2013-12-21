@@ -40,6 +40,14 @@ figure.ezimage-field img {
     padding: 0 10px;
 }
 
+.menu-search .form-group {
+    width:400px;
+}
+
+.menu-search input {
+    width:300px;
+}
+
 
 /* Gallery */
 
