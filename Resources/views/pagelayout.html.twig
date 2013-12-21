@@ -51,22 +51,20 @@
         <![endif]-->
     </head>
     <body>
-        <div class="container">
-            <header class="header">
-                <div class="row">
-                    <div class="col-sm-6 company-logo"><a class="navbar-brand" href="/">Tutei Base</a></div>
-                    <div class="col-sm-6">
-                        <div class="pull-right user-menu">
-                            <ul class="list-unstyled list-inline">
-                                {{ render( controller( "tutei:showComponent", { 'name': 'UserMenu' } ) ) }}
-                            </ul>
-                        </div>
+        <header class="header container">
+            <div class="row">
+                <h1 class="col-sm-6 company-logo navbar-brand"><a href="/"><img role="banner" alt="Tutei Base" src="logo.jpg" /></a></h1>
+                <div class="col-sm-6">
+                    <div class="pull-right user-menu">
+                        <ul class="list-unstyled list-inline">
+                            {{ render( controller( "tutei:showComponent", { 'name': 'UserMenu' } ) ) }}
+                        </ul>
                     </div>
                 </div>
-            </header>
-        </div>
+            </div>
+        </header>
 
-        <div class="navbar navbar-default" role="navigation">
+        <nav class="navbar navbar-default" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -93,10 +91,10 @@
                             <ul class="dropdown-menu pull-right" role="menu">
                                 <li>
                                     <div class="navbar-form">
-                                        <form class="navbar-form navbar-right menu-search" role="form" method="get" action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}">
+                                        <form class="navbar-form navbar-right menu-search" role="search" method="get" action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}">
                                             <div class="form-group">
                                                 <input type="text" placeholder="Text" class="form-control inline" id="search_text" name="search_text">
-                                            
+
                                                 <button type="submit" class="btn btn-success inline">Search</button>
                                             </div>
                                         </form>
@@ -110,7 +108,7 @@
                 </div><!--/.navbar-collapse -->
             </div>
 
-        </div>
+        </nav>
 
         <div class="container">
             <div class="row">
@@ -129,15 +127,15 @@
                     {% set showSideMenu = true %}
                 {% endif %}
                     {% if showSideMenu %}
-                <div class="col-md-3">
+                <aside class="col-md-3">
                             {{ render( controller( "tutei:showComponent", { 'name':'SideMenu',
                                              'parameters': { 'pathString': location.pathString } } ) ) }}
                             {{ render( controller( "tutei:showComponent",
                                                         { 'name':'ExtraInfo',
                                                           'parameters': { 'pathString': location.pathString } } ) ) }}
-                </div>                       
+                </aside>                       
                     {% endif %} 
-                <div class="col-md-{% if showSideMenu %}9{% else %}12{% endif %}">     
+                <section class="col-md-{% if showSideMenu %}9{% else %}12{% endif %}" role="main">     
 
                             {% if location.pathString is defined
                                     and location.pathString|split('/')[3] != ''  %}
@@ -149,73 +147,75 @@
                             {% if location.pathString is defined %}
                                 {{ render( controller( "tutei:showComponent", {'name':'Blocks', 'parameters': { 'pathString': location.pathString } } ) ) }}
                             {% endif %}
-                </div>
+                </section>
 
 
             </div>
 
-            <hr>
+        </div> <!-- /container -->
 
-            <footer>
-                <div class="row">
-                    <div class="col-md-4">
-                        <!-- About -->
-                        <h2>About</h2> 
-                        <p>TuteiBaseBundle is a clean eZ publish 5 bundle that features common features and also an installer script.</p>                            
-                    </div><!--/col-md-4--> 
+        <hr>
 
-                    <div class="col-md-4">
-                        <!-- Monthly Newsletter -->
-                        <div class="headline"><h2>Contact Us</h2></div> 
-                        <address>
-                            101, BaseBundle Street, eZ publish<br>
-                            Community, NO <br>
-                            Phone: 555 555 5555<br>
-                            Fax: 555 555 5555<br>
-                            Email: <a class="" href="mailto:nospam@company.com">nospam@company.com</a>
-                        </address>                        
-                    </div><!--/col-md-4-->
+        <footer class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- About -->
+                    <h2>About</h2> 
+                    <p>TuteiBaseBundle is a clean eZ publish 5 bundle that features common features and also an installer script.</p>                            
+                </div><!--/col-md-4--> 
 
-                    <div class="col-md-4">
-                        <!-- Stay Connected -->
-                        <div class="headline"><h2>Stay Connected</h2></div> 
-                        <div class="social-bar">
-                            <a href="https://www.facebook.com/thiagocamposviana" target="_blank">
-                                <span class="fa-stack fa-lg icon-facebook">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                            <a href="https://twitter.com/tcv_br" target="_blank">
-                                <span class="fa-stack fa-lg icon-twitter">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                            <a href="https://plus.google.com/116026022246221247074/" target="_blank">
-                                <span class="fa-stack fa-lg icon-google-plus">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                            <a href="mailto:thiagocamposviana@gmail.com">
-                                <span class="fa-stack fa-lg icon-rss">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                            <a href="https://github.com/thiagocamposviana/TuteiBaseBundle">
-                                <span class="fa-stack fa-lg icon-github">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </div>
-                    </div><!--/col-md-4-->
+                <div class="col-md-4">
+                    <!-- Monthly Newsletter -->
 
-                </div>
+                    <h2 class="headline">Contact Us</h2>
+                    <address>
+                        101, BaseBundle Street, eZ publish<br>
+                        Community, NO <br>
+                        Phone: 555 555 5555<br>
+                        Fax: 555 555 5555<br>
+                        Email: <a class="" href="mailto:nospam@company.com">nospam@company.com</a>
 
-            </footer>
+                    </address>
+                </div><!--/col-md-4-->
+
+                <div class="col-md-4">
+                    <!-- Stay Connected -->
+                    <div class="headline"><h2>Stay Connected</h2></div> 
+                    <div class="social-bar">
+                        <a href="https://www.facebook.com/thiagocamposviana" target="_blank">
+                            <span class="fa-stack fa-lg icon-facebook">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="https://twitter.com/tcv_br" target="_blank">
+                            <span class="fa-stack fa-lg icon-twitter">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="https://plus.google.com/116026022246221247074/" target="_blank">
+                            <span class="fa-stack fa-lg icon-google-plus">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="mailto:thiagocamposviana@gmail.com">
+                            <span class="fa-stack fa-lg icon-rss">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                        <a href="https://github.com/thiagocamposviana/TuteiBaseBundle">
+                            <span class="fa-stack fa-lg icon-github">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div><!--/col-md-4-->
+
+            </div>          
 
             <hr>
 
@@ -225,7 +225,9 @@
 
             </div>
 
-        </div> <!-- /container -->
+        </footer>
+
+
 
         {% javascripts
             '@eZDemoBundle/Resources/public/js/hinclude.js'

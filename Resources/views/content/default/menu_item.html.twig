@@ -20,4 +20,4 @@
     {% set cssClasses = cssClasses ~ ' dropdown-toggle disabled' %}
 {% endif %}
 
-<a href="{{ path( location ) }}" classes="{{ cssClasses }}" title="{{ contentName }}"{{ extraAttributes|raw }}>{{ contentName }}{% if dropdown == true %} <span class="caret"></span>{% endif %}</a>
+<a href="{{ path( location ) }}" class="{{ cssClasses }}" title="{{ contentName }}"{{ extraAttributes|raw }}>{{ contentName }}{% if dropdown == true %} <span class="caret"></span>{% endif %}</a>
