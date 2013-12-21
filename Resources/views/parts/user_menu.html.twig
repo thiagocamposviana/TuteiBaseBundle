@@ -15,9 +15,38 @@
 
 
 {% if current_user.login != 'anonymous' %}
-    <li><a href="{{ "/user/logout" }}">{{ 'Logout'|trans }}</a></li>
-    <li><a href="{{ "/content/edit/" ~ current_user.content.versionInfo.contentInfo.id }}">{{ 'Change profile'|trans }} ( {{ current_user.login }} )</a></li>
+<li><a href="{{ "/user/logout" }}">{{ 'Logout'|trans }}</a></li>
+<li><a href="{{ "/content/edit/" ~ current_user.content.versionInfo.contentInfo.id }}">{{ 'Change profile'|trans }} ( {{ current_user.login }} )</a></li>
 {% else %}
-    <li><a href={{ "/user/login" }}>{{ 'Log in'|trans }}</a></li>
-    <li><a href={{ "/user/register" }}>{{ 'Register'|trans }}</a></li>
+<li class="dropdown">
+    <a href="{{ "/user/login" }}" class="dropdown-toggle" data-toggle="dropdown">{{ 'Log in'|trans }}</a>
+    <ul class="dropdown-menu pull-right">
+        <li>
+            <div class="navbar-form">
+
+                <form action="{{ "/user/login" }}" method="post">
+
+                    <div>
+                        <label for="id1">Username</label><div class="labelbreak"></div>
+                        <input type="text" tabindex="1" value="" id="id1" name="Login" size="10" class="halfbox">
+                    </div>
+                    <div>
+                        <label for="id2">Password</label><div class="labelbreak"></div>
+                        <input type="password" tabindex="1" value="" id="id2" name="Password" size="10" class="halfbox">
+                    </div>
+                    <div class="buttonblock">
+                        <input type="submit" tabindex="1" value="Login" name="LoginButton" class="defaultbutton">
+                        <input type="submit" tabindex="1" value="Sign Up" name="RegisterButton" class="button">
+                    </div>
+
+                    <input type="hidden" value="" name="RedirectURI">
+                </form>
+
+            </div>
+
+
+        </li>
+    </ul>
+</li>
+<li><a href={{ "/user/register" }}>{{ 'Register'|trans }}</a></li>
 {% endif%}
