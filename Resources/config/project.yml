@@ -8,6 +8,7 @@ parameters:
                 - folder
                 - gallery
                 # - article/menu
+    project.topmenu.dropdown: true
                 
     project.list.block: [block_item]
     project.list.infobox: [article, link]

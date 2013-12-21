@@ -1,27 +1,6 @@
-$("#b_groups").on('click', function(e) {
-
-    $("#group_list").removeClass('hide');
-    $("#site_list").addClass('hide');
-    $("#default_site").addClass('hide');
-
+//Add Hover effect to menus
+$('ul.nav li.dropdown').hover(function() {
+  $(this).find('.dropdown-menu').stop(true, true).delay(50).fadeIn();
+}, function() {
+  $(this).find('.dropdown-menu').stop(true, true).delay(50).fadeOut();
 });
-
-
-$("#b_default_site").on('click', function(e) {
-
-    $("#group_list").addClass('hide');
-    $("#site_list").addClass('hide');
-    $("#default_site").removeClass('hide');
-
-});
-
-
-$("#b_sites").on('click', function(e) {
-
-    $("#group_list").addClass('hide');
-    $("#site_list").removeClass('hide');
-    $("#default_site").addClass('hide');
-
-});
-
-

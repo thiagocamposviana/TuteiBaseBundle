@@ -1,17 +1,59 @@
 {% for item in list.searchHits %}
 
+{% set locationdId = item.valueObject.versionInfo.contentInfo.mainLocationId %}
+
 {% set active = false %}
-{% if item.valueObject.versionInfo.contentInfo.mainLocationId in locations %}
+{% if locationdId in locations %}
     {% set active = true %}
 {% endif %}
-<li{% if active %} class="active"{% endif %}>{{ render(
+
+{% set dropdown = false %}
+{% set cssClasses = 'topmenu-item' %}
+{% set extraAttributes = '' %}
+
+{% if locationChildren[locationdId] is defined %}
+
+    {% set dropdown = true %}
+
+    {% set cssClasses = cssClasses ~ ' dropdown' %}
+{% endif %}
+
+{% if active %}
+    {% set cssClasses = cssClasses ~ ' active' %}
+{% endif %}
+
+
+
+
+
+<li class="{{ cssClasses }}"{{ extraAttributes|raw }}>{{ render(
                    controller(
                        'ez_content:viewLocation',
                        {
                            'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
                            'viewType': 'menu_item',
-                           'params': {'active':active}
+                           'params': {
+                                'active':active,
+                                'dropdown' : dropdown
+                            }
+                       }
+                   )
+               ) }}
+    {% if locationChildren[locationdId] is defined %}
+    <ul class="dropdown-menu">
+        {% for subitem in locationChildren[locationdId].searchHits %}
+        <li>
+        {{ render(
+                   controller(
+                       'ez_content:viewLocation',
+                       {
+                           'locationId': subitem.valueObject.versionInfo.contentInfo.mainLocationId,
+                           'viewType': 'menu_item',
+                           'params': {}
                        }
                    )
                ) }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}</li>
 {% endfor %}

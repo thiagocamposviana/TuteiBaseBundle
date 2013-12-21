@@ -1,7 +1,23 @@
 {% set language = siteaccess[ezpublish.siteaccess.name].language %}
 
 {% if content.versionInfo.names[language] is defined %}
-    <a href="{{ path( location ) }}" title="{{ content.versionInfo.names[language] }}">{{ content.versionInfo.names[language] }}</a>
+    {% set contentName = content.versionInfo.names[language] %}
 {% else %}
-    <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ location.contentInfo.name }}</a>
+    {% set contentName = location.contentInfo.name %}
 {% endif %}
+
+{% set cssClasses = 'menu-link' %}
+{% set extraAttributes = '' %}
+
+{% set dropdown = dropdown|default(false) %}
+
+{% if dropdown == true %}
+    {#
+    {% set extraAttributes = 
+            extraAttributes ~ ' data-toggle="dropdown"' %}
+    #}
+
+    {% set cssClasses = cssClasses ~ ' dropdown-toggle disabled' %}
+{% endif %}
+
+<a href="{{ path( location ) }}" classes="{{ cssClasses }}" title="{{ contentName }}"{{ extraAttributes|raw }}>{{ contentName }}{% if dropdown == true %} <span class="caret"></span>{% endif %}</a>

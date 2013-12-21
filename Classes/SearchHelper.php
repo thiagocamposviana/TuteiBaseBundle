@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File containing the SearchHelper class
  *
@@ -9,6 +10,7 @@ namespace Tutei\BaseBundle\Classes;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ContentTypeIdentifier;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentId;
@@ -19,6 +21,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationDepth;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationPriority;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\SectionIdentifier;
 use Tutei\BaseBundle\Controller\TuteiController;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 
 /**
  * Helpers functions used to search object
@@ -110,6 +113,23 @@ class SearchHelper
         }
 
         return $path;
+    }
+
+    public static function fetchChildren(TuteiController $controller, $locationId, $filters = array())
+    {
+
+        $searchService = $controller->getRepository()->getSearchService();
+        $location = $controller->getRepository()->getLocationService()->loadLocation($locationId);
+
+        $filters[] = new ParentLocationId($locationId);
+
+        $query = new Query();
+
+        $query->criterion = new LogicalAnd($filters);
+
+        $query->sortClauses = array(self::createSortClause($location));
+
+        return $searchService->findContent($query);
     }
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File containing the TopMenu Component class
  *
@@ -7,12 +8,8 @@
 
 namespace Tutei\BaseBundle\Classes\Components;
 
-use eZ\Publish\API\Repository\Values\Content\Query;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationPriority as LocationPriority2;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LogicalAnd;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Operator;
-use eZ\Publish\API\Repository\Values\Content\Query\Criterion\ParentLocationId;
-use eZ\Publish\API\Repository\Values\Content\Query\SortClause\LocationPriority;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion\LocationPriority;
 use Symfony\Component\HttpFoundation\Response;
 use Tutei\BaseBundle\Classes\SearchHelper;
 
@@ -40,36 +37,39 @@ class TopMenu extends Component
 
         $classes = $this->controller->getContainer()->getParameter('project.menufilter.top');
 
-        $filters = SearchHelper::createMenuFilter($classes);
-
-        $searchService = $this->controller->getRepository()->getSearchService();
-
-        $query = new Query();
-
-        $query->criterion = new LogicalAnd(
-            array(
-            $filters,
-            new ParentLocationId(array(2)),
-            new LocationPriority2(Operator::LT, 100)
-            )
+        $filters = array(
+            SearchHelper::createMenuFilter($classes),
+            new LocationPriority(Operator::LT, 100),
         );
-        $query->sortClauses = array(
-            new LocationPriority(Query::SORT_ASC)
-        );
-        $list = $searchService->findContent($query);
-        
+
+        $list = SearchHelper::fetchChildren($this->controller, 2, $filters);
+
         $pathString = '';
-        if(isset($this->parameters['pathString']))
-        {
+        if (isset($this->parameters['pathString'])) {
             $pathString = $this->parameters['pathString'];
         }
 
         $locations = explode('/', $pathString);
 
+        $locationChildren = array();
+
+        if($this->controller->getContainer()->getParameter('project.topmenu.dropdown')) {
+            foreach ($list->searchHits as $item) {
+                $locationdId = $item->valueObject->versionInfo->contentInfo->mainLocationId;
+                $searchResult = SearchHelper::fetchChildren($this->controller, $locationdId, $filters);
+
+                if ($searchResult->totalCount > 0) {
+                    $locationChildren[$locationdId] = $searchResult;
+                }
+            }
+        }
+
 
         return $this->controller->render(
                 'TuteiBaseBundle:parts:top_menu.html.twig', array(
-                'list' => $list, 'locations' => $locations
+                'list' => $list,
+                'locations' => $locations,
+                'locationChildren' => $locationChildren,
                 ), $response
         );
     }
