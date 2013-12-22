@@ -35,7 +35,9 @@
             "bundles/tuteibase/css/bootstrap.min.css"
             "bundles/tuteibase/css/font-awesome.min.css"
             "bundles/tuteibase/css/lightbox.css"
-            "bundles/tuteibase/css/project.css"
+            "bundles/tuteibase/css/core.css"
+            "bundles/tuteibase/css/pagelayout.css"
+            "bundles/tuteibase/css/content.css"
             filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
@@ -135,7 +137,7 @@
                                                           'parameters': { 'pathString': location.pathString } } ) ) }}
                 </aside>                       
                     {% endif %} 
-                <section class="col-md-{% if showSideMenu %}9{% else %}12{% endif %}" role="main">     
+                <div class="col-md-{% if showSideMenu %}9{% else %}12{% endif %}">     
 
                             {% if location.pathString is defined
                                     and location.pathString|split('/')[3] != ''  %}
@@ -147,7 +149,7 @@
                             {% if location.pathString is defined %}
                                 {{ render( controller( "tutei:showComponent", {'name':'Blocks', 'parameters': { 'pathString': location.pathString } } ) ) }}
                             {% endif %}
-                </section>
+                </div>
 
 
             </div>
