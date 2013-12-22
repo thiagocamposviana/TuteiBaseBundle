@@ -27,6 +27,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
+        
+        <link rel="shortcut icon" type="image/png" href="{{ asset('bundles/tuteibase/images/icon.png') }}" />
         <!-- Bootstrap -->
 
         <!-- Include all compiled plugins (below), or include individual files as needed
@@ -41,6 +43,8 @@
             filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
+        
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tuteibase/css/print.css') }}" media="print" />
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->       
         <script src="https://code.jquery.com/jquery.js"></script>
 
@@ -55,7 +59,7 @@
     <body>
         <header class="header container">
             <div class="row">
-                <h1 class="col-sm-6 company-logo navbar-brand"><a href="/"><img role="banner" alt="Tutei Base" src="logo.jpg" /></a></h1>
+                <h1 class="col-sm-6 company-logo navbar-brand"><a href="/"><img role="banner" alt="Tutei Base" src="{{ asset('bundles/tuteibase/images/logo.png') }}" /></a></h1>
                 <div class="col-sm-6">
                     <div class="pull-right user-menu">
                         <ul class="list-unstyled list-inline">
