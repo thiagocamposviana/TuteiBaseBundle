@@ -1,9 +1,11 @@
 <?php
+
 /**
  * File containing the Blocks Component class
  *
  * @author Thiago Campos Viana <thiagocamposviana@gmail.com>
  */
+
 namespace Tutei\BaseBundle\Classes\Components;
 
 use eZ\Publish\API\Repository\Values\Content\Query;
@@ -38,7 +40,7 @@ class Blocks extends Component
         $query->criterion = new LogicalAnd(
             array(
             new ContentTypeIdentifier(array('block')),
-            new ParentLocationId(array($locationId))
+            new ParentLocationId($locationId)
             )
         );
 
@@ -55,26 +57,28 @@ class Blocks extends Component
         $blocks = array();
 
         foreach ($list->searchHits as $block) {
-
-            $parentId = $block->valueObject->versionInfo->contentInfo->mainLocationId;
-            $blocks[$parentId]['content'] = $block;
-            $query = new Query();
-
-            $query->criterion = new LogicalAnd(
-                array(
-                new ParentLocationId(array($parentId))
-                )
-            );
-            $query->sortClauses = array(
-                new LocationPriority(Query::SORT_ASC)
-            );
+            
+            $limit = null;
             $columns = $block->valueObject->fields['columns'][$this->controller->getLanguage()]->value;
             $rows = $block->valueObject->fields['rows'][$this->controller->getLanguage()]->value;
+            $offset = $block->valueObject->fields['offset'][$this->controller->getLanguage()]->value;
             if ($rows > 0) {
-                $query->limit = $rows * $columns;
+                $limit = $rows * $columns;
             }
+            $blockLocationId = $block->valueObject->versionInfo->contentInfo->mainLocationId;
+            $blocks[$blockLocationId]['content'] = $block;
 
-            $blocks[$parentId]['children'] = $searchService->findContent($query);
+            if (!isset($block->valueObject->fields['source'][$this->controller->getLanguage()]->destinationContentId)) {               
+
+                $blocks[$blockLocationId]['children'] = SearchHelper::fetchChildren($this->controller, $blockLocationId, array(), $limit, $offset);
+            } else {
+
+                $sourceId = $block->valueObject->fields['source'][$this->controller->getLanguage()]->destinationContentId;
+                $sourceObj = $repository->getContentService()->loadContent($sourceId);
+                $parentId = $sourceObj->versionInfo->contentInfo->mainLocationId;
+                $blocks[$blockLocationId]['children'] = SearchHelper::fetchChildren($this->controller, $parentId, array(), $limit, $offset);
+
+            }
         }
 
         $siteaccess = $this->controller->getContainer()->get('ezpublish.siteaccess')->name;

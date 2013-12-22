@@ -6,7 +6,11 @@
     {% set name = location.contentInfo.name %}
 {% endif %}
 
-{% set newWindow = content.fields.new_window[language].bool %}
+{% set newWindow = false %}
+
+{% if not ez_is_field_empty( content, "new_window" ) %}
+    {% set newWindow = content.fields.new_window[language].bool %}
+{% endif %}
 
 {% set link = '' %}
 

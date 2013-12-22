@@ -67,6 +67,10 @@ system:
                         UrlAlias: "/"
                         
             block:
+                article:
+                    template: "TuteiBaseBundle:content/article:block.html.twig"
+                    match:
+                        Identifier\ContentType: [article]
 
                 default:
                     template: "TuteiBaseBundle:content/default:block.html.twig"

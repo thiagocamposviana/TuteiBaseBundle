@@ -1,0 +1,55 @@
+{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
+
+<div class="content-view-line">
+    <div class="content-type-article media"> 
+        
+
+        <div class="attribute-title media-heading">
+            <h2>
+                <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'title', { lang: language } ) }}</a>
+            </h2>
+        </div>
+        
+        {% if not ez_is_field_empty( content, 'image', { lang: language } ) %}
+        
+        <div class="attribute-image pull-left">
+        <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">
+
+        {{ render_hinclude(
+                controller( 
+                    "ez_content:viewContent", 
+                    {
+                        "contentId": content.fields.image[language].destinationContentId,
+                        "viewType": "line",
+                        "params": { 'alias' : 'small' }
+                    }
+                )
+          ) }}</a>
+        </div>
+        
+        {% endif %} 
+        
+        <div class="attribute-byline">
+            <span class="date">
+                <small>{{ location.contentInfo.publishedDate|localizeddate( 'short', 'short', app.request.locale ) }}</small>
+            </span>
+        {% if not ez_is_field_empty( content, 'author' ) %}
+            <span class="author"><small>
+                {{ ez_render_field(
+                    content,
+                    'author',
+                    {
+                        'template': 'eZDemoBundle:fields:ezauthor_simple.html.twig'
+                    }
+                ) }}</small>
+            </span>
+        {% endif %}
+        </div>
+
+        {% if not ez_is_field_empty( content, 'intro', { lang: language } ) %}
+        <div class="attribute-short media-body">
+                {{ ez_render_field( content, 'intro', { lang: language } ) }}
+        </div>
+        {% endif %}
+    </div>
+</div>

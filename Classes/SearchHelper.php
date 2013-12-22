@@ -115,7 +115,7 @@ class SearchHelper
         return $path;
     }
 
-    public static function fetchChildren(TuteiController $controller, $locationId, $filters = array())
+    public static function fetchChildren(TuteiController $controller, $locationId, $filters = array(), $limit = null, $offset = null)
     {
 
         $searchService = $controller->getRepository()->getSearchService();
@@ -128,7 +128,15 @@ class SearchHelper
         $query->criterion = new LogicalAnd($filters);
 
         $query->sortClauses = array(self::createSortClause($location));
-
+        
+        if($limit !== null){
+            $query->limit = $limit;
+        }
+        
+        if($offset !== null){
+            $query->offset = $offset;
+        }
+        
         return $searchService->findContent($query);
     }
 
