@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale|split('_')[0] }}" prefix="hx: http://purl.org/NET/hinclude# og: http://ogp.me/ns#">
+<html lang="{{ app.request.locale|split('_')[0] }}" prefix="hx: http://purl.org/NET/hinclude# og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <head>
         {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
@@ -32,25 +32,36 @@
         
         {% block meta_base %}
         {#
-        <meta name="description" content="...">
-        <meta name="author" content="...">
+        <meta name="description" content="..." />
+        <meta name="author" content="..." />
 
         <!-- Seems useless -->
-        <meta name="keywords" content="...">
+        <meta name="keywords" content="..." />
         <!-- For google news, up to 10 keywords separeted by comma -->
-        <meta name="news_keywords" content="...">
+        <meta name="news_keywords" content="..." />
         
         #}
         {% endblock %}
         
         {% block meta_og %}
         {#
-        <meta content="..." property="og:title">
-        <meta content="..." property="og:description">
-        <meta content="..." property="og:site_name">
-        <meta content="..." property="og:url">
-        <meta content="..." property="og:type">
-        <meta content="..." property="og:image">
+        <meta content="..." property="og:title" />
+        <meta content="..." property="og:description" />
+        <meta content="..." property="og:site_name" />
+        <meta content="..." property="og:url" />
+        <meta content="..." property="og:type" />
+        <meta content="..." property="og:image" />
+        <meta property=”fb:admins” content=”USER_ID”/>
+        #}
+        {% endblock %}
+        
+        {% block meta_twitter %}
+        {#
+        <meta property=”twitter:card” content="..." />
+        <meta property=”twitter:url” content="..." />
+        <meta property=”twitter:title” content="..." />
+        <meta property=”twitter:description” content="" />
+        <meta property=”twitter:image” content="..." />
         #}
         {% endblock %}
         
@@ -71,8 +82,7 @@
         <link rel='prev' href='http://yoast.com/cat/seo/' />
         <link rel='next' href='http://yoast.com/cat/seo/page/3/' />
         #}
-        {% endblock %}
-        
+        {% endblock %} 
         
         
         
@@ -106,7 +116,7 @@
     </head>
     <body itemscope="itemscope" itemtype="http://schema.org/WebPage">
         <header class="header container" role="banner" aria-labelledby="banner-desc">
-            <p class="hidden">
+            <p class="hidden" role="button">
                 <a href="#content">skip to main content</a>
             </p>
             <div class="row">
@@ -200,7 +210,7 @@
                 </div>                       
                 {% endif %} 
                 
-                <main role="main" id="content" class="col-md-{% if enable_side_menu %}9{% else %}12{% endif %}">     
+                <main role="main" id="content" class="col-md-{% if enable_side_menu %}9{% else %}12{% endif %}" tabindex="-1">     
                     {% block breadcrumb %}
 
                         {% if location.pathString is defined
