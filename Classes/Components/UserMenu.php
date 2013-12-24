@@ -30,7 +30,7 @@ class UserMenu extends Component
         $response = new Response();
 
         $response->setSharedMaxAge(3600);
-        $response->setVary('Cookie');
+        $response->setVary('X-User-Hash');
 
         $classes = $this->controller->getContainer()->getParameter('project.menufilter.top');
 

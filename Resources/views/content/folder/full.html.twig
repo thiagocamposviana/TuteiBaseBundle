@@ -4,11 +4,11 @@
 
 {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
-<div class="content-view-full">
+<article class="content-view-full">
     <div class="content-type-folder">
-        <div class="attribute-title">
-            <h2>{{ ez_render_field( content, 'name', { lang: language } ) }}</h2>
-        </div>
+        <header class="attribute-title">
+            <h1 id="main-desc">{{ ez_render_field( content, 'name', { lang: language } ) }}</h1>
+        </header>
         {% if not ez_is_field_empty( content, "short_description" ) %}
         <div class="attribute-short">
             {{ ez_render_field( content, 'short_description', { lang: language } ) }}    
@@ -30,7 +30,7 @@
             </div>
         {% endif %}
     </div>
-</div>
+</article>
 
 
 {% endblock %}

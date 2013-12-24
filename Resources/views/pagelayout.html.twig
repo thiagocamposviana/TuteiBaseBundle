@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale|split('_')[0] }}">
+<html lang="{{ app.request.locale|split('_')[0] }}" prefix="hx: http://purl.org/NET/hinclude# og: http://ogp.me/ns#">
     <head>
+        {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
+
         {% if location is not defined %}
             {% set location = null %}
         {% endif %}
@@ -9,7 +11,7 @@
             {% set title %}
                 {{ render( controller( "tutei:showComponent", { 'name':'Title', 'parameters':{'pathString': location.pathString } } ) ) }}
             {% endset %}
-        {% elseif content is defined%}
+        {% elseif content is defined %}
             {% set title %}
                     {{ content.contentInfo.name }} / (location ID is #{{ location.id }})
             {% endset %}
@@ -20,13 +22,59 @@
 
         {% endif %}
 
+        {% block meta_title %}
         <title>{{ title }}</title>
+        {% endblock %}
 
         <meta charset="utf-8">
         <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
+        
+        {% block meta_base %}
+        {#
+        <meta name="description" content="...">
+        <meta name="author" content="...">
+
+        <!-- Seems useless -->
+        <meta name="keywords" content="...">
+        <!-- For google news, up to 10 keywords separeted by comma -->
+        <meta name="news_keywords" content="...">
+        
+        #}
+        {% endblock %}
+        
+        {% block meta_og %}
+        {#
+        <meta content="..." property="og:title">
+        <meta content="..." property="og:description">
+        <meta content="..." property="og:site_name">
+        <meta content="..." property="og:url">
+        <meta content="..." property="og:type">
+        <meta content="..." property="og:image">
+        #}
+        {% endblock %}
+        
+        {% block meta_author_link %}
+        {# 
+        <link rel="author" href="..."/>
+        #}
+        {% endblock %}
+        
+        {% block meta_link_canonical %}
+        {#
+        <link rel="canonical" href="..."/>
+        #}
+        {% endblock %}
+        
+        {% block meta_link_next_prev %}
+        {#
+        <link rel='prev' href='http://yoast.com/cat/seo/' />
+        <link rel='next' href='http://yoast.com/cat/seo/page/3/' />
+        #}
+        {% endblock %}
+        
+        
+        
         
         <link rel="shortcut icon" type="image/png" href="{{ asset('bundles/tuteibase/images/icon.png') }}" />
         <!-- Bootstrap -->
@@ -56,10 +104,17 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body>
-        <header class="header container">
+    <body itemscope="itemscope" itemtype="http://schema.org/WebPage">
+        <header class="header container" role="banner" aria-labelledby="banner-desc">
+            <p class="hidden">
+                <a href="#content">skip to main content</a>
+            </p>
             <div class="row">
-                <h1 class="col-sm-6 company-logo navbar-brand"><a href="/"><img role="banner" alt="Tutei Base" src="{{ asset('bundles/tuteibase/images/logo.png') }}" /></a></h1>
+                {% if app.request.pathInfo is defined and app.request.pathInfo == '/' %}
+                    <h1 id="banner-desc" class="col-sm-6 company-logo navbar-brand"><a href="/"><img alt="Tutei Base" src="{{ asset('bundles/tuteibase/images/logo.png') }}" /></a></h1>
+                {% else %}                
+                    <p id="banner-desc" class="col-sm-6 company-logo navbar-brand"><a href="/"><img alt="Tutei Base" src="{{ asset('bundles/tuteibase/images/logo.png') }}" /></a></p>
+                {% endif %}
                 <div class="col-sm-6">
                     <div class="pull-right user-menu">
                         <ul class="list-unstyled list-inline">
@@ -70,7 +125,8 @@
             </div>
         </header>
 
-        <nav class="navbar navbar-default" role="navigation">
+        <nav class="navbar navbar-default" role="navigation" aria-labelledby="sitenav-desc">
+            <h2 class="hidden"><span id="sitenav-desc">Site</span> Navigation</h2>
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -82,13 +138,13 @@
 
                 </div>
                 <div class="navbar-collapse collapse top-menu">
-                    {% set pathString = '' %}
+                    {% set path_string = '' %}
                     {% if location.pathString is defined %}
-                        {% set pathString = location.pathString %}
+                        {% set path_string = location.pathString %}
                     {% endif %}
 
                     <ul class="nav navbar-nav top-menu-items">
-                        {{ render( controller( "tutei:showComponent", { 'name': 'TopMenu','parameters' : {'pathString': pathString } } ) ) }}
+                        {{ render( controller( "tutei:showComponent", { 'name': 'TopMenu','parameters' : {'pathString': path_string } } ) ) }}
                     </ul>
                     <ul class="nav navbar-form pull-right">
                         <li class="dropdown">
@@ -97,8 +153,9 @@
                             <ul class="dropdown-menu pull-right" role="menu">
                                 <li>
                                     <div class="navbar-form">
-                                        <form class="navbar-form navbar-right menu-search" role="search" method="get" action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}">
+                                        <form class="navbar-form navbar-right menu-search" role="search" method="get" action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}" aria-labelledby="search-desc">
                                             <div class="form-group">
+                                                <label for="search_text" class="hidden">Search this <span id="search-desc">site</span></label>
                                                 <input type="text" placeholder="Text" class="form-control inline" id="search_text" name="search_text">
 
                                                 <button type="submit" class="btn btn-success inline">Search</button>
@@ -123,38 +180,48 @@
                 {% endif %}
 
 
-                {% set showSideMenu = false %}
+                {% set enable_side_menu = false %}
                 {% if show_side_menu 
                     and content is defined
                     and content.contentInfo.contentTypeId not in hide_side_menu_type_id_array
                     and location.pathString is defined
                     and location.pathString|split('/')[3] != '' %}
 
-                    {% set showSideMenu = true %}
+                    {% set enable_side_menu = true %}
                 {% endif %}
-                    {% if showSideMenu %}
-                <aside class="col-md-3">
-                            {{ render( controller( "tutei:showComponent", { 'name':'SideMenu',
-                                             'parameters': { 'pathString': location.pathString } } ) ) }}
+                
+                {% if enable_side_menu %}
+                <div class="col-md-3">
+                    {{ render( controller( "tutei:showComponent", { 'name':'SideMenu',
+                                     'parameters': { 'pathString': location.pathString } } ) ) }}
+                    {{ render( controller( "tutei:showComponent",
+                                                { 'name':'ExtraInfo',
+                                                  'parameters': { 'pathString': location.pathString } } ) ) }}
+                </div>                       
+                {% endif %} 
+                
+                <main role="main" id="content" class="col-md-{% if enable_side_menu %}9{% else %}12{% endif %}">     
+                    {% block breadcrumb %}
+
+                        {% if location.pathString is defined
+                                and location.pathString|split('/')[3] != ''  %}
+
                             {{ render( controller( "tutei:showComponent",
-                                                        { 'name':'ExtraInfo',
-                                                          'parameters': { 'pathString': location.pathString } } ) ) }}
-                </aside>                       
-                    {% endif %} 
-                <div class="col-md-{% if showSideMenu %}9{% else %}12{% endif %}">     
+                                                    { 'name':'Breadcrumb',
+                                                      'parameters': { 'pathString': location.pathString } } ) ) }}
+                        {% endif %}
 
-                            {% if location.pathString is defined
-                                    and location.pathString|split('/')[3] != ''  %}
-                                {{ render( controller( "tutei:showComponent",
-                                                        { 'name':'Breadcrumb',
-                                                          'parameters': { 'pathString': location.pathString } } ) ) }}
-                            {% endif %}
-                            {% block content %}{% endblock %}
-                            {% if location.pathString is defined %}
-                                {{ render( controller( "tutei:showComponent", {'name':'Blocks', 'parameters': { 'pathString': location.pathString } } ) ) }}
-                            {% endif %}
-                </div>
+                    {% endblock %}
 
+                    {% block content %}{% endblock %}
+
+                    {% if location.pathString is defined %}
+
+                        {{ render( controller( "tutei:showComponent", {'name':'Blocks', 'parameters': { 'pathString': location.pathString } } ) ) }}
+
+                    {% endif %}
+                    
+                </main>
 
             </div>
 
@@ -162,7 +229,8 @@
 
         <hr>
 
-        <footer class="container">
+        <footer class="container" role="contentinfo" aria-labelledby="footer-desc">
+            <p id="footer-desc" class="hidden">Footer content</p>
             <div class="row">
                 <div class="col-md-4">
                     <!-- About -->
@@ -232,8 +300,6 @@
             </div>
 
         </footer>
-
-
 
         {% javascripts
             '@eZDemoBundle/Resources/public/js/hinclude.js'

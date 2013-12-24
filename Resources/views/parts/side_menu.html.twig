@@ -1,21 +1,22 @@
 {% if list.totalCount != 0 %}
-<div class="navbar navbar-collapse side-menu"  role="navigation">
-<ul class="nav  nav-tabs nav-stacked">
-        {% for item in list.searchHits %}
-        {% set active = false %}
-        {% if item.valueObject.versionInfo.contentInfo.mainLocationId in locations %}
-            {% set active = true %}
-        {% endif %}
-        <li{% if active %} class="active"{% endif %}>{{ render(
-                   controller(
-                       'ez_content:viewLocation',
-                       {
-                           'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
-                           'viewType': 'menu_item'
-                       }
-                   )
-               ) }}</li>
-        {% endfor %}
-</ul>
-</div>
+<nav class="navbar navbar-collapse side-menu" role="navigation" aria-labelledby="sectionnav-desc">
+    <h2 class="hidden"><span id="sectionnav-desc">Section</span> Navigation</h2>
+    <ul class="nav  nav-tabs nav-stacked">
+            {% for item in list.searchHits %}
+            {% set active = false %}
+            {% if item.valueObject.versionInfo.contentInfo.mainLocationId in locations %}
+                {% set active = true %}
+            {% endif %}
+            <li{% if active %} class="active"{% endif %}>{{ render(
+                       controller(
+                           'ez_content:viewLocation',
+                           {
+                               'locationId': item.valueObject.versionInfo.contentInfo.mainLocationId,
+                               'viewType': 'menu_item'
+                           }
+                       )
+                   ) }}</li>
+            {% endfor %}
+    </ul>
+</nav>
 {% endif %}

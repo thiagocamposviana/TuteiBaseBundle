@@ -6,7 +6,7 @@
 {% set column_width = 12 // columns %}
 
 
-<div class="row">
+<section class="row">
     {% for item in list.children.searchHits %}
 
     {% if loop.index0 > 0 and loop.index0 % columns == 0 %}
@@ -27,6 +27,6 @@
         ) }}
     </div>    
     {% endfor %}
-</div>
+</section>
 
 {% endfor %}

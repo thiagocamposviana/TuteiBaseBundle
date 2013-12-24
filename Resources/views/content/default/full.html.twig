@@ -3,7 +3,7 @@
 {% block content %}
 {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
-<div class="content-view-full">
+<article class="content-view-full">
     <div class="content-type-default">
         
         {% for key, field in content.fields %}
@@ -21,6 +21,6 @@
                                                      'request': app.request } } ) ) }}              
         </div>
     </div>
-</div>
+</article>
 
 {% endblock %}
