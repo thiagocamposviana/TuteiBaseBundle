@@ -8,6 +8,7 @@ header .company-logo {
     margin-bottom:15px;
 }
 
+/*
 .top-menu > ul > li > a {
     border-bottom: 2px solid rgba(0, 0, 0, 0);
 }
@@ -18,6 +19,8 @@ header .company-logo {
     border-bottom: 2px solid #428BCA;
     box-sizing:border-box;
 }
+*/
+
 .content-view-full {
     margin-bottom:25px;    
 }
