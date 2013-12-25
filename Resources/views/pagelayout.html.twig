@@ -116,7 +116,7 @@
     </head>
     <body itemscope="itemscope" itemtype="http://schema.org/WebPage">
         <header class="header container" role="banner" aria-labelledby="banner-desc">
-            <p class="hidden" role="button">
+            <p class="sr-only" role="button">
                 <a href="#content">skip to main content</a>
             </p>
             <div class="row">
@@ -136,7 +136,7 @@
         </header>
 
         <nav class="navbar navbar-default" role="navigation" aria-labelledby="sitenav-desc">
-            <h2 class="hidden"><span id="sitenav-desc">Site</span> Navigation</h2>
+            <h2 class="sr-only"><span id="sitenav-desc">Site</span> Navigation</h2>
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -165,7 +165,7 @@
                                     <div class="navbar-form">
                                         <form class="navbar-form navbar-right menu-search" role="search" method="get" action="{{ path( 'ez_legacy', {'module_uri': '/content/search'} ) }}" aria-labelledby="search-desc">
                                             <div class="form-group">
-                                                <label for="search_text" class="hidden">Search this <span id="search-desc">site</span></label>
+                                                <label for="search_text" class="sr-only">Search this <span id="search-desc">site</span></label>
                                                 <input type="text" placeholder="Text" class="form-control inline" id="search_text" name="search_text">
 
                                                 <button type="submit" class="btn btn-success inline">Search</button>
@@ -240,7 +240,7 @@
         <hr>
 
         <footer class="container" role="contentinfo" aria-labelledby="footer-desc">
-            <p id="footer-desc" class="hidden">Footer content</p>
+            <p id="footer-desc" class="sr-only">Footer content</p>
             <div class="row">
                 <div class="col-md-4">
                     <!-- About -->

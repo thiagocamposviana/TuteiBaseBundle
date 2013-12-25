@@ -1,0 +1,7 @@
+body > header, nav, .breadcrumb, .sf-toolbar, a[href]:after, footer {
+    display:none !important;
+}
+
+main {
+    visibility: visible;
+}
