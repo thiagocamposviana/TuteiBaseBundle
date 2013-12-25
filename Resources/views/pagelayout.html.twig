@@ -88,11 +88,12 @@
         
         <link rel="shortcut icon" type="image/png" href="{{ asset('bundles/tuteibase/images/icon.png') }}" />
         <!-- Bootstrap -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" id="theme" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap-theme.min.css') }}" />
 
         <!-- Include all compiled plugins (below), or include individual files as needed
             Not using bootstrap-theme.min.css -->
         {% stylesheets 
-            "bundles/tuteibase/css/bootstrap.min.css"
             "bundles/tuteibase/css/font-awesome.min.css"
             "bundles/tuteibase/css/lightbox.css"
             "bundles/tuteibase/css/core.css"
@@ -314,6 +315,7 @@
         {% javascripts
             '@eZDemoBundle/Resources/public/js/hinclude.js'
             "bundles/tuteibase/js/bootstrap.min.js"
+            "bundles/tuteibase/js/jquery.cookie.js"
             "bundles/tuteibase/js/lightbox-2.6.min.js"
             "bundles/tuteibase/js/project.js"
         %}

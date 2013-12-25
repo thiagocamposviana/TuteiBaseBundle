@@ -1,6 +1,57 @@
 {# includes items with priority higher than 100
    TODO: create settings for this, like class filter  #}
 
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Themes</a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/amelia/theme.css') }}">Amelia</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/cerulean/theme.css') }}">Cerulean</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/cosmo/theme.css') }}">Cosmo</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/cyborg/theme.css') }}">Cyborg</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/dark/theme.css') }}">Dark</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/flatly/theme.css') }}">Flatly</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/geo/css/theme.css') }}">Geo</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/journal/theme.css') }}">Journal</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/readable/theme.css') }}">Readable</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/red/theme.css') }}">Red</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/simplex/theme.css') }}">Simplex</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/slate/theme.css') }}">Slate</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/spacelab/theme.css') }}">Spacelab</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/united/theme.css') }}">United</a>
+        </li>
+        <li>
+            <a href="#" data-theme="{{ asset('bundles/tuteibase/css/themes/yeti/theme.css') }}">Yeti</a>
+        </li>
+    </ul>
+</li>
+
 {% for item in list.searchHits %}
 <li>{{ render(
                    controller(
