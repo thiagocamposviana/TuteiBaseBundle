@@ -2,7 +2,7 @@
    TODO: create settings for this, like class filter  #}
 
 <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Themes</a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Themes <span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li>
             <a href="#" data-theme="{{ asset('bundles/tuteibase/css/bootstrap-theme.min.css') }}">Default</a>
@@ -73,7 +73,7 @@
 <li><a href="{{ "/content/edit/" ~ current_user.content.versionInfo.contentInfo.id }}">{{ 'Change profile'|trans }} ( {{ current_user.login }} )</a></li>
 {% else %}
 <li class="dropdown">
-    <a href="{{ "/user/login" }}" class="dropdown-toggle" data-toggle="dropdown">{{ 'Log in'|trans }}</a>
+    <a href="{{ "/user/login" }}" class="dropdown-toggle" data-toggle="dropdown">{{ 'Log in'|trans }} <span class="caret"></span></a>
     <ul class="dropdown-menu pull-right">
         <li>
             <div class="navbar-form">

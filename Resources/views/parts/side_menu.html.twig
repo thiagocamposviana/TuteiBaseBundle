@@ -1,7 +1,7 @@
 {% if list.totalCount != 0 %}
-<nav class="navbar navbar-collapse side-menu" role="navigation" aria-labelledby="sectionnav-desc">
+<nav class="collapse navbar-collapse side-menu" role="navigation" aria-labelledby="sectionnav-desc">
     <h2 class="sr-only"><span id="sectionnav-desc">Section</span> Navigation</h2>
-    <ul class="nav  nav-tabs nav-stacked">
+    <ul class="nav nav-pills nav-stacked">
             {% for item in list.searchHits %}
             {% set active = false %}
             {% if item.valueObject.versionInfo.contentInfo.mainLocationId in locations %}
