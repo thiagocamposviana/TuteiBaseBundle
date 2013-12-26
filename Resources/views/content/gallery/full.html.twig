@@ -4,20 +4,20 @@
 
 {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
-<div class="content-view-full">
+<div class="content-view-full" itemscope="itemscope" itemtype="http://schema.org/ImageGallery">
     <div class="content-type-gallery">
         <div class="attribute-title">
-            <h2>{{ ez_render_field( content, 'title', { lang: language } ) }}</h2>
+            <h1 itemprop="name">{{ ez_render_field( content, 'title', { lang: language } ) }}</h1>
         </div>
 
-        <div class="attribute-children">
+        <section class="attribute-children">
         {{ render( controller( "tutei:showComponent", 
                                    { 'name': 'LineList',
                                      'parameters': { 'location': location,
                                                      'limit':9,
                                                      'template': 'TuteiBaseBundle:parts:gallery_list.html.twig',
                                                      'request': app.request } } ) ) }}             
-        </div>
+        </section>
     </div>
 </div>
 

@@ -21,17 +21,17 @@
 {% endif %}
 
 
-<div class="panel panel-default">
+<div class="panel panel-default" itemscope="itemscope" itemtype="http://schema.org/Thing">
     <div class="panel-heading">
-        <h3 class="panel-title">
-            <a href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>{{ name }}</a>
+        <h3 class="panel-title" itemprop="name">
+            <a itemprop="url" href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>{{ name }}</a>
         </h3>
     </div>
     <div class="panel-body">
 
 
         {% if content.fields.image is defined %}
-        <div class="block-image">
+        <div class="block-image" itemprop="image">
             <a href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>
         {{ ez_render_field(content, 'image', {
                                         parameters:{ alias:'small' },
@@ -44,7 +44,7 @@
 
 
         {% if not ez_is_field_empty( content, "intro" ) %}
-        <div class="block-intro">
+        <div class="block-intro" itemprop="description">
           {{ ez_render_field( content, 'intro', { lang: language } ) }}    
         </div>          
         {% endif %}

@@ -3,23 +3,23 @@
 {% block content %}
 {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
-<article class="content-view-full">
+<article class="content-view-full" itemscope="itemscope" itemtype="http://schema.org/Thing">
     <div class="content-type-default">
         
         {% for key, field in content.fields %}
             <div class="attribute">
-                <h3>{{ key }}:</h3>
+                <h2>{{ key }}:</h2>
                 {{ ez_render_field( content, key, { lang: language } ) }}
             </div>        
         {% endfor %}
         
 
-        <div class="attribute-children">
+        <section class="attribute-children">
             {{ render( controller( "tutei:showComponent", 
                                    { 'name': 'LineList',
                                      'parameters': { 'location': location,
                                                      'request': app.request } } ) ) }}              
-        </div>
+        </section>
     </div>
 </article>
 

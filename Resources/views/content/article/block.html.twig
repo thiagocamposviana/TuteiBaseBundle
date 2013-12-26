@@ -1,19 +1,19 @@
 {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
-<article class="content-view-line">
+<article class="content-view-block" itemscope="itemscope" itemtype="http://schema.org/Article">
     <div class="content-type-article media"> 
         
 
         <header class="attribute-title media-heading">
-            <h2>
-                <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'title', { lang: language } ) }}</a>
+            <h2 itemprop="name">
+                <a itemprop="url" href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'title', { lang: language } ) }}</a>
             </h2>
         </header>
         
         {% if not ez_is_field_empty( content, 'image', { lang: language } ) %}
         
-        <div class="attribute-image pull-left">
-        <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">
+        <div class="attribute-image pull-left" itemprop="image">
+        <a itemprop="url" href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">
 
         {{ render_hinclude(
                 controller( 
@@ -31,10 +31,10 @@
         
         <div class="attribute-byline">
             <span class="date">
-                <small>{{ location.contentInfo.publishedDate|localizeddate( 'short', 'short', app.request.locale ) }}</small>
+                <small><time itemprop="datePublished" datetime="{{location.contentInfo.publishedDate|date("Y-m-d")}}">{{ location.contentInfo.publishedDate|localizeddate( 'short', 'short', app.request.locale ) }}</time></small>
             </span>
         {% if not ez_is_field_empty( content, 'author' ) %}
-            <span class="author"><small>
+            <span class="author" itemtype="http://schema.org/Person" itemscope="itemscope" itemprop="creator"><small>
                 {{ ez_render_field(
                     content,
                     'author',
@@ -47,7 +47,7 @@
         </div>
 
         {% if not ez_is_field_empty( content, 'intro', { lang: language } ) %}
-        <div class="attribute-short media-body">
+        <div class="attribute-short media-body" itemprop="description">
                 {{ ez_render_field( content, 'intro', { lang: language } ) }}
         </div>
         {% endif %}

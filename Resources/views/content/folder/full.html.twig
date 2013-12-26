@@ -4,13 +4,13 @@
 
 {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
-<article class="content-view-full">
+<article class="content-view-full" itemscope="itemscope" itemtype="http://schema.org/Thing">
     <div class="content-type-folder">
-        <header class="attribute-title">
+        <header class="attribute-title" itemprop="name">
             <h1 id="main-desc">{{ ez_render_field( content, 'name', { lang: language } ) }}</h1>
         </header>
         {% if not ez_is_field_empty( content, "short_description" ) %}
-        <div class="attribute-short">
+        <div class="attribute-short" itemprop="description">
             {{ ez_render_field( content, 'short_description', { lang: language } ) }}    
         </div>
         {% endif %}
@@ -22,12 +22,12 @@
         {% endif %}
 
         {% if content.fields.show_children is defined and content.getField( 'show_children' ).value.bool %}
-            <div class="attribute-children">
+            <section class="attribute-children">
             {{ render( controller( "tutei:showComponent", 
                                    { 'name': 'LineList',
                                      'parameters': { 'location': location,
                                                      'request': app.request } } ) ) }}             
-            </div>
+            </section>
         {% endif %}
     </div>
 </article>

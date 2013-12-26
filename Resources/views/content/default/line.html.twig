@@ -1,9 +1,9 @@
-<article class="content-view-line">
+<article class="content-view-line" itemscope="itemscope" itemtype="http://schema.org/Thing">
     <div class="content-type-default">
 
         <header class="attribute-title">
-            <h2>
-                <a href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ location.contentInfo.name }}</a>
+            <h2 itemprop="name">
+                <a itemprop="url" href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ location.contentInfo.name }}</a>
             </h2>
         </header>
 
