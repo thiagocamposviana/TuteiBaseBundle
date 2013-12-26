@@ -25,6 +25,10 @@ header .company-logo {
     margin-bottom:25px;    
 }
 
+.content-view-block {
+    margin-bottom: 20px;
+}
+
 figure.ezimage-field {
     text-align:center;
 }
