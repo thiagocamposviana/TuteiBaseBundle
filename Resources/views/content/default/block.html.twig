@@ -15,7 +15,7 @@
 {% set link = '' %}
 
 {% if not ez_is_field_empty( content, "link_object" ) %}
-    {% set link = path(relationList[content.fields.link_object[language].destinationContentId]) %}
+    {% set link = path(relation_list[content.fields.link_object[language].destinationContentId]) %}
 {% elseif not ez_is_field_empty( content, "link_external" ) %}
     {% set link = content.fields.link_external[language].link %}
 {% endif %}

@@ -77,7 +77,7 @@ class ExtraInfo extends Component
 
             if (isset($content->valueObject->fields['source'][$language]->destinationContentId)) {
                 $srcId = $content->valueObject->fields['source'][$language]->destinationContentId;
-                $source = $contentService->loadContent($objId);
+                $source = $contentService->loadContent($srcId);
                 $query = new Query();
 
                 $query->criterion = new LogicalAnd(
@@ -96,8 +96,8 @@ class ExtraInfo extends Component
         return $this->controller->render(
                 'TuteiBaseBundle:parts:extra_info.html.twig', array(
                 'list' => $list,
-                'relationList' => $relationList,
-                'sourceItems' => $sourceItems
+                'relation_list' => $relationList,
+                'source_items' => $sourceItems
                 ), $response
         );
     }

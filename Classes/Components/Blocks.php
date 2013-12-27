@@ -111,7 +111,7 @@ class Blocks extends Component
         return $this->controller->render(
                 'TuteiBaseBundle:parts:page_blocks.html.twig', array(
                 'blocks' => $blocks,
-                'relationList' => $relationList
+                'relation_list' => $relationList
                 ), $response
         );
     }

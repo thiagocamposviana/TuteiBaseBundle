@@ -1,23 +1,23 @@
 {% set language = siteaccess[ezpublish.siteaccess.name].language %}
 
 {% if content.versionInfo.names[language] is defined %}
-    {% set contentName = content.versionInfo.names[language] %}
+    {% set content_name = content.versionInfo.names[language] %}
 {% else %}
-    {% set contentName = location.contentInfo.name %}
+    {% set content_name = location.contentInfo.name %}
 {% endif %}
 
-{% set cssClasses = 'menu-link' %}
-{% set extraAttributes = '' %}
+{% set css_classes = 'menu-link' %}
+{% set extra_attributes = '' %}
 
 {% set dropdown = dropdown|default(false) %}
 
 {% if dropdown == true %}
     {#
-    {% set extraAttributes = 
-            extraAttributes ~ ' data-toggle="dropdown"' %}
+    {% set extra_attributes = 
+            extra_attributes ~ ' data-toggle="dropdown"' %}
     #}
 
-    {% set cssClasses = cssClasses ~ ' dropdown-toggle disabled' %}
+    {% set css_classes = css_classes ~ ' dropdown-toggle disabled' %}
 {% endif %}
 
-<a href="{{ path( location ) }}" class="{{ cssClasses }}" title="{{ contentName }}"{{ extraAttributes|raw }}>{{ contentName }}{% if dropdown == true %} <span class="caret"></span>{% endif %}</a>
+<a href="{{ path( location ) }}" class="{{ css_classes }}" title="{{ content_name }}"{{ extra_attributes|raw }}>{{ content_name }}{% if dropdown == true %} <span class="caret"></span>{% endif %}</a>

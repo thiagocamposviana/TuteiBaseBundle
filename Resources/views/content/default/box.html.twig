@@ -12,7 +12,7 @@
 {% set link = '' %}
 
 {% if not ez_is_field_empty( content, "link_object" ) %}
-    {% set link = path(relationList[content.fields.link_object[language].destinationContentId]) %}
+    {% set link = path(relation_list[content.fields.link_object[language].destinationContentId]) %}
 {% elseif not ez_is_field_empty( content, "link_external" ) %}
     {% set link = content.fields.link_external[language].link %}
 {% endif %}
@@ -44,8 +44,8 @@
     {% endif %}
       
       
-    {% if sourceItems[content.fields.source[language].destinationContentId] is defined %}
-    {% set items = sourceItems[content.fields.source[language].destinationContentId] %}
+    {% if source_items[content.fields.source[language].destinationContentId] is defined %}
+    {% set items = source_items[content.fields.source[language].destinationContentId] %}
     <ul>
     {% for item in items.searchHits %}
                 <li>{{ render(

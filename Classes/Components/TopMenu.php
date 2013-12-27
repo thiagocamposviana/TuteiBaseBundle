@@ -69,7 +69,7 @@ class TopMenu extends Component
                 'TuteiBaseBundle:parts:top_menu.html.twig', array(
                 'list' => $list,
                 'locations' => $locations,
-                'locationChildren' => $locationChildren,
+                'location_children' => $locationChildren,
                 ), $response
         );
     }

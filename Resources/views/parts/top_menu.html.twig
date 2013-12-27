@@ -8,25 +8,25 @@
 {% endif %}
 
 {% set dropdown = false %}
-{% set cssClasses = 'topmenu-item' %}
-{% set extraAttributes = '' %}
+{% set css_classes = 'topmenu-item' %}
+{% set extra_attributes = '' %}
 
-{% if locationChildren[locationdId] is defined %}
+{% if location_children[locationdId] is defined %}
 
     {% set dropdown = true %}
 
-    {% set cssClasses = cssClasses ~ ' dropdown' %}
+    {% set css_classes = css_classes ~ ' dropdown' %}
 {% endif %}
 
 {% if active %}
-    {% set cssClasses = cssClasses ~ ' active' %}
+    {% set css_classes = css_classes ~ ' active' %}
 {% endif %}
 
 
 
 
 
-<li class="{{ cssClasses }}"{{ extraAttributes|raw }}>{{ render(
+<li class="{{ css_classes }}"{{ extra_attributes|raw }}>{{ render(
                    controller(
                        'ez_content:viewLocation',
                        {
@@ -39,9 +39,9 @@
                        }
                    )
                ) }}
-    {% if locationChildren[locationdId] is defined %}
+    {% if location_children[locationdId] is defined %}
     <ul class="dropdown-menu">
-        {% for subitem in locationChildren[locationdId].searchHits %}
+        {% for subitem in location_children[locationdId].searchHits %}
         <li>
         {{ render(
                    controller(

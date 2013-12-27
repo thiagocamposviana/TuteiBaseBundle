@@ -27,7 +27,7 @@ class Breadcrumb extends Component
 
         return $this->controller->render(
                 'TuteiBaseBundle:parts:breadcrumb.html.twig', array(
-                'locationList' => $path
+                'location_list' => $path
                 ), $response
         );
     }

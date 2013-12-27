@@ -102,7 +102,7 @@ class Banners extends Component
         return $this->controller->render(
                 'TuteiBaseBundle:parts:page_banners.html.twig', array(
                 'banners' => $blocks,
-                'relationList' => $relationList
+                'relation_list' => $relationList
                 ), $response
         );
     }
