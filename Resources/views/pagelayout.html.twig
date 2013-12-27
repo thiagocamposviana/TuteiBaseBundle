@@ -85,25 +85,32 @@
         {% endblock %} 
         
         
+        {% image '@TuteiBaseBundle/Resources/public/images/icon.png' %}
+            <link rel="shortcut icon" type="image/png" href="{{ asset_url }}" />
+        {% endimage %}
         
-        <link rel="shortcut icon" type="image/png" href="{{ asset('bundles/tuteibase/images/icon.png') }}" />
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" id="theme" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap-theme.min.css') }}" />
-
+        
         <!-- Include all compiled plugins (below), or include individual files as needed
             Not using bootstrap-theme.min.css -->
         {% stylesheets 
             "bundles/tuteibase/css/font-awesome.min.css"
             "bundles/tuteibase/css/lightbox.css"
-            "bundles/tuteibase/css/core.css"
-            "bundles/tuteibase/css/pagelayout.css"
-            "bundles/tuteibase/css/content.css"
+            "@TuteiBaseBundle/Resources/public/css/core.css"
+            "@TuteiBaseBundle/Resources/public/css/pagelayout.css"
+            "@TuteiBaseBundle/Resources/public/css/content.css"
             filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
         
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tuteibase/css/print.css') }}" media="print" />
+        {% stylesheets 
+            "@TuteiBaseBundle/Resources/public/css/print.css"
+            filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" media="print" />
+        {% endstylesheets %}
+        
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->       
         <script src="https://code.jquery.com/jquery.js"></script>
 
@@ -121,11 +128,14 @@
                 <a href="#content" accesskey="s">skip to main content (access key = s)</a>
             </p>
             <div class="row">
-                {% if app.request.pathInfo is defined and app.request.pathInfo == '/' %}
-                    <h1 id="banner-desc" class="col-sm-6 company-logo navbar-brand"><a href="/" accesskey="1"><img alt="Tutei Base" src="{{ asset('bundles/tuteibase/images/logo.png') }}" /><span class="sr-only"> (access key = 1)</span></a></h1>
-                {% else %}                
-                    <p id="banner-desc" class="col-sm-6 company-logo navbar-brand"><a href="/" accesskey="1"><img alt="Tutei Base" src="{{ asset('bundles/tuteibase/images/logo.png') }}" /><span class="sr-only"> (access key = 1)</span></a></p>
-                {% endif %}
+                {% image '@TuteiBaseBundle/Resources/public/images/logo.png' %}
+        
+                    {% if app.request.pathInfo is defined and app.request.pathInfo == '/' %}
+                        <h1 id="banner-desc" class="col-sm-6 company-logo navbar-brand"><a href="/" accesskey="1"><img alt="Tutei Base" src="{{ asset_url }}" /><span class="sr-only"> (access key = 1)</span></a></h1>
+                    {% else %}                
+                        <p id="banner-desc" class="col-sm-6 company-logo navbar-brand"><a href="/" accesskey="1"><img alt="Tutei Base" src="{{ asset_url }}" /><span class="sr-only"> (access key = 1)</span></a></p>
+                    {% endif %}
+                {% endimage %}
                 <div class="col-sm-6">
                     <div class="pull-right user-menu">
                         <ul class="list-unstyled list-inline">
@@ -314,10 +324,10 @@
 
         {% javascripts
             '@eZDemoBundle/Resources/public/js/hinclude.js'
-            "bundles/tuteibase/js/bootstrap.min.js"
-            "bundles/tuteibase/js/jquery.cookie.js"
-            "bundles/tuteibase/js/lightbox-2.6.min.js"
-            "bundles/tuteibase/js/project.js"
+            "@TuteiBaseBundle/Resources/public/js/bootstrap.min.js"
+            "@TuteiBaseBundle/Resources/public/js/jquery.cookie.js"
+            "@TuteiBaseBundle/Resources/public/js/lightbox-2.6.min.js"
+            "@TuteiBaseBundle/Resources/public/js/project.js"
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
