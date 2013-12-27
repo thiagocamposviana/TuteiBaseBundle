@@ -2,6 +2,10 @@
 
 Youtube video tutorial: http://youtu.be/PPWYx863OXo
 
+Other youtube videos:
+
+Version 2.0 preview: http://www.youtube.com/watch?v=F_sMgqpjjxE
+
 You can use Virtual Box to test it.
 
 This extension has been created in order to clean install ez publish in Ubuntu using the Github master version.
