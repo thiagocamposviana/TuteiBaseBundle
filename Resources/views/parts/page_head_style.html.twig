@@ -1,0 +1,14 @@
+ <!-- Bootstrap -->
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap.min.css') }}" />
+<link rel="stylesheet" id="theme" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap-theme.min.css') }}" />
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+{% stylesheets 
+    "bundles/tuteibase/css/font-awesome.min.css"
+    "bundles/tuteibase/css/lightbox.css"
+    "@TuteiBaseBundle/Resources/public/css/core.css"
+    "@TuteiBaseBundle/Resources/public/css/pagelayout.css"
+    "@TuteiBaseBundle/Resources/public/css/content.css"
+    filter='cssrewrite' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
