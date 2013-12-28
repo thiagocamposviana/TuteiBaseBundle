@@ -31,7 +31,7 @@
         
         <div class="attribute-byline">
             <span class="date">
-                <small><time itemprop="datePublished" datetime="{{location.contentInfo.publishedDate|date("Y-m-d")}}">{{ location.contentInfo.publishedDate|localizeddate( 'short', 'short', app.request.locale ) }}</time><</small>
+                <small><time itemprop="datePublished" datetime="{{location.contentInfo.publishedDate|date("Y-m-d")}}">{{ location.contentInfo.publishedDate|localizeddate( 'short', 'short', app.request.locale ) }}</time></small>
             </span>
         {% if not ez_is_field_empty( content, 'author' ) %}
             <span class="author" itemtype="http://schema.org/Person" itemscope="itemscope" itemprop="creator"><small>
