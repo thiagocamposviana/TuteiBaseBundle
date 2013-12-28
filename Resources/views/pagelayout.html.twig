@@ -88,41 +88,54 @@
         {% image '@TuteiBaseBundle/Resources/public/images/icon.png' %}
             <link rel="shortcut icon" type="image/png" href="{{ asset_url }}" />
         {% endimage %}
+
+        {% block page_head_style %}
+            
+            <!-- Bootstrap -->
+            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap.min.css') }}" />
+            <link rel="stylesheet" id="theme" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap-theme.min.css') }}" />
+
+            <!-- Include all compiled plugins (below), or include individual files as needed
+                Not using bootstrap-theme.min.css -->
+            {% stylesheets 
+                "bundles/tuteibase/css/font-awesome.min.css"
+                "bundles/tuteibase/css/lightbox.css"
+                "@TuteiBaseBundle/Resources/public/css/core.css"
+                "@TuteiBaseBundle/Resources/public/css/pagelayout.css"
+                "@TuteiBaseBundle/Resources/public/css/content.css"
+                filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+            
+        {% endblock %} 
+            
+        {% block print_style %}
+
+            {% stylesheets 
+                "@TuteiBaseBundle/Resources/public/css/print.css"
+                filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" media="print" />
+            {% endstylesheets %}
+            
+        {% endblock %} 
         
-        <!-- Bootstrap -->
-        <link rel="stylesheet" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap.min.css') }}" />
-        <link rel="stylesheet" id="theme" type="text/css" href="{{ asset('bundles/tuteibase/css/bootstrap-theme.min.css') }}" />
-        
-        <!-- Include all compiled plugins (below), or include individual files as needed
-            Not using bootstrap-theme.min.css -->
-        {% stylesheets 
-            "bundles/tuteibase/css/font-awesome.min.css"
-            "bundles/tuteibase/css/lightbox.css"
-            "@TuteiBaseBundle/Resources/public/css/core.css"
-            "@TuteiBaseBundle/Resources/public/css/pagelayout.css"
-            "@TuteiBaseBundle/Resources/public/css/content.css"
-            filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-        {% endstylesheets %}
-        
-        {% stylesheets 
-            "@TuteiBaseBundle/Resources/public/css/print.css"
-            filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" media="print" />
-        {% endstylesheets %}
-        
+        {% block page_head_script %}    
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->       
         <script src="https://code.jquery.com/jquery.js"></script>
-
-
+        {% endblock %} 
+        
+        {% block html5shiv_script %}
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
+        {% endblock %} 
+        
     </head>
     <body itemscope="itemscope" itemtype="http://schema.org/WebPage">
+        {% block page_header %} 
         <header class="header container" role="banner" aria-labelledby="banner-desc">
             <p class="sr-only" role="button">
                 <a href="#content" accesskey="s">skip to main content (access key = s)</a>
@@ -145,7 +158,9 @@
                 </div>
             </div>
         </header>
+        {% endblock %}
 
+        {% block page_topmenu %} 
         <nav class="navbar navbar-default" role="navigation" aria-labelledby="sitenav-desc">
             <h2 class="sr-only"><span id="sitenav-desc">Site</span> Navigation</h2>
             <div class="container">
@@ -193,7 +208,9 @@
             </div>
 
         </nav>
+        {% endblock %}
 
+        {% block page_content %} 
         <div class="container">
             <div class="row">
                 {% if location.pathString is defined %}
@@ -249,7 +266,9 @@
         </div> <!-- /container -->
 
         <hr>
-
+        {% endblock %}
+        
+        {% block page_footer %} 
         <footer class="container" role="contentinfo" aria-labelledby="footer-desc">
             <p id="footer-desc" class="sr-only">Footer content</p>
             <div class="row">
@@ -321,37 +340,46 @@
             </div>
 
         </footer>
+        {% endblock %}
 
-        {% javascripts
-            '@eZDemoBundle/Resources/public/js/hinclude.js'
-            "@TuteiBaseBundle/Resources/public/js/bootstrap.min.js"
-            "@TuteiBaseBundle/Resources/public/js/jquery.cookie.js"
-            "@TuteiBaseBundle/Resources/public/js/lightbox-2.6.min.js"
-            "@TuteiBaseBundle/Resources/public/js/project.js"
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+        {% block page_footer_script %}  
+        
+            {% javascripts
+                '@eZDemoBundle/Resources/public/js/hinclude.js'
+                "@TuteiBaseBundle/Resources/public/js/bootstrap.min.js"
+                "@TuteiBaseBundle/Resources/public/js/jquery.cookie.js"
+                "@TuteiBaseBundle/Resources/public/js/lightbox-2.6.min.js"
+                "@TuteiBaseBundle/Resources/public/js/project.js"
+            %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        
+        {% endblock %}        
+        
+        {% block google_analytics %}  
+            
+            {% if google_analytics_id is not null and
+                  google_analytics_site is not null %}
+            <script>
+                (function(i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function() {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-        {% if google_analytics_id is not null and
-              google_analytics_site is not null %}
-        <script>
-            (function(i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function() {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+                ga('create', '{{google_analytics_id}}', '{{google_analytics_site}}');
+                ga('send', 'pageview');
 
-            ga('create', '{{google_analytics_id}}', '{{google_analytics_site}}');
-            ga('send', 'pageview');
-
-        </script>
-        {% endif %}
+            </script>
+            {% endif %}
+            
+        {% endblock %}
 
     </body>
 </html>
