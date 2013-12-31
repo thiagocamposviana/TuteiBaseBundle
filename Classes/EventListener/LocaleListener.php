@@ -22,7 +22,6 @@ class LocaleListener{
 
     public function onKernelRequest( GetResponseEvent $event )
     {
-        $request = $event->getRequest();
         $siteaccess = $this->container->get('ezpublish.siteaccess')->name;
         $twigGlobals = $this->container->get('twig')->getGlobals();
         $locale = $twigGlobals['siteaccess'][$siteaccess]['locale'];
