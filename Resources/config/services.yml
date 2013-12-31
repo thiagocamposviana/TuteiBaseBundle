@@ -1,5 +1,6 @@
 parameters:
     tutei_base.tuteicontroller.class: Tutei\BaseBundle\Controller\TuteiController
+    tutei_base.locale_listener.class: Tutei\BaseBundle\Classes\EventListener\LocaleListener
     
 services:
     tutei_base.controller:
@@ -10,3 +11,10 @@ services:
  
     tutei:
         alias: tutei_base.controller
+
+    tutei_base.locale_listener:
+        class: %tutei_base.locale_listener.class%
+        calls:
+            - [setContainer, [@service_container] ]
+        tags:
+            - {name: kernel.event_listener, event: kernel.request, method: onKernelRequest}

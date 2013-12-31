@@ -1,7 +1,13 @@
 {% if pager|length() > 0 %}
     <section class="content-view-children">
         {% for item in pager %}
-            {{ render_esi( controller( 'ez_content:viewLocation', {'locationId': item.contentInfo.mainLocationId, 'viewType': 'line'} ) ) }}
+            {{ render( controller( 'ez_content:viewLocation',
+                                   {
+                                    'locationId': item.contentInfo.mainLocationId,
+                                    'viewType': 'line'
+                                   } 
+                       ) 
+               ) }}
         {% endfor %}
     </section>
 
