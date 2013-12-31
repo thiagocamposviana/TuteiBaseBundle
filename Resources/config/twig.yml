@@ -10,7 +10,7 @@ globals:
     siteaccess:
         site:
             language: eng-GB
-            locale: pt_BR
+            locale: en_GB
         siteadmin:
             language: eng-GB
             locale: en_GB
