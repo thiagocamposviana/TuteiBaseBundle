@@ -1,8 +1,6 @@
-{% set language = siteaccess[ezpublish.siteaccess.name].language %}
-
 {% for list in blocks %}
 
-{% set columns = list.content.valueObject.fields['columns'][language].value %}
+{% set columns = ez_field_value(list.content.valueObject, 'columns').value %}
 {% set column_width = 12 // columns %}
 
 

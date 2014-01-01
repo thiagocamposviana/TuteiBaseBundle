@@ -59,21 +59,21 @@ class Blocks extends Component
         foreach ($list->searchHits as $block) {
             
             $limit = null;
-            $columns = $block->valueObject->fields['columns'][$this->controller->getLanguage()]->value;
-            $rows = $block->valueObject->fields['rows'][$this->controller->getLanguage()]->value;
-            $offset = $block->valueObject->fields['offset'][$this->controller->getLanguage()]->value;
+            $columns = $block->valueObject->getFieldValue('columns')->value;
+            $rows = $block->valueObject->getFieldValue('rows')->value;
+            $offset = $block->valueObject->getFieldValue('offset')->value;
             if ($rows > 0) {
                 $limit = $rows * $columns;
             }
             $blockLocationId = $block->valueObject->versionInfo->contentInfo->mainLocationId;
             $blocks[$blockLocationId]['content'] = $block;
 
-            if (!isset($block->valueObject->fields['source'][$this->controller->getLanguage()]->destinationContentId)) {               
+            if ($this->controller->getContainer()->get( 'ezpublish.field_helper' )->isFieldEmpty( $block->valueObject, 'source')) {               
 
                 $blocks[$blockLocationId]['children'] = SearchHelper::fetchChildren($this->controller, $blockLocationId, array(), $limit, $offset);
             } else {
 
-                $sourceId = $block->valueObject->fields['source'][$this->controller->getLanguage()]->destinationContentId;
+                $sourceId = $block->valueObject->getFieldValue('source')->destinationContentId;
                 $sourceObj = $repository->getContentService()->loadContent($sourceId);
                 $parentId = $sourceObj->versionInfo->contentInfo->mainLocationId;
                 $blocks[$blockLocationId]['children'] = SearchHelper::fetchChildren($this->controller, $parentId, array(), $limit, $offset);
@@ -81,9 +81,6 @@ class Blocks extends Component
             }
         }
 
-        $siteaccess = $this->controller->getContainer()->get('ezpublish.siteaccess')->name;
-        $twigGlobals = $this->controller->getContainer()->get('twig')->getGlobals();
-        $language = $twigGlobals['siteaccess'][$siteaccess]['language'];
         $contentService = $repository->getContentService();
 
         $relationList = array();
@@ -91,8 +88,8 @@ class Blocks extends Component
         foreach ($blocks as $b) {
             foreach ($b['children']->searchHits as $content) {
 
-                if (isset($content->valueObject->fields['link_object'][$language]->destinationContentId)) {
-                    $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
+                if ( isset($content->valueObject->fields['link_object']) && !$this->controller->getContainer()->get( 'ezpublish.field_helper' )->isFieldEmpty( $content->valueObject, 'link_object' )) {
+                    $objId = $content->valueObject->getFieldValue('link_object')->destinationContentId;
                     $related = $contentService->loadContent($objId);
 
                     $relationList[$objId] = $locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);

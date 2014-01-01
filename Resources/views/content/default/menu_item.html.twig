@@ -1,11 +1,3 @@
-{% set language = siteaccess[ezpublish.siteaccess.name].language %}
-
-{% if content.versionInfo.names[language] is defined %}
-    {% set content_name = content.versionInfo.names[language] %}
-{% else %}
-    {% set content_name = location.contentInfo.name %}
-{% endif %}
-
 {% set css_classes = 'menu-link' %}
 {% set extra_attributes = '' %}
 
@@ -20,4 +12,4 @@
     {% set css_classes = css_classes ~ ' dropdown-toggle disabled' %}
 {% endif %}
 
-<a href="{{ path( location ) }}" class="{{ css_classes }}" title="{{ content_name }}"{{ extra_attributes|raw }}>{{ content_name }}{% if dropdown == true %} <span class="caret"></span>{% endif %}</a>
+<a href="{{ path( location ) }}" class="{{ css_classes }}" title="{{ ez_content_name( content ) }}"{{ extra_attributes|raw }}>{{ ez_content_name( content ) }}{% if dropdown == true %} <span class="caret"></span>{% endif %}</a>

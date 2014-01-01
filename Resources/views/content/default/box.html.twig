@@ -1,27 +1,18 @@
-{% set language = siteaccess[ezpublish.siteaccess.name].language %}
-
-{% if content.versionInfo.names[language] is defined %}
-    {% set name = content.versionInfo.names[language] %}
-{% else %}
-    {% set name = location.contentInfo.name %}
-{% endif %}
-
-
-{% set newWindow = content.fields.new_window[language].bool %}
+{% set newWindow = ez_field_value(content, 'new_window').bool %}
 
 {% set link = '' %}
 
 {% if not ez_is_field_empty( content, "link_object" ) %}
-    {% set link = path(relation_list[content.fields.link_object[language].destinationContentId]) %}
+    {% set link = path(relation_list[ez_field_value(content, 'link_object').destinationContentId]) %}
 {% elseif not ez_is_field_empty( content, "link_external" ) %}
-    {% set link = content.fields.link_external[language].link %}
+    {% set link = ez_field_value(content, 'link_external').link %}
 {% endif %}
 
 <aside class="panel panel-default" itemscope="itemscope" itemtype="http://schema.org/Thing">
     
   <div class="panel-heading">
       <h3 class="panel-title" itemprop="name">
-          <a itemprop="url" href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>{{ name }}</a>
+          <a itemprop="url" href="{{ link }}"{% if newWindow %} target="_blank"{% endif %}>{{ ez_content_name(content) }}</a>
       </h3>
   </div>
 
@@ -40,12 +31,12 @@
     
   <div class="panel-body">
     {% if content.fields.body is defined %}
-            {{ ez_render_field( content, 'body', { lang: language } ) }}    
+            {{ ez_render_field( content, 'body' ) }}    
     {% endif %}
       
       
-    {% if source_items[content.fields.source[language].destinationContentId] is defined %}
-    {% set items = source_items[content.fields.source[language].destinationContentId] %}
+    {% if source_items[ez_field_value(content, 'source').destinationContentId] is defined %}
+    {% set items = source_items[ez_field_value(content, 'source').destinationContentId] %}
     <ul>
     {% for item in items.searchHits %}
                 <li>{{ render(

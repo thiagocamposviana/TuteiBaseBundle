@@ -2,7 +2,6 @@
 <html lang="{{ app.request.locale|split('_')[0] }}" prefix="hx: http://purl.org/NET/hinclude# og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
     <head>
 
-        {% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
         {% if location is not defined %}
             {% set location = null %}
         {% endif %}

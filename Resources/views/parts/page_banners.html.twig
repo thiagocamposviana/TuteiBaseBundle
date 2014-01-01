@@ -1,4 +1,3 @@
-{% set language = siteaccess[ezpublish.siteaccess.name].language %}
 {% if  banners[0] is defined %}
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
@@ -14,14 +13,14 @@
     {% for item in banners[0].searchHits %}
       
    
-    {% set newWindow = item.valueObject.fields.new_window[language].bool %}
+    {% set newWindow = ez_field_value(item.valueObject,'new_window').bool %}
 
     {% set link = '' %}
 
     {% if not ez_is_field_empty( item.valueObject, "link_object" ) %}
-        {% set link = path(relation_list[item.valueObject.fields.link_object[language].destinationContentId]) %}
+        {% set link = path(relation_list[ez_field_value(item.valueObject,'link_object').destinationContentId]) %}
     {% elseif not ez_is_field_empty( item.valueObject, "link_external" ) %}
-        {% set link = item.valueObject.fields.link_external[language].link %}
+        {% set link = ez_field_value(item.valueObject, 'link_external').link %}
     {% endif %}   
       
       
@@ -42,7 +41,7 @@
         {% endif %}
 
       <div class="carousel-caption">
-        {{ item.valueObject.fields.title[language].text }}
+        {{ ez_render_field( item.valueObject, 'title' ) }}
       </div>
       
     </div>

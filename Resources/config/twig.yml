@@ -9,12 +9,7 @@ globals:
     
     siteaccess:
         site:
-            language: eng-GB
             locale: en_GB
         siteadmin:
-            language: eng-GB
             locale: en_GB
-        por:
-            language: por-BR
-            locale: pt_BR
             

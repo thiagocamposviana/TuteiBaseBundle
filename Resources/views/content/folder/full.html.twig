@@ -2,22 +2,20 @@
 
 {% block content %}
 
-{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
-
 <article class="content-view-full" itemscope="itemscope" itemtype="http://schema.org/Thing">
     <div class="content-type-folder">
         <header class="attribute-title" itemprop="name">
-            <h1 id="main-desc">{{ ez_render_field( content, 'name', { lang: language } ) }}</h1>
+            <h1 id="main-desc">{{ ez_render_field( content, 'name' ) }}</h1>
         </header>
         {% if not ez_is_field_empty( content, "short_description" ) %}
         <div class="attribute-short" itemprop="description">
-            {{ ez_render_field( content, 'short_description', { lang: language } ) }}    
+            {{ ez_render_field( content, 'short_description' ) }}    
         </div>
         {% endif %}
 
         {% if not ez_is_field_empty( content, "description" ) %}
         <div class="attribute-long">
-            {{ ez_render_field( content, 'description', { lang: language } ) }}
+            {{ ez_render_field( content, 'description' ) }}
         </div>
         {% endif %}
 

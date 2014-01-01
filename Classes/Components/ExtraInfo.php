@@ -63,20 +63,19 @@ class ExtraInfo extends Component
         }
 
 
-        $language = $this->controller->getLanguage();
         $contentService = $repository->getContentService();
 
         $relationList = array();
         $sourceItems = array();
         foreach ($list->searchHits as $content) {
-            if (isset($content->valueObject->fields['link_object'][$language]->destinationContentId)) {
-                $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
+            if (!$this->controller->getContainer()->get( 'ezpublish.field_helper' )->isFieldEmpty($content->valueObject, 'link_object')) {
+                $objId = $content->valueObject->getFieldValue('link_object')->destinationContentId;
                 $related = $contentService->loadContent($objId);
                 $relationList[$objId] = $locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);
             }
 
-            if (isset($content->valueObject->fields['source'][$language]->destinationContentId)) {
-                $srcId = $content->valueObject->fields['source'][$language]->destinationContentId;
+            if (!$this->controller->getContainer()->get( 'ezpublish.field_helper' )->isFieldEmpty($content->valueObject, 'source')) {
+                $srcId = $content->valueObject->getFieldValue('source')->destinationContentId;
                 $source = $contentService->loadContent($srcId);
                 $query = new Query();
 

@@ -1,17 +1,15 @@
-{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
-
 <article class="content-view-line" itemscope="itemscope" itemtype="http://schema.org/Thing">
     <div class="content-type-folder">
         
         <header class="attribute-title">
             <h2 itemprop="name">
-                <a itemprop="url" href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'name' ) }}</a>
+                <a itemprop="url" href="{{ path( location ) }}" title="{{ ez_content_name(content) }}">{{ ez_render_field( content, 'name' ) }}</a>
             </h2>
         </header>
         
-        {% if not ez_is_field_empty( content, 'short_description', { lang: language } ) %}
+        {% if not ez_is_field_empty( content, 'short_description' ) %}
         <div class="attribute-short" itemprop="description">
-                {{ ez_render_field( content, 'short_description', { lang: language } ) }}
+                {{ ez_render_field( content, 'short_description' ) }}
         </div>
         {% endif %}
     </div>

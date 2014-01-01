@@ -72,9 +72,7 @@ class Banners extends Component
             $blocks[] = $searchService->findContent($query);
         }
 
-        $siteaccess = $this->controller->getContainer()->get('ezpublish.siteaccess')->name;
-        $twigGlobals = $this->controller->getContainer()->get('twig')->getGlobals();
-        $language = $twigGlobals['siteaccess'][$siteaccess]['language'];
+
         $contentService = $repository->getContentService();
 
         $relationList = array();
@@ -82,8 +80,8 @@ class Banners extends Component
         foreach ($blocks as $b) {
             foreach ($b->searchHits as $content) {
 
-                if (isset($content->valueObject->fields['link_object'][$language]->destinationContentId)) {
-                    $objId = $content->valueObject->fields['link_object'][$language]->destinationContentId;
+                if (!$this->controller->getContainer()->get( 'ezpublish.field_helper' )->isFieldEmpty( $content->valueObject, 'link_object' )) {
+                    $objId = $content->valueObject->getFieldValue('link_object')->destinationContentId;
                     $related = $contentService->loadContent($objId);
 
                     $relationList[$objId] = $locationService->loadLocation($related->versionInfo->contentInfo->mainLocationId);

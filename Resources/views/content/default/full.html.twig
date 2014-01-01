@@ -1,7 +1,6 @@
 {% extends noLayout ? viewbaseLayout : "TuteiBaseBundle::pagelayout.html.twig" %}
 
 {% block content %}
-{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
 
 <article class="content-view-full" itemscope="itemscope" itemtype="http://schema.org/Thing">
     <div class="content-type-default">
@@ -9,7 +8,7 @@
         {% for key, field in content.fields %}
             <div class="attribute">
                 <h2>{{ key }}:</h2>
-                {{ ez_render_field( content, key, { lang: language } ) }}
+                {{ ez_render_field( content, key ) }}
             </div>        
         {% endfor %}
         

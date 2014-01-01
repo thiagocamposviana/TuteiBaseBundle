@@ -1,25 +1,22 @@
-{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
-
 <article class="content-view-block" itemscope="itemscope" itemtype="http://schema.org/Article">
     <div class="content-type-article media"> 
         
 
         <header class="attribute-title media-heading">
             <h2 itemprop="name">
-                <a itemprop="url" href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">{{ ez_render_field( content, 'title', { lang: language } ) }}</a>
+                <a itemprop="url" href="{{ path( location ) }}" title="{{ ez_content_name( location.contentInfo ) }}">{{ ez_render_field( content, 'title' ) }}</a>
             </h2>
         </header>
         
-        {% if not ez_is_field_empty( content, 'image', { lang: language } ) %}
+        {% if not ez_is_field_empty( content, 'image' ) %}
         
         <div class="attribute-image pull-left" itemprop="image">
-        <a itemprop="url" href="{{ path( location ) }}" title="{{ location.contentInfo.name }}">
-
+        <a itemprop="url" href="{{ path( location ) }}" title="{{ ez_content_name( location.contentInfo ) }}">
         {{ render_hinclude(
                 controller( 
                     "ez_content:viewContent", 
                     {
-                        "contentId": content.fields.image[language].destinationContentId,
+                        "contentId": ez_field_value( content, 'image' ).destinationContentId,
                         "viewType": "line",
                         "params": { 'alias' : 'small' }
                     }
@@ -46,9 +43,9 @@
         {% endif %}
         </div>
 
-        {% if not ez_is_field_empty( content, 'intro', { lang: language } ) %}
+        {% if not ez_is_field_empty( content, 'intro' ) %}
         <div class="attribute-short media-body" itemprop="description">
-                {{ ez_render_field( content, 'intro', { lang: language } ) }}
+                {{ ez_render_field( content, 'intro' ) }}
         </div>
         {% endif %}
     </div>

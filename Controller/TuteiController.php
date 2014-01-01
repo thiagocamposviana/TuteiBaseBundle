@@ -55,16 +55,4 @@ class TuteiController extends Controller
         return $this->container;
     }
 
-    /**
-     * Returns the current siteaccess language
-     * 
-     * @return string
-     */
-    public function getLanguage()
-    {
-        $siteaccess = $this->container->get('ezpublish.siteaccess')->name;
-        $twigGlobals = $this->container->get('twig')->getGlobals();
-        return $twigGlobals['siteaccess'][$siteaccess]['language'];
-    }
-
 }

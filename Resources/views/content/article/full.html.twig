@@ -2,23 +2,20 @@
 
 {% block content %}
 
-{% set language = (siteaccess[ezpublish.siteaccess.name].language) %}
-
 <article class="content-view-full" itemscope="itemscope" itemtype="http://schema.org/Article">
     <div class="content-type-article media">
         <header class="attribute-title media-heading">
-            <h1 itemprop="name" id="main-desc">{{ ez_render_field( content, 'title', { lang: language } ) }}</h1>
+            <h1 itemprop="name" id="main-desc">{{ ez_render_field( content, 'title' ) }}</h1>
         </header>        
         
-        {% if not ez_is_field_empty( content, 'image', { lang: language } ) %}
+        {% if not ez_is_field_empty( content, 'image' ) %}
         
         <div class="attribute-image pull-left" itemprop="image">
-
         {{ render_hinclude(
                 controller( 
                     "ez_content:viewContent", 
                     {
-                        "contentId": content.fields.image[language].destinationContentId,
+                        "contentId": ez_field_value( content, 'image' ).destinationContentId,
                         "viewType": "line",
                         "params": { 'alias' : 'small' }
                     }
@@ -47,13 +44,13 @@
 
         {% if not ez_is_field_empty( content, "intro" ) %}
         <div class="attribute-short media-body" itemprop="description">
-            {{ ez_render_field( content, 'intro', { lang: language } ) }}    
+            {{ ez_render_field( content, 'intro' ) }}    
         </div>
         {% endif %}
 
         {% if not ez_is_field_empty( content, "body" ) %}
         <div class="attribute-long media-body" itemprop="articleBody">
-            {{ ez_render_field( content, 'body', { lang: language } ) }}
+            {{ ez_render_field( content, 'body' ) }}
         </div>
         {% endif %}
         
