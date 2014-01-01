@@ -74,9 +74,13 @@ class Blocks extends Component
             } else {
 
                 $sourceId = $block->valueObject->getFieldValue('source')->destinationContentId;
-                $sourceObj = $repository->getContentService()->loadContent($sourceId);
-                $parentId = $sourceObj->versionInfo->contentInfo->mainLocationId;
-                $blocks[$blockLocationId]['children'] = SearchHelper::fetchChildren($this->controller, $parentId, array(), $limit, $offset);
+                try {
+                    $sourceObj = $repository->getContentService()->loadContent($sourceId);
+                    $parentId = $sourceObj->versionInfo->contentInfo->mainLocationId;
+                    $blocks[$blockLocationId]['children'] = SearchHelper::fetchChildren($this->controller, $parentId, array(), $limit, $offset);
+                } catch (\Exception $e) {
+                    $blocks[$blockLocationId]['children'] = SearchHelper::fetchChildren($this->controller, $blockLocationId, array(), $limit, $offset);
+                }
 
             }
         }
