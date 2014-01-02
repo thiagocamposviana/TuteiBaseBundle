@@ -1,11 +1,10 @@
-system:
-    site:
+system:        
+    frontend_group:
         image_variations:
                     small:
                         reference: ~
                         filters:
                             - {name: geometry/scaledownonly, params: [400, 350]}
-    frontend_group:
         location_view:
             full:
                 article:
