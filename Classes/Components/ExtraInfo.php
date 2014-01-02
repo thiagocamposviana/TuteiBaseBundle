@@ -27,7 +27,10 @@ class ExtraInfo extends Component
     {
 
         $pathString = $this->parameters['pathString'];
-        if ($pathString == '/1/') {
+        $rootLocationId = $this->controller->getConfigResolver()->getParameter( 'content.tree_root.location_id' );
+
+        
+        if ( strpos( $pathString , '/' . $rootLocationId . '/' ) === false ) {
             return new Response();
         }
 

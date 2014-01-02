@@ -26,12 +26,13 @@ class TopMenu extends Component
     {
 
         $response = new Response();
+        $rootLocationId = $this->controller->getConfigResolver()->getParameter( 'content.tree_root.location_id' );
 
         $response->setPublic();
         $response->setSharedMaxAge(86400);
 
         // Menu will expire when top location cache expires.
-        $response->headers->set('X-Location-Id', 2);
+        $response->headers->set('X-Location-Id', $rootLocationId);
         // Menu might vary depending on user permissions, so make the cache vary on the user hash.
         $response->setVary('X-User-Hash');
 
@@ -42,7 +43,7 @@ class TopMenu extends Component
             new LocationPriority(Operator::LT, 100),
         );
 
-        $list = SearchHelper::fetchChildren($this->controller, 2, $filters);
+        $list = SearchHelper::fetchChildren($this->controller, $rootLocationId, $filters);
 
         $pathString = '';
         if (isset($this->parameters['pathString'])) {

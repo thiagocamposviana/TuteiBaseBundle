@@ -29,11 +29,13 @@ class SideMenu extends Component
 
         $response->setPublic();
         $response->setSharedMaxAge(86400);
+        $rootLocationId = $this->controller->getConfigResolver()->getParameter( 'content.tree_root.location_id' );
 
-
+        $subPath = explode( '/'. $rootLocationId . '/', $this->parameters['pathString']);
+        $subLocations = explode( '/', $subPath[1]);
 
         $locations = explode('/', $this->parameters['pathString']);
-        $locationId = $locations[3];
+        $locationId = $subLocations[0];
 
         // Menu will expire when top location cache expires.
         $response->headers->set('X-Location-Id', $locationId);

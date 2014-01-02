@@ -100,14 +100,20 @@ class SearchHelper
     {
 
         $repository = $controller->getRepository();
+        $rootLocationId = $controller->getConfigResolver()->getParameter( 'content.tree_root.location_id' );
 
         $locationService = $repository->getLocationService();
         $locations = explode('/', $pathString);
 
         $path = array();
+        $start = false;
         foreach ($locations as $id) {
-
-            if (!in_array($id, array('', '1'))) {
+            if(!$start){
+                if($id == $rootLocationId){
+                    $start = true;
+                }
+            }
+            if ($start and !in_array($id, array('', '1'))) {
                 $path[] = $locationService->loadLocation($id);
             }
         }
