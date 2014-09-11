@@ -1,4 +1,20 @@
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver: pdo_mysql
+                host: localhost
+                user: [DBUSER]
+                dbname: [DBNAME]
+                password: [DBPASS]
+                charset: UTF8
+                options: {  }
+
 ezpublish:
+    repositories:
+        default:
+            engine: legacy
+            connection: default
     siteaccess:
         list:
             - site
@@ -22,12 +38,7 @@ ezpublish:
         path: /usr/bin/convert
     system:
         site_group:
-            database:
-                type: mysql
-                user: [DBUSER]
-                password: [DBPASS]
-                server: localhost
-                database_name: [DBNAME]
+            repository: default
             languages:
                 - eng-GB
         frontend_group:
