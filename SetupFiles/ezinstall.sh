@@ -78,13 +78,13 @@ cd ${sitedir}
 
 mkdir src/Tutei
 ###### use a branch
-#git clone -b 1.x https://github.com/rantoniazzi/TuteiBaseBundle.git src/Tutei/BaseBundle
+#git clone -b 1.x https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
 #cd src/Tutei/BaseBundle
 #git stash
 #git checkout 1.x
 #cd ../../..
 
-git clone https://github.com/rantoniazzi/TuteiBaseBundle.git src/Tutei/BaseBundle
+git clone https://github.com/thiagocamposviana/TuteiBaseBundle.git src/Tutei/BaseBundle
 
 rm -Rf ezpublish/cache/*
 
